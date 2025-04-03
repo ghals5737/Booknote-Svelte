@@ -1,7 +1,7 @@
 <script lang="ts">
-    import BookCard from "./components/BookCard.svelte";
-    import ReadingStats from "./components/ReadingStats.svelte";
-    // import RecommendedCategories from "./(app)/components/RecommendedCategories.svelte";
+    import BookCard from "../../../lib/components/book/BookCard.svelte";
+    import ReadingStats from "../../../lib/components/dashboard/ReadingStats.svelte";
+    import RecommendedCategories from "../../../lib/components/dashboard/RecommendedCategories.svelte";
         
     // Mock data for demonstration
     const recentBooks = [
@@ -9,7 +9,7 @@
         id: "1",
         title: "The Great Gatsby",
         author: "F. Scott Fitzgerald",
-        cover: "/placeholder.svg?height=300&width=200",
+        cover: "https://shopping-phinf.pstatic.net/main_4684697/46846973619.20240404092858.jpg",
         progress: 75,
         totalPages: 180,
         currentPage: 135,
@@ -18,7 +18,7 @@
         id: "2",
         title: "To Kill a Mockingbird",
         author: "Harper Lee",
-        cover: "/placeholder.svg?height=300&width=200",
+        cover: "https://shopping-phinf.pstatic.net/main_4684697/46846973619.20240404092858.jpg",
         progress: 30,
         totalPages: 281,
         currentPage: 84,
@@ -27,7 +27,7 @@
         id: "3",
         title: "1984",
         author: "George Orwell",
-        cover: "/placeholder.svg?height=300&width=200",
+        cover: "https://shopping-phinf.pstatic.net/main_4684697/46846973619.20240404092858.jpg",
         progress: 100,
         totalPages: 328,
         currentPage: 328,
@@ -36,7 +36,7 @@
         id: "4",
         title: "The Catcher in the Rye",
         author: "J.D. Salinger",
-        cover: "/placeholder.svg?height=300&width=200",
+        cover: "https://shopping-phinf.pstatic.net/main_4684697/46846973619.20240404092858.jpg",
         progress: 50,
         totalPages: 224,
         currentPage: 112,
@@ -86,7 +86,7 @@
       
       <section>
         <h2 class="text-2xl font-semibold mb-4 text-[#8B4513]">Recommended Categories</h2>
-        <!-- <RecommendedCategories {categories} /> -->
+        <RecommendedCategories {categories} />
       </section>
     </div>
   </div>

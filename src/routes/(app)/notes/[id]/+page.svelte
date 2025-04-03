@@ -1,14 +1,17 @@
-<script>
+<script lang="ts">
     import { onMount } from 'svelte';
     import { page } from '$app/stores';
     import { ArrowLeft, BookOpen, Save, Eye, Edit } from 'lucide-svelte';
-    import { Button } from '$lib/components/ui/button';
-    import { Card } from '$lib/components/ui/card';
-    import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
-    import { Textarea } from '$lib/components/ui/textarea';
+    import Button from '$lib/components/ui/button/Button.svelte';
+    import Card from '$lib/components/ui/card/Card.svelte';
+    import Tabs from '$lib/components/ui/tabs/Tabs.svelte';
+    import TabsContent from '$lib/components/ui/tabs/TabsContent.svelte';
+    import TabsList from '$lib/components/ui/tabs/TabsList.svelte';
+    import TabsTrigger from '$lib/components/ui/tabs/TabsTrigger.svelte';
+    import Textarea from '$lib/components/ui/textarea/Textarea.svelte';
     
-    let mode = "edit";
-    let content = `
+    let mode: string = "edit";
+    let content: string = `
   # Character Analysis: Jay Gatsby
   
   ## Introduction

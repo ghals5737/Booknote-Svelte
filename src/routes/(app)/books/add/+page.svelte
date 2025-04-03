@@ -1,12 +1,19 @@
 <script lang="ts">
-    import { Camera, Upload } from '@lucide/svelte';
-    import Button from '../../components/ui/button/Button.svelte';
-    import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card/index.js';
-    import { Input } from '../../components/ui/input/index.js';
-    import { Label } from '../../components/ui/label/index.js';
-    import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs/index.js';
-    import { Textarea } from '../../components/ui/textarea';
-    import BookScan from '../../components/BookScan.svelte';
+    import { Camera, Upload } from 'lucide-svelte';
+    import Button from '$lib/components/ui/button/Button.svelte';
+    import Card from '$lib/components/ui/card/Card.svelte';
+    import CardContent from '$lib/components/ui/card/CardContent.svelte';
+    import CardDescription from '$lib/components/ui/card/CardDescription.svelte';
+    import CardHeader from '$lib/components/ui/card/CardHeader.svelte';
+    import CardTitle from '$lib/components/ui/card/CardTitle.svelte';
+    import Input  from '$lib/components/ui/input/Input.svelte';
+    import Label  from '$lib/components/ui/label/Label.svelte';
+    import Tabs from '$lib/components/ui/tabs/Tabs.svelte';
+    import TabsContent from '$lib/components/ui/tabs/TabsContent.svelte';
+    import TabsList from '$lib/components/ui/tabs/TabsList.svelte';
+    import TabsTrigger from '$lib/components/ui/tabs/TabsTrigger.svelte';
+    import Textarea from '$lib/components/ui/textarea/Textarea.svelte';
+    import BookScan from '$lib/components/book/BookScan.svelte';
     
     let coverImage:any = null;
 </script>

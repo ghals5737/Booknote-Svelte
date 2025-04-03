@@ -1,5 +1,8 @@
 <script lang="ts">
   import { cn } from "$lib/utils/utils.js";
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
 
   let className = "";
   export { className as class };
@@ -23,6 +26,12 @@
     lg: "h-11 px-8",
     icon: "h-10 w-10"
   };
+
+  function handleClick(event: MouseEvent) {
+    if (!disabled) {
+      dispatch('click', event);
+    }
+  }
 </script>
 
 <button
@@ -34,6 +43,7 @@
     className
   )}
   {disabled}
+  on:click={handleClick}
   {...$$restProps}
 >
   <slot />

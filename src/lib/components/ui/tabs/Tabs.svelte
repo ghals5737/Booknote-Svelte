@@ -1,15 +1,22 @@
 <script lang="ts">
   import { setContext } from "svelte";
-  import { writable } from "svelte/store";
+  import { writable, derived, type Writable, type Readable } from "svelte/store";
 
   export let value = "";
   const activeTab = writable(value);
   
-  setContext("tabs", {
+  interface TabsContext {
+    activeTab: Writable<string>;
+    registerTab: (tabValue: string) => {
+      isActive: Readable<boolean>;
+    };
+  }
+  
+  setContext<TabsContext>("tabs", {
     activeTab,
     registerTab: (tabValue: string) => {
       return {
-        isActive: activeTab.subscribe(v => v === tabValue)
+        isActive: derived(activeTab, $activeTab => $activeTab === tabValue)
       };
     }
   });

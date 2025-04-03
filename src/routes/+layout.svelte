@@ -16,12 +16,7 @@
 		name: "My Books",
 		href: "/books",
 		icon: "BookOpen",
-	  },
-	  {
-		name: "Add Book",
-		href: "/books/add",
-		icon: "PlusCircle",
-	  },
+	  },	  
 	  {
 		name: "Notes",
 		href: "/notes",

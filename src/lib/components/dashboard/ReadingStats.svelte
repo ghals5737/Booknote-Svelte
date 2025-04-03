@@ -1,9 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import BookOpen from '@lucide/svelte/icons/book-open';
-    import Clock from '@lucide/svelte/icons/clock';
-    import Star from '@lucide/svelte/icons/star';
-    import FileText from '@lucide/svelte/icons/file-text';
+    import { BookOpen, Clock, Star, FileText } from 'lucide-svelte';
     import Tabs  from "$lib/components/ui/tabs/Tabs.svelte";
     import TabsContent  from "$lib/components/ui/tabs/TabsContent.svelte";
     import TabsList  from "$lib/components/ui/tabs/TabsList.svelte";
@@ -13,50 +10,39 @@
     import CardContent from "$lib/components/ui/card/CardContent.svelte";
     import CardHeader from "$lib/components/ui/card/CardHeader.svelte";
     import CardTitle from "$lib/components/ui/card/CardTitle.svelte";
+    import Chart from 'chart.js/auto';
 
     
     export let stats;
     
-    let chartContainer: HTMLDivElement;
-    let chart: any;
+    let chartCanvas: HTMLCanvasElement;
+    let chart: Chart;
     
     onMount(() => {
       if (typeof window !== 'undefined') {
-        // 비동기 로직을 별도 함수로 분리
-        const initChart = async () => {
-          const { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } = await import('recharts');
-          
-          if (chartContainer && stats.monthlyProgress) {
-            const container = document.createElement('div');
-            container.style.width = '100%';
-            container.style.height = '100%';
-            chartContainer.appendChild(container);
-            
-            // Note: This is a simplified implementation
-            chart = new BarChart({
-              target: container,
-              props: {
-                data: stats.monthlyProgress,
-                margin: { top: 20, right: 30, left: 20, bottom: 5 },
-                children: [
-                  new XAxis({ dataKey: 'month' }),
-                  new YAxis(),
-                  new Tooltip(),
-                  new Bar({ dataKey: 'books', fill: '#2E8B57', radius: [4, 4, 0, 0] })
-                ]
-              }
-            });
-          }
-        };
-        
-        // 비동기 함수 실행
-        initChart();
+        if (chartCanvas && stats.monthlyProgress) {
+          chart = new Chart(chartCanvas, {
+            type: 'bar',
+            data: {
+              labels: stats.monthlyProgress.map((d: any) => d.month),
+              datasets: [{
+                label: '읽은 책',
+                data: stats.monthlyProgress.map((d: any) => d.books),
+                backgroundColor: '#2E8B57',
+                borderRadius: 4
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false
+            }
+          });
+        }
       }
       
-      // 정리 함수 반환
       return () => {
         if (chart) {
-          chart.$destroy();
+          chart.destroy();
         }
       };
     });
@@ -113,11 +99,8 @@
           </div>
         </TabsContent>
         <TabsContent value="progress">
-          <div class="h-[300px] mt-4" bind:this={chartContainer}>
-            <!-- Chart will be rendered here by Recharts -->
-            <div class="flex items-center justify-center h-full text-muted-foreground">
-              Loading chart...
-            </div>
+          <div class="h-[300px] mt-4">
+            <canvas bind:this={chartCanvas}></canvas>
           </div>
         </TabsContent>
       </Tabs>
