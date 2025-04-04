@@ -1,16 +1,13 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { ArrowLeft, BookOpen, Edit, Plus, Star,  Calendar,  MoreHorizontal } from 'lucide-svelte';
+  import { ArrowLeft, BookOpen, Edit, Plus, Star, Calendar, MoreHorizontal, ChevronDown } from 'lucide-svelte';
+  import { slide } from 'svelte/transition';
 
   import Button from '$lib/components/ui/button/Button.svelte';
   import Card from '$lib/components/ui/card/Card.svelte';
   import CardContent from '$lib/components/ui/card/CardContent.svelte';
   import CardHeader from '$lib/components/ui/card/CardHeader.svelte';
   import CardTitle from '$lib/components/ui/card/CardTitle.svelte';  
-  import Tabs from '$lib/components/ui/tabs/Tabs.svelte';
-  import TabsContent from '$lib/components/ui/tabs/TabsContent.svelte';
-  import TabsList from '$lib/components/ui/tabs/TabsList.svelte';
-  import TabsTrigger from '$lib/components/ui/tabs/TabsTrigger.svelte';
   import DropdownMenu from '$lib/components/ui/dropdown-menu/DropdownMenu.svelte';
   import DropdownMenuContent from '$lib/components/ui/dropdown-menu/DropdownMenuContent.svelte';
   import DropdownMenuItem from '$lib/components/ui/dropdown-menu/DropdownMenuItem.svelte';
@@ -25,7 +22,7 @@
     id: "1",
     title: "The Great Gatsby",
     author: "F. Scott Fitzgerald",
-    cover: "/placeholder.svg?height=300&width=200",
+    cover: "https://shopping-phinf.pstatic.net/main_3244103/32441031070.20231011075212.jpg",
     progress: 75,
     totalPages: 180,
     currentPage: 135,
@@ -45,6 +42,7 @@
       id: "1",
       title: "Character Analysis: Jay Gatsby",
       excerpt: "Gatsby's character represents the American Dream and its ultimate failure...",
+      content: "Gatsby's character represents the American Dream and its ultimate failure. Born into poverty, he amasses a fortune through questionable means, all in pursuit of winning back Daisy Buchanan, his first love. His wealth and lavish parties are merely a facade to impress Daisy, revealing the emptiness of materialism and the corruption of the American Dream. Despite his wealth, Gatsby remains emotionally stunted, unable to move past his idealized memory of Daisy from five years ago. His tragic flaw is his inability to accept that the past cannot be recreated, leading to his eventual downfall.",
       date: "2023-04-15",
       tags: ["character", "analysis", "symbolism"],
     },
@@ -52,6 +50,7 @@
       id: "2",
       title: "Symbolism of the Green Light",
       excerpt: "The green light at the end of Daisy's dock represents Gatsby's hopes and dreams...",
+      content: "The green light at the end of Daisy's dock represents Gatsby's hopes and dreams for the future. Throughout the novel, Gatsby stares at this light, which is visible from his mansion across the bay. It symbolizes his longing for Daisy and his belief that he can recapture the past. The green light also represents the broader American Dream—the idea that anyone can achieve success through hard work and determination. However, like Gatsby's dream of reuniting with Daisy, the green light is ultimately unattainable, representing the impossibility of fully realizing the American Dream.",
       date: "2023-04-10",
       tags: ["symbolism", "themes"],
     },
@@ -59,6 +58,7 @@
       id: "3",
       title: "The Valley of Ashes",
       excerpt: "The valley of ashes represents the moral and social decay hidden by the beautiful façades...",
+      content: "The valley of ashes represents the moral and social decay hidden by the beautiful façades of the wealthy. This desolate area, located between West Egg and New York City, is described as a 'fantastic farm where ashes grow like wheat into ridges and hills and grotesque gardens.' It symbolizes the consequences of the unbridled pursuit of wealth and the stark contrast between the lives of the rich and the poor. The valley of ashes is home to the Wilsons, whose lives are destroyed by the carelessness of the wealthy characters. The billboard of the eyes of Doctor T.J. Eckleburg overlooking the valley serves as a symbol of God's judgment on this moral decay, watching over the characters but unable to intervene.",
       date: "2023-03-28",
       tags: ["setting", "symbolism"],
     },
@@ -73,7 +73,16 @@
     });
   }
   
-  let activeTab = "overview";
+  // 노트 상세 보기 상태 관리
+  let expandedNoteId: string | null = null;
+  
+  function toggleNoteExpansion(noteId: string) {
+    if (expandedNoteId === noteId) {
+      expandedNoteId = null;
+    } else {
+      expandedNoteId = noteId;
+    }
+  }
 </script>
 
 <div class="container py-8">
@@ -83,7 +92,7 @@
         <ArrowLeft class="h-5 w-5" />
       </Button>
     </a>
-    <h1 class="text-2xl font-bold ml-2 text-[#8B4513]">{book.title}</h1>
+    <h1 class="text-2xl font-bold ml-2 text-[#2C4044]">{book.title}</h1>
   </div>
   
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -92,7 +101,7 @@
       <Card>
         <CardContent class="p-6">
           <div class="flex flex-col items-center mb-6">
-            <div class="relative w-40 h-60 bg-[#F5F5DC] mb-4">
+            <div class="relative w-40 h-60 bg-[#DDE0B6] mb-4">
               <img
                 src={book.cover || "/placeholder.svg"}
                 alt={book.title}
@@ -102,7 +111,7 @@
             
             <div class="flex items-center justify-center mb-2">
               {#each Array(5) as _, i}
-                <Star class="h-5 w-5 {i < book.rating ? 'fill-current text-[#8B4513]' : 'text-muted-foreground'}"/>
+                <Star class="h-5 w-5 {i < book.rating ? 'fill-current text-[#E6A04A]' : 'text-muted-foreground'}"/>
               {/each}
             </div>
             
@@ -115,7 +124,7 @@
             </div>
             
             <div class="flex gap-2 w-full">
-              <Button class="flex-1 bg-[#8B4513] hover:bg-[#6d3710]">
+              <Button class="flex-1 bg-[#E6A04A] hover:bg-[#d08f3f] text-white">
                 Update Progress
               </Button>
               <Button variant="outline" size="icon">
@@ -133,7 +142,7 @@
             <div>
               <h3 class="text-sm font-medium text-muted-foreground mb-1">Category</h3>
               <div class="flex">
-                <span class="inline-flex items-center rounded-full bg-[#F5F5DC]/50 px-2.5 py-1 text-xs font-medium text-[#8B4513]">
+                <span class="inline-flex items-center rounded-full bg-[#DDE0B6]/50 px-2.5 py-1 text-xs font-medium text-[#2C4044]">
                   {book.category}
                 </span>
               </div>
@@ -166,154 +175,106 @@
               <h3 class="text-sm font-medium text-muted-foreground mb-1">Language</h3>
               <p>{book.language}</p>
             </div>
+            
+            <!-- Reading Stats 섹션을 사이드바로 이동 -->
+            <div class="pt-4 border-t">
+              <h3 class="text-sm font-medium text-[#2C4044] mb-3">Reading Stats</h3>
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-muted-foreground">Started Reading</span>
+                  <span class="text-sm">March 15, 2023</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-muted-foreground">Reading Time</span>
+                  <span class="text-sm">4h 30m</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-muted-foreground">Pages per Day</span>
+                  <span class="text-sm">12</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-muted-foreground">Estimated Completion</span>
+                  <span class="text-sm">May 10, 2023</span>
+                </div>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
     </div>
     
-    <!-- 책 상세 정보 및 노트 -->
+    <!-- 노트 섹션 -->
     <div class="lg:col-span-2">
-      <Tabs bind:value={activeTab} class="w-full">
-        <TabsList class="w-full grid grid-cols-2">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="notes">Notes ({bookNotes.length})</TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="overview" class="mt-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Book Description</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>{book.description}</p>
-            </CardContent>
-          </Card>
-          
-          <!-- 추가 정보 섹션 -->
-          <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Reading Stats</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div class="space-y-4">
-                  <div class="flex items-center justify-between">
-                    <span class="text-sm text-muted-foreground">Started Reading</span>
-                    <span>March 15, 2023</span>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span class="text-sm text-muted-foreground">Reading Time</span>
-                    <span>4h 30m</span>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span class="text-sm text-muted-foreground">Pages per Day</span>
-                    <span>12</span>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span class="text-sm text-muted-foreground">Estimated Completion</span>
-                    <span>May 10, 2023</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle>Similar Books</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul class="space-y-3">
-                  <li class="flex items-center">
-                    <div class="w-8 h-12 bg-[#F5F5DC] mr-3 flex-shrink-0"></div>
-                    <div>
-                      <p class="font  mr-3 flex-shrink-0"></div>
-                    <div>
-                      <p class="font-medium text-sm">The Catcher in the Rye</p>
-                      <p class="text-xs text-muted-foreground">J.D. Salinger</p>
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-semibold text-[#2C4044]">Notes ({bookNotes.length})</h2>
+        <Button class="bg-[#E6A04A] hover:bg-[#d08f3f]">
+          <Plus class="mr-2 h-4 w-4" />
+          Add Note
+        </Button>
+      </div>
+      
+      {#if bookNotes.length === 0}
+        <div class="flex flex-col items-center justify-center py-12 text-center">
+          <BookOpen class="h-12 w-12 text-muted-foreground mb-4" />
+          <h3 class="text-lg font-medium mb-1">No notes yet</h3>
+          <p class="text-muted-foreground mb-4">
+            Start capturing your thoughts and insights about this book
+          </p>
+          <Button class="bg-[#E6A04A] hover:bg-[#d08f3f]">
+            <Plus class="mr-2 h-4 w-4" />
+            Create First Note
+          </Button>
+        </div>
+      {:else}
+        <div class="space-y-4">
+          {#each bookNotes as note}
+            <Card class="hover:shadow-md transition-shadow">
+              <CardHeader class="pb-2 cursor-pointer" >
+                <div class="flex justify-between items-start" on:click={() => toggleNoteExpansion(note.id)}>
+                  <div class="flex-1">
+                    <div class="flex items-center">
+                      <CardTitle class="text-lg text-[#2C4044]">{note.title}</CardTitle>
+                      <ChevronDown class="h-4 w-4 ml-2 text-muted-foreground transition-transform {expandedNoteId === note.id ? 'rotate-180' : ''}" />
                     </div>
-                  </li>
-                  <li class="flex items-center">
-                    <div class="w-8 h-12 bg-[#F5F5DC] mr-3 flex-shrink-0"></div>
-                    <div>
-                      <p class="font-medium text-sm">This Side of Paradise</p>
-                      <p class="text-xs text-muted-foreground">F. Scott Fitzgerald</p>
-                    </div>
-                  </li>
-                  <li class="flex items-center">
-                    <div class="w-8 h-12 bg-[#F5F5DC] mr-3 flex-shrink-0"></div>
-                    <div>
-                      <p class="font-medium text-sm">The Sun Also Rises</p>
-                      <p class="text-xs text-muted-foreground">Ernest Hemingway</p>
-                    </div>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-        
-        <TabsContent value="notes" class="mt-6">
-          <div class="flex items-center justify-between mb-6">
-            <h2 class="text-xl font-semibold text-[#8B4513]">Book Notes</h2>
-            <Button class="bg-[#8B4513] hover:bg-[#6d3710]">
-              <Plus class="mr-2 h-4 w-4" />
-              Add Note
-            </Button>
-          </div>
-          
-          {#if bookNotes.length === 0}
-            <div class="flex flex-col items-center justify-center py-12 text-center">
-              <BookOpen class="h-12 w-12 text-muted-foreground mb-4" />
-              <h3 class="text-lg font-medium mb-1">No notes yet</h3>
-              <p class="text-muted-foreground mb-4">
-                Start capturing your thoughts and insights about this book
-              </p>
-              <Button class="bg-[#8B4513] hover:bg-[#6d3710]">
-                <Plus class="mr-2 h-4 w-4" />
-                Create First Note
-              </Button>
-            </div>
-          {:else}
-            <div class="space-y-4">
-              {#each bookNotes as note}
-                <Card class="hover:shadow-md transition-shadow">
-                  <CardHeader class="pb-2">
-                    <div class="flex justify-between items-start">
-                      <CardTitle class="text-lg">{note.title}</CardTitle>
-                      <div class="flex items-center">
-                        <span class="text-sm text-muted-foreground mr-2">{formatDate(note.date)}</span>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" class="h-8 w-8">
-                              <MoreHorizontal class="h-4 w-4" />
-                              <span class="sr-only">Open menu</span>
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem>Edit</DropdownMenuItem>
-                            <DropdownMenuItem>Share</DropdownMenuItem>
-                            <DropdownMenuItem class="text-destructive">Delete</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p class="text-sm text-muted-foreground mb-3">{note.excerpt}</p>
-                    <div class="flex flex-wrap gap-2">
+                    <p class="text-sm text-muted-foreground mt-1">{note.excerpt}</p>
+                    <div class="flex flex-wrap gap-2 mt-2">
                       {#each note.tags as tag}
                         <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
                           {tag}
                         </span>
                       {/each}
                     </div>
-                  </CardContent>
-                </Card>
-              {/each}
-            </div>
-          {/if}
-        </TabsContent>
-      </Tabs>
+                  </div>
+                  <div class="flex items-center">
+                    <span class="text-sm text-muted-foreground mr-2">{formatDate(note.date)}</span>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <Button variant="ghost" size="icon" class="h-8 w-8" on:click={(e) => e.stopPropagation()}>
+                          <MoreHorizontal class="h-4 w-4" />
+                          <span class="sr-only">Open menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem>Share</DropdownMenuItem>
+                        <DropdownMenuItem class="text-destructive">Delete</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                {#if expandedNoteId === note.id}
+                  <div class="pt-4" transition:slide={{ duration: 300 }}>
+                    <h4 class="text-sm font-medium mb-2">Full Note</h4>
+                    <p class="text-sm whitespace-pre-line">{note.content}</p>
+                  </div>
+                {/if}
+              </CardContent>
+            </Card>
+          {/each}
+        </div>
+      {/if}
     </div>
   </div>
 </div>

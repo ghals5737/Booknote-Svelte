@@ -74,9 +74,12 @@ const config: Config= {
 
                 ,
                 // Custom brand colors
-                "brand-brown": "#8B4513",
-                "brand-beige": "#F5F5DC",
-                "brand-green": "#2E8B57",
+                "brand-beige": "#DDE0B6",
+                "brand-orange": "#E6A04A",
+                "brand-teal-dark": "#2C4044",
+                "brand-teal-medium": "#2C868E",
+                "brand-teal-light": "#88E3D9",
+                "brand-teal-pale": "#C2E4DE",
             }
 
             ,

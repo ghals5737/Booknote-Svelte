@@ -1,9 +1,22 @@
-<script>
-    import { onMount } from 'svelte';
+<script lang="ts">
     import { BookOpen, Clock, Star, FileText, Calendar } from 'lucide-svelte';
-    import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '$lib/components/ui/card';
-    import { Tabs, TabsContent, TabsList, TabsTrigger } from '$lib/components/ui/tabs';
-    import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '$lib/components/ui/select';
+    import { onMount } from 'svelte';
+
+    import Card from '$lib/components/ui/card/Card.svelte';
+    import CardContent from '$lib/components/ui/card/CardContent.svelte';
+    import CardDescription from '$lib/components/ui/card/CardDescription.svelte';
+    import CardHeader from '$lib/components/ui/card/CardHeader.svelte';
+    import CardTitle from '$lib/components/ui/card/CardTitle.svelte';
+    import Tabs from '$lib/components/ui/tabs/Tabs.svelte';
+    import TabsContent from '$lib/components/ui/tabs/TabsContent.svelte';
+    import TabsList from '$lib/components/ui/tabs/TabsList.svelte';
+    import TabsTrigger from '$lib/components/ui/tabs/TabsTrigger.svelte';
+
+    import Select from '$lib/components/ui/select/Select.svelte';
+    import SelectContent from '$lib/components/ui/select/SelectContent.svelte';
+    import SelectItem from '$lib/components/ui/select/SelectItem.svelte';
+    import SelectTrigger from '$lib/components/ui/select/SelectTrigger.svelte';
+    import SelectValue from '$lib/components/ui/select/SelectValue.svelte';
     
     // Mock data for demonstration
     const monthlyData = [
@@ -39,9 +52,9 @@
       { day: "Sun", hours: 2.7 },
     ];
     
-    let barChartContainer;
-    let pieChartContainer;
-    let lineChartContainer;
+    let barChartContainer:any;
+    let pieChartContainer:any;
+    let lineChartContainer:any;
     
     onMount(() => {
       // In a real app, you'd use a Svelte-compatible charting library

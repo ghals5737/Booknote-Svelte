@@ -20,13 +20,12 @@
 {#if $isOpen}
   <div
     class={cn(
-      "absolute right-0 z-50 mt-2 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md animate-in data-[side=bottom]:slide-in-from-top-2",
+      "absolute z-50 mt-2 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md animate-in data-[side=bottom]:slide-in-from-top-2",
       className
     )}
     class:left-0={align === 'left'}
     class:right-0={align === 'right'}
     transition:fade={{ duration: 100 }}
-    on:click={close}
     {...$$restProps}
   >
     <slot />

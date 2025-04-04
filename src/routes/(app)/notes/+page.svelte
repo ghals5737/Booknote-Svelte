@@ -126,8 +126,8 @@
 
 <div class="container py-8">
   <div class="flex items-center justify-between mb-8">
-    <h1 class="text-3xl font-bold text-[#8B4513]">My Notes</h1>
-    <Button class="bg-[#8B4513] hover:bg-[#6d3710]">
+    <h1 class="text-3xl font-bold text-[#2C4044]">My Notes</h1>
+    <Button class="bg-[#E6A04A] hover:bg-[#d08f3f] text-white">
       <Plus class="mr-2 h-4 w-4" />
       New Note
     </Button>
@@ -147,7 +147,7 @@
       
       <Card>
         <CardHeader class="py-4">
-          <CardTitle class="text-base">Filter by Tags</CardTitle>
+          <CardTitle class="text-base text-[#2C4044]">Filter by Tags</CardTitle>
         </CardHeader>
         <CardContent class="py-2">
           <div class="flex flex-wrap gap-2">
@@ -155,7 +155,7 @@
               <Button 
                 variant={selectedTags.includes(tag) ? "default" : "outline"} 
                 size="sm" 
-                class="rounded-full {selectedTags.includes(tag) ? 'bg-[#8B4513] hover:bg-[#6d3710]' : ''}"
+                class="rounded-full {selectedTags.includes(tag) ? 'bg-[#E6A04A] hover:bg-[#d08f3f] text-white' : ''}"
                 on:click={() => toggleTagFilter(tag)}
               >
                 {tag}
@@ -167,12 +167,12 @@
       
       <Card>
         <CardHeader class="py-4">
-          <CardTitle class="text-base">Filter by Books</CardTitle>
+          <CardTitle class="text-base text-[#2C4044]">Filter by Books</CardTitle>
         </CardHeader>
         <CardContent class="py-2 space-y-2">
           {#each books as book}
             <button 
-              class="flex items-center w-full space-x-2 py-2 px-3 rounded-md text-sm hover:bg-[#F5F5DC] transition-colors {selectedBooks.includes(book.id) ? 'bg-[#F5F5DC] text-[#8B4513] font-medium' : 'text-muted-foreground'}"
+              class="flex items-center w-full space-x-2 py-2 px-3 rounded-md text-sm hover:bg-[#DDE0B6] transition-colors {selectedBooks.includes(book.id) ? 'bg-[#DDE0B6] text-[#2C4044] font-medium' : 'text-muted-foreground'}"
               on:click={() => toggleBookFilter(book.id)}
             >
               <BookOpen class="h-4 w-4" />
@@ -184,7 +184,7 @@
       
       <Card>
         <CardHeader class="py-4">
-          <CardTitle class="text-base">Sort Notes</CardTitle>
+          <CardTitle class="text-base text-[#2C4044]">Sort Notes</CardTitle>
         </CardHeader>
         <CardContent class="py-2">
           <DropdownMenu>
@@ -224,7 +224,7 @@
                   : "Start by creating your first note"}
               </p>
               {#if !searchQuery && selectedTags.length === 0 && selectedBooks.length === 0}
-                <Button class="bg-[#8B4513] hover:bg-[#6d3710]">
+                <Button class="bg-[#E6A04A] hover:bg-[#d08f3f] text-white">
                   <Plus class="mr-2 h-4 w-4" />
                   Create First Note
                 </Button>
@@ -237,7 +237,7 @@
                   <CardHeader class="pb-2">
                     <div class="flex justify-between items-start">
                       <div>
-                        <CardTitle>{note.title}</CardTitle>
+                        <CardTitle class="text-[#2C4044]">{note.title}</CardTitle>
                         <CardDescription class="mt-1 flex items-center">
                           <BookOpen class="h-3 w-3 mr-1" />
                           <a href={`/books/${note.bookId}`} class="hover:underline">
@@ -275,7 +275,7 @@
                     <CardHeader class="pb-2">
                       <div class="flex justify-between items-start">
                         <div>
-                          <CardTitle>{note.title}</CardTitle>
+                          <CardTitle class="text-[#2C4044]">{note.title}</CardTitle>
                           <CardDescription class="mt-1 flex items-center">
                             <BookOpen class="h-3 w-3 mr-1" />
                             <a href={`/books/${note.bookId}`} class="hover:underline">
@@ -314,7 +314,7 @@
                     <CardHeader class="pb-2">
                       <div class="flex justify-between items-start">
                         <div>
-                          <CardTitle>{note.title}</CardTitle>
+                          <CardTitle class="text-[#2C4044]">{note.title}</CardTitle>
                           <CardDescription class="mt-1 flex items-center">
                             <BookOpen class="h-3 w-3 mr-1" />
                             <a href={`/books/${note.bookId}`} class="hover:underline">

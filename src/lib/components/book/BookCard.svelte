@@ -7,20 +7,20 @@
   
 <a href={`/books/${book.id}`} class="block h-full">
   <div class="overflow-hidden transition-all duration-200 hover:shadow-md h-full flex flex-col rounded-lg border bg-card text-card-foreground shadow-sm">
-    <div class="relative pt-[60%] bg-[#F5F5DC]">
+    <div class="relative pt-[60%]">
       <img
         src={book.cover || "/placeholder.svg"}
         alt={book.title}
-        class="absolute inset-0 object-cover w-full h-full p-2"
+        class="absolute inset-0 object-cover w-full h-full p-2 rounded-lg"
       />
     </div>
     <div class="p-4 flex flex-col flex-grow">
-      <h3 class="font-semibold text-lg line-clamp-1 mb-1">{book.title}</h3>
+      <h3 class="font-semibold text-lg line-clamp-1 mb-1 text-[#2C4044]">{book.title}</h3>
       <p class="text-sm text-muted-foreground mb-2">{book.author}</p>
       
       <div class="flex items-center mb-3">
         {#each Array(5) as _, i}
-          <Star class="h-3 w-3 {i < book.rating ? 'fill-current text-[#8B4513]' : 'text-muted-foreground'}" />
+          <Star class="h-3 w-3 {i < book.rating ? 'fill-current text-[#E6A04A]' : 'text-muted-foreground'}" />
         {/each}
       </div>
       
@@ -30,7 +30,7 @@
             {book.currentPage} / {book.totalPages}
           </p>
         </div>
-        <CircularProgress value={book.progress} size={36} />
+        <CircularProgress value={book.progress} size={36} strokeColor="#2C868E" />
       </div>
     </div>
   </div>

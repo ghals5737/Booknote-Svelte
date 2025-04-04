@@ -10,14 +10,18 @@
   }
 
   const { close } = getContext<DropdownContext>('dropdown');
+  
+  function handleClick() {
+    close();
+  }
 </script>
 
 <div
   class={cn(
-    "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+    "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
     className
   )}
-  on:click={close}
+  on:click={handleClick}
   {...$$restProps}
 >
   <slot />

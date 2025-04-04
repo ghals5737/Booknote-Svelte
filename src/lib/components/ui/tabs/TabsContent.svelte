@@ -1,13 +1,14 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import { cn } from "$lib/utils/utils.js";
-  import type { Readable } from 'svelte/store';
+  import type { Readable, Writable } from 'svelte/store';
 
   let className = "";
   export { className as class };
   export let value: string;
 
   interface TabsContext {
+    activeTab: Writable<string>;
     registerTab: (value: string) => { isActive: Readable<boolean> };
   }
 

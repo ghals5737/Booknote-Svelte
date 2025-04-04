@@ -162,8 +162,8 @@
 
 <div class="container py-8">
   <div class="flex items-center justify-between mb-8">
-    <h1 class="text-3xl font-bold text-[#8B4513]">My Books</h1>    
-    <Button class="bg-[#8B4513] hover:bg-[#6d3710]" on:click={goToAddBook}>
+    <h1 class="text-3xl font-bold text-[#2C4044]">My Books</h1>    
+    <Button class="bg-[#E6A04A] hover:bg-[#d08f3f]" on:click={goToAddBook}>
       <Plus class="mr-2 h-4 w-4" />
       Add Book
     </Button>
@@ -183,11 +183,11 @@
       
       <Card>
         <CardContent class="p-4">
-          <h3 class="font-medium mb-3">Categories</h3>
+          <h3 class="font-medium mb-3 text-[#2C4044]">Categories</h3>
           <div class="space-y-1">
             {#each categories as category}
               <button
-                class="w-full flex items-center justify-between py-2 px-3 rounded-md text-sm hover:bg-[#F5F5DC] transition-colors {selectedCategory === category.name ? 'bg-[#F5F5DC] text-[#8B4513] font-medium' : 'text-muted-foreground'}"
+                class="w-full flex items-center justify-between py-2 px-3 rounded-md text-sm hover:bg-[#DDE0B6] transition-colors {selectedCategory === category.name ? 'bg-[#DDE0B6] text-[#2C4044] font-medium' : 'text-muted-foreground'}"
                 on:click={() => handleCategorySelect(category.name)}
               >
                 <span>{category.name}</span>
@@ -200,21 +200,21 @@
       
       <Card>
         <CardContent class="p-4">
-          <h3 class="font-medium mb-3">Reading Status</h3>
+          <h3 class="font-medium mb-3 text-[#2C4044]">Reading Status</h3>
           <div class="space-y-1">
-            <button class="w-full flex items-center justify-between py-2 px-3 rounded-md text-sm hover:bg-[#F5F5DC] transition-colors">
+            <button class="w-full flex items-center justify-between py-2 px-3 rounded-md text-sm hover:bg-[#DDE0B6] transition-colors">
               <span>Currently Reading</span>
               <span class="text-xs bg-muted px-2 py-0.5 rounded-full">
                 {books.filter(b => b.progress > 0 && b.progress < 100).length}
               </span>
             </button>
-            <button class="w-full flex items-center justify-between py-2 px-3 rounded-md text-sm hover:bg-[#F5F5DC] transition-colors">
+            <button class="w-full flex items-center justify-between py-2 px-3 rounded-md text-sm hover:bg-[#DDE0B6] transition-colors">
               <span>Completed</span>
               <span class="text-xs bg-muted px-2 py-0.5 rounded-full">
                 {books.filter(b => b.progress === 100).length}
               </span>
             </button>
-            <button class="w-full flex items-center justify-between py-2 px-3 rounded-md text-sm hover:bg-[#F5F5DC] transition-colors">
+            <button class="w-full flex items-center justify-between py-2 px-3 rounded-md text-sm hover:bg-[#DDE0B6] transition-colors">
               <span>Not Started</span>
               <span class="text-xs bg-muted px-2 py-0.5 rounded-full">
                 {books.filter(b => b.progress === 0).length}
@@ -226,13 +226,13 @@
       
       <Card>
         <CardContent class="p-4">
-          <h3 class="font-medium mb-3">Rating</h3>
+          <h3 class="font-medium mb-3 text-[#2C4044]">Rating</h3>
           <div class="space-y-1">
             {#each [5, 4, 3, 2, 1] as rating}
-              <button class="w-full flex items-center justify-between py-2 px-3 rounded-md text-sm hover:bg-[#F5F5DC] transition-colors">
+              <button class="w-full flex items-center justify-between py-2 px-3 rounded-md text-sm hover:bg-[#DDE0B6] transition-colors">
                 <div class="flex items-center">
                   {#each Array(rating) as _, i}
-                    <Star class="h-4 w-4 fill-current text-[#8B4513]" />
+                    <Star class="h-4 w-4 fill-current text-[#E6A04A]" />
                   {/each}
                   {#each Array(5 - rating) as _, i}
                     <Star class="h-4 w-4 text-muted-foreground" />

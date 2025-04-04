@@ -1,11 +1,23 @@
 <script>
     import { Plus, Search, Tag, MoreHorizontal, Trash2, Edit2, BookOpen } from 'lucide-svelte';
-    import { Button } from '$lib/components/ui/button';
-    import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
-    import { Input } from '$lib/components/ui/input';
-    import { Label } from '$lib/components/ui/label';
-    import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '$lib/components/ui/dialog';
-    import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '$lib/components/ui/dropdown-menu';
+    import Button from '$lib/components/ui/button/Button.svelte';
+    import Card from '$lib/components/ui/card/Card.svelte';
+    import CardContent from '$lib/components/ui/card/CardContent.svelte';
+    import CardHeader from '$lib/components/ui/card/CardHeader.svelte';
+    import CardTitle from '$lib/components/ui/card/CardTitle.svelte';
+    import Input from '$lib/components/ui/input/Input.svelte';
+    import Label from '$lib/components/ui/label/Label.svelte';
+    import Dialog from '$lib/components/ui/dialog/Dialog.svelte';
+    import DialogContent from '$lib/components/ui/dialog/DialogContent.svelte';
+    import DialogDescription from '$lib/components/ui/dialog/DialogDescription.svelte';
+    import DialogFooter from '$lib/components/ui/dialog/DialogFooter.svelte';
+    import DialogHeader from '$lib/components/ui/dialog/DialogHeader.svelte';
+    import DialogTitle from '$lib/components/ui/dialog/DialogTitle.svelte';
+    import DialogTrigger from '$lib/components/ui/dialog/DialogTrigger.svelte';
+    import DropdownMenu from '$lib/components/ui/dropdown-menu/DropdownMenu.svelte';
+    import DropdownMenuContent from '$lib/components/ui/dropdown-menu/DropdownMenuContent.svelte';
+    import DropdownMenuItem from '$lib/components/ui/dropdown-menu/DropdownMenuItem.svelte';
+    import DropdownMenuTrigger from '$lib/components/ui/dropdown-menu/DropdownMenuTrigger.svelte';
     
     // Mock data for demonstration
     let categories = [
@@ -121,5 +133,3 @@
       {/each}
     </div>
   </div>
-  
-  

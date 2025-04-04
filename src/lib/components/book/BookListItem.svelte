@@ -23,7 +23,7 @@
     <Card class="hover:shadow-md transition-shadow">
       <CardContent class="p-0">
         <div class="flex items-start p-4">
-          <div class="relative w-16 h-24 bg-[#F5F5DC] flex-shrink-0">
+          <div class="relative w-16 h-24 bg-[#DDE0B6] flex-shrink-0">
             <img
               src={book.cover || "/placeholder.svg"}
               alt={book.title}
@@ -34,7 +34,7 @@
           <div class="ml-4 flex-1 min-w-0">
             <div class="flex justify-between items-start">
               <div>
-                <h3 class="font-semibold text-lg line-clamp-1">{book.title}</h3>
+                <h3 class="font-semibold text-lg line-clamp-1 text-[#2C4044]">{book.title}</h3>
                 <p class="text-sm text-muted-foreground">{book.author}</p>
               </div>
               
@@ -55,7 +55,7 @@
             </div>
             
             <div class="flex items-center mt-1 text-sm">
-              <span class="inline-flex items-center rounded-full bg-[#F5F5DC]/50 px-2 py-0.5 text-xs font-medium text-[#8B4513]">
+              <span class="inline-flex items-center rounded-full bg-[#DDE0B6]/50 px-2 py-0.5 text-xs font-medium text-[#2C4044]">
                 {book.category}
               </span>
               <span class="mx-2 text-muted-foreground">•</span>
@@ -65,7 +65,7 @@
             <div class="flex items-center justify-between mt-3">
               <div class="flex items-center">
                 {#each Array(5) as _, i}
-                  <Star class="h-4 w-4 {i < book.rating ? 'fill-current text-[#8B4513]' : 'text-muted-foreground'}" />
+                  <Star class="h-4 w-4 {i < book.rating ? 'fill-current text-[#E6A04A]' : 'text-muted-foreground'}" />
                 {/each}
               </div>
               
@@ -73,7 +73,7 @@
                 <div class="text-sm text-muted-foreground">
                   {book.currentPage} / {book.totalPages}
                 </div>
-                <CircularProgress value={book.progress} size={32} />
+                <CircularProgress value={book.progress} size={32} strokeColor="#2C868E" />
               </div>
             </div>
           </div>

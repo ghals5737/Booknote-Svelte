@@ -1,14 +1,28 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import { cn } from "$lib/utils/utils.js";
+  import type { Writable, Readable } from "svelte/store";
 
   let className = "";
   export { className as class };
   export let value: string;
   export let disabled = false;
 
-  const { registerTab } = getContext("tabs");
+  interface TabsContext {
+    activeTab: Writable<string>;
+    registerTab: (tabValue: string) => {
+      isActive: Readable<boolean>;
+    };
+  }
+
+  const { registerTab, activeTab } = getContext<TabsContext>("tabs");
   const { isActive } = registerTab(value);
+  
+  function handleClick() {
+    if (!disabled) {
+      $activeTab = value;
+    }
+  }
 </script>
 
 <button
@@ -20,6 +34,7 @@
   )}
   {disabled}
   aria-selected={$isActive}
+  on:click={handleClick}
   {...$$restProps}
 >
   <slot />

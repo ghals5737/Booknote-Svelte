@@ -4,46 +4,56 @@
 @layer base {
     :root {
         --background: 0 0% 100%;
-        --foreground: 20 14.3% 4.1%;
+        --foreground: 200 20% 22%;
         --card: 0 0% 100%;
-        --card-foreground: 20 14.3% 4.1%;
+        --card-foreground: 200 20% 22%;
         --popover: 0 0% 100%;
-        --popover-foreground: 20 14.3% 4.1%;
-        --primary: 24 33% 31%;
-        --primary-foreground: 60 9.1% 97.8%;
-        --secondary: 60 33% 96%;
-        --secondary-foreground: 24 9.8% 10%;
+        --popover-foreground: 200 20% 22%;
+        --primary: 35 75% 60%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 60 20% 80%;
+        --secondary-foreground: 200 20% 22%;
         --muted: 60 4.8% 95.9%;
         --muted-foreground: 25 5.3% 44.7%;
-        --accent: 60 4.8% 95.9%;
-        --accent-foreground: 24 9.8% 10%;
+        --accent: 175 50% 70%;
+        --accent-foreground: 200 20% 22%;
         --destructive: 0 84.2% 60.2%;
         --destructive-foreground: 60 9.1% 97.8%;
         --border: 20 5.9% 90%;
         --input: 20 5.9% 90%;
-        --ring: 24 33% 31%;
+        --ring: 35 75% 60%;
         --radius: 0.5rem;
     }
 
     .dark {
-        --background: 20 14.3% 4.1%;
+        --background: 200 20% 22%;
         --foreground: 60 9.1% 97.8%;
-        --card: 20 14.3% 4.1%;
+        --card: 200 20% 22%;
         --card-foreground: 60 9.1% 97.8%;
-        --popover: 20 14.3% 4.1%;
+        --popover: 200 20% 22%;
         --popover-foreground: 60 9.1% 97.8%;
-        --primary: 60 9.1% 97.8%;
-        --primary-foreground: 24 9.8% 10%;
-        --secondary: 12 6.5% 15.1%;
+        --primary: 35 75% 60%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 180 20% 30%;
         --secondary-foreground: 60 9.1% 97.8%;
         --muted: 12 6.5% 15.1%;
         --muted-foreground: 24 5.4% 63.9%;
-        --accent: 12 6.5% 15.1%;
+        --accent: 175 50% 70%;
         --accent-foreground: 60 9.1% 97.8%;
         --destructive: 0 62.8% 30.6%;
         --destructive-foreground: 60 9.1% 97.8%;
         --border: 12 6.5% 15.1%;
         --input: 12 6.5% 15.1%;
-        --ring: 24 5.7% 82.9%;
+        --ring: 35 75% 60%;
+    }
+}
+
+@layer components {
+    .container {
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        max-width: 80rem;
     }
 }

@@ -6,9 +6,6 @@
   let className = "";
   export { className as class };
   
-
-  export let asChild = false;
-  
   interface DropdownContext {
     isOpen: Writable<boolean>;
   }
@@ -20,20 +17,14 @@
   }
 </script>
 
-{#if asChild}
-  <div on:click={toggle}>
-    <slot />
-  </div>
-{:else}
-  <button
-    type="button"
-    class={cn(
-      "inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-medium",
-      className
-    )}
-    on:click={toggle}
-    {...$$restProps}
-  >
-    <slot />
-  </button>
-{/if} 
+<button
+  type="button"
+  class={cn(
+    "inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-medium",
+    className
+  )}
+  on:click={toggle}
+  {...$$restProps}
+>
+  <slot />
+</button> 

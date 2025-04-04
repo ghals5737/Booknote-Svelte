@@ -9,7 +9,7 @@
 	const navItems = [
 	  {
 		name: "Dashboard",
-		href: "/",
+		href: "/dashboard",
 		icon: "Home",
 	  },
 	  {
@@ -45,17 +45,17 @@
   
   <div class="flex min-h-screen flex-col">
 	<header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-	  <div class="container flex h-16 items-center">
+	  <div class="container mx-auto flex h-16 items-center">
 		<div class="mr-4 hidden md:flex">
 		  <a href="/" class="mr-6 flex items-center space-x-2">
-			<BookOpen class="h-6 w-6 text-[#8B4513]" />
-			<span class="font-bold text-xl text-[#8B4513]">BookNote</span>
+			<BookOpen class="h-6 w-6 text-[#E6A04A]" />
+			<span class="font-bold text-xl text-[#E6A04A]">BookNote</span>
 		  </a>
 		  <nav class="flex items-center space-x-6 text-sm font-medium">
 			{#each navItems as item}
 			  <a
 				href={item.href}
-				class="flex items-center text-sm font-medium transition-colors hover:text-[#2E8B57] {$page.url.pathname === item.href ? 'text-[#8B4513] font-semibold' : 'text-muted-foreground'}"
+				class="flex items-center text-sm font-medium transition-colors hover:text-[#2C868E] {$page.url.pathname === item.href ? 'text-[#E6A04A] font-semibold' : 'text-muted-foreground'}"
 			  >
 				<!-- {#await import(`lucide-svelte`) then module}
 					<svelte:component this={module[item.icon]} class="mr-2 h-4 w-4" />
@@ -72,8 +72,8 @@
 		</button>
 		
 		<a href="/" class="mr-6 flex items-center space-x-2 md:hidden">
-		  <BookOpen class="h-6 w-6 text-[#8B4513]" />
-		  <span class="font-bold text-xl text-[#8B4513]">BookNote</span>
+		  <BookOpen class="h-6 w-6 text-[#E6A04A]" />
+		  <span class="font-bold text-xl text-[#E6A04A]">BookNote</span>
 		</a>
 		
 		<div class="flex flex-1 items-center justify-end space-x-4">
@@ -98,14 +98,14 @@
 		  on:click|stopPropagation={() => {}}
 		>
 		  <a href="/" class="flex items-center space-x-2">
-			<BookOpen class="h-6 w-6 text-[#8B4513]" />
-			<span class="font-bold text-xl text-[#8B4513]">BookNote</span>
+			<BookOpen class="h-6 w-6 text-[#E6A04A]" />
+			<span class="font-bold text-xl text-[#E6A04A]">BookNote</span>
 		  </a>
 		  <nav class="mt-8 flex flex-col space-y-4">
 			{#each navItems as item}
 			  <a
 				href={item.href}
-				class="flex items-center py-2 text-base font-medium transition-colors hover:text-[#2E8B57] {$page.url.pathname === item.href ? 'text-[#8B4513] font-semibold' : 'text-muted-foreground'}"
+				class="flex items-center py-2 text-base font-medium transition-colors hover:text-[#2C868E] {$page.url.pathname === item.href ? 'text-[#E6A04A] font-semibold' : 'text-muted-foreground'}"
 				on:click={closeMenu}
 			  >
 				<!-- <svelte:component this={import(`lucide-svelte`).then(m => m[item.icon])} class="mr-3 h-5 w-5" /> -->
@@ -125,11 +125,22 @@
 <style lang="postcss">
 	@layer base {
 		* {
-			@apply border-[hsl(var(--border))];
+			border-color: hsl(var(--border));
 		}
 
 		:global(body) {
-			@apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))];
+			background-color: hsl(var(--background));
+			color: hsl(var(--foreground));
+		}
+	}
+
+	@layer components {
+		.container {
+			margin-left: auto;
+			margin-right: auto;
+			padding-left: 1rem;
+			padding-right: 1rem;
+			max-width: 80rem;
 		}
 	}
 </style>
