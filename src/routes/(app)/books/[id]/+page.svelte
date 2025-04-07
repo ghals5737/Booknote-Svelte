@@ -92,7 +92,7 @@
         <ArrowLeft class="h-5 w-5" />
       </Button>
     </a>
-    <h1 class="text-2xl font-bold ml-2 text-[#2C4044]">{book.title}</h1>
+    <h1 class="text-2xl font-bold ml-2 text-[#255DAA]">{book.title}</h1>
   </div>
   
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -101,7 +101,7 @@
       <Card>
         <CardContent class="p-6">
           <div class="flex flex-col items-center mb-6">
-            <div class="relative w-40 h-60 bg-[#DDE0B6] mb-4">
+            <div class="relative w-40 h-60 bg-[#FCE0D4] mb-4">
               <img
                 src={book.cover || "/placeholder.svg"}
                 alt={book.title}
@@ -111,7 +111,7 @@
             
             <div class="flex items-center justify-center mb-2">
               {#each Array(5) as _, i}
-                <Star class="h-5 w-5 {i < book.rating ? 'fill-current text-[#E6A04A]' : 'text-muted-foreground'}"/>
+                <Star class="h-5 w-5 {i < book.rating ? 'fill-current text-[#DE525E]' : 'text-muted-foreground'}"/>
               {/each}
             </div>
             
@@ -124,7 +124,7 @@
             </div>
             
             <div class="flex gap-2 w-full">
-              <Button class="flex-1 bg-[#E6A04A] hover:bg-[#d08f3f] text-white">
+              <Button class="flex-1 bg-[#54A6E1] hover:bg-[#255DAA] text-white">
                 Update Progress
               </Button>
               <Button variant="outline" size="icon">
@@ -142,7 +142,7 @@
             <div>
               <h3 class="text-sm font-medium text-muted-foreground mb-1">Category</h3>
               <div class="flex">
-                <span class="inline-flex items-center rounded-full bg-[#DDE0B6]/50 px-2.5 py-1 text-xs font-medium text-[#2C4044]">
+                <span class="inline-flex items-center rounded-full bg-[#D2EEFA]/50 px-2.5 py-1 text-xs font-medium text-[#255DAA]">
                   {book.category}
                 </span>
               </div>
@@ -178,7 +178,7 @@
             
             <!-- Reading Stats 섹션을 사이드바로 이동 -->
             <div class="pt-4 border-t">
-              <h3 class="text-sm font-medium text-[#2C4044] mb-3">Reading Stats</h3>
+              <h3 class="text-sm font-medium text-[#255DAA] mb-3">Reading Stats</h3>
               <div class="space-y-3">
                 <div class="flex items-center justify-between">
                   <span class="text-sm text-muted-foreground">Started Reading</span>
@@ -206,8 +206,8 @@
     <!-- 노트 섹션 -->
     <div class="lg:col-span-2">
       <div class="flex items-center justify-between mb-6">
-        <h2 class="text-xl font-semibold text-[#2C4044]">Notes ({bookNotes.length})</h2>
-        <Button class="bg-[#E6A04A] hover:bg-[#d08f3f]">
+        <h2 class="text-xl font-semibold text-[#255DAA]">Notes ({bookNotes.length})</h2>
+        <Button class="bg-[#54A6E1] hover:bg-[#255DAA]">
           <Plus class="mr-2 h-4 w-4" />
           Add Note
         </Button>
@@ -220,7 +220,7 @@
           <p class="text-muted-foreground mb-4">
             Start capturing your thoughts and insights about this book
           </p>
-          <Button class="bg-[#E6A04A] hover:bg-[#d08f3f]">
+          <Button class="bg-[#54A6E1] hover:bg-[#255DAA]">
             <Plus class="mr-2 h-4 w-4" />
             Create First Note
           </Button>
@@ -233,7 +233,7 @@
                 <div class="flex justify-between items-start" on:click={() => toggleNoteExpansion(note.id)}>
                   <div class="flex-1">
                     <div class="flex items-center">
-                      <CardTitle class="text-lg text-[#2C4044]">{note.title}</CardTitle>
+                      <CardTitle class="text-lg text-[#255DAA]">{note.title}</CardTitle>
                       <ChevronDown class="h-4 w-4 ml-2 text-muted-foreground transition-transform {expandedNoteId === note.id ? 'rotate-180' : ''}" />
                     </div>
                     <p class="text-sm text-muted-foreground mt-1">{note.excerpt}</p>

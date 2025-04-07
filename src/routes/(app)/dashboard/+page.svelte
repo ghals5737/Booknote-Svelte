@@ -67,10 +67,10 @@
   </script>
   
   <div class="container py-8">
-    <h1 class="text-3xl font-bold mb-8 text-[#8B4513]">Dashboard</h1>
+    <!-- <h1 class="text-3xl font-bold mb-8 text-[#8B4513]">Dashboard</h1> -->
     
     <section class="mb-12">
-      <h2 class="text-2xl font-semibold mb-4 text-[#8B4513]">Recently Viewed Books</h2>
+      <h2 class="text-2xl font-semibold mb-4 text-[#255DAA]">Recently Viewed Books</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {#each recentBooks as book}
           <BookCard {book} />
@@ -80,12 +80,12 @@
     
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <section class="lg:col-span-2">
-        <h2 class="text-2xl font-semibold mb-4 text-[#8B4513]">Reading Statistics</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-[#255DAA]">Reading Statistics</h2>
         <ReadingStats stats={readingStats} />
       </section>
       
       <section>
-        <h2 class="text-2xl font-semibold mb-4 text-[#8B4513]">Recommended Categories</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-[#255DAA]">Recommended Categories</h2>
         <RecommendedCategories {categories} />
       </section>
     </div>

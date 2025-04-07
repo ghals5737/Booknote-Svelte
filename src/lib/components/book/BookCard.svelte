@@ -1,38 +1,38 @@
 <script lang="ts">
-    import { Star } from "lucide-svelte";
-    import CircularProgress from "../ui/progress/CircularProgress.svelte";
+    import { BookOpen } from 'lucide-svelte';
+    import Card from '$lib/components/ui/card/Card.svelte';
+    import CardContent from '$lib/components/ui/card/CardContent.svelte';
+    import CircularProgress from '$lib/components/ui/progress/CircularProgress.svelte';
     
     export let book;
   </script>
   
-<a href={`/books/${book.id}`} class="block h-full">
-  <div class="overflow-hidden transition-all duration-200 hover:shadow-md h-full flex flex-col rounded-lg border bg-card text-card-foreground shadow-sm">
-    <div class="relative pt-[60%]">
-      <img
-        src={book.cover || "/placeholder.svg"}
-        alt={book.title}
-        class="absolute inset-0 object-cover w-full h-full p-2 rounded-lg"
-      />
-    </div>
-    <div class="p-4 flex flex-col flex-grow">
-      <h3 class="font-semibold text-lg line-clamp-1 mb-1 text-[#2C4044]">{book.title}</h3>
-      <p class="text-sm text-muted-foreground mb-2">{book.author}</p>
-      
-      <div class="flex items-center mb-3">
-        {#each Array(5) as _, i}
-          <Star class="h-3 w-3 {i < book.rating ? 'fill-current text-[#E6A04A]' : 'text-muted-foreground'}" />
-        {/each}
-      </div>
-      
-      <div class="mt-auto flex items-center justify-between">
-        <div class="text-sm">
-          <p class="text-muted-foreground">
-            {book.currentPage} / {book.totalPages}
-          </p>
+<a href={`/books/${book.id}`}>
+  <Card class="h-full hover:shadow-md transition-shadow border-1 border-gray-300">
+    <CardContent class="p-4">
+      <div class="flex flex-col items-center">
+        <div class="relative w-32 h-48 bg-[#FCE0D4] mb-3">
+          <img
+            src={book.cover || "/placeholder.svg"}
+            alt={book.title}
+            class="absolute inset-0 object-cover w-full h-full"
+          />
         </div>
-        <CircularProgress value={book.progress} size={36} strokeColor="#2C868E" />
+        
+        <div class="text-center mb-2">
+          <h3 class="font-bold line-clamp-2">{book.title}</h3>
+          <p class="text-sm text-muted-foreground">{book.author}</p>
+        </div>
+        
+        <div class="flex items-center justify-center gap-2 w-full">
+          <CircularProgress value={book.progress} size={36}/>
+          <div class="text-xs">
+            <p class="font-medium">{book.progress}%</p>
+            <p class="text-muted-foreground">{book.currentPage}/{book.totalPages}</p>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </CardContent>
+  </Card>
 </a>
   

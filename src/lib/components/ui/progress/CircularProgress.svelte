@@ -2,7 +2,7 @@
     export let value = 0;
     export let size = 40;
     export let strokeWidth = 4;
-    export let strokeColor = "#2C868E";
+    export let strokeColor = "#54A6E1";
     
     $: radius = (size - strokeWidth) / 2;
     $: circumference = radius * 2 * Math.PI;
@@ -16,7 +16,7 @@
         cy={size / 2}
         r={radius}
         fill="transparent"
-        stroke="#e6e6e6"
+        stroke="#A3D8F1"
         stroke-width={strokeWidth}
       />
       <circle

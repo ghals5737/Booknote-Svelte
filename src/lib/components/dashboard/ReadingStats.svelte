@@ -48,51 +48,48 @@
     });
   </script>
   
-  <Card>
-    <CardHeader>
-      <CardTitle>Reading Overview</CardTitle>
-    </CardHeader>
+  <Card class="border-1 border-gray-300">    
     <CardContent>
       <Tabs value="summary">
-        <TabsList class="grid w-full grid-cols-2">
-          <TabsTrigger value="summary">Summary</TabsTrigger>
-          <TabsTrigger value="progress">Progress</TabsTrigger>
+        <TabsList class="mt-2 grid w-full grid-cols-2">
+          <TabsTrigger value="summary" class="font-semibold">Summary</TabsTrigger>
+          <TabsTrigger value="progress" class="font-semibold">Progress</TabsTrigger>
         </TabsList>
         <TabsContent value="summary" class="space-y-4">
           <div class="grid grid-cols-2 gap-4 mt-4">
-            <div class="flex items-center gap-2 p-4 border rounded-lg">
-              <div class="p-2 rounded-full bg-[#F5F5DC]">
-                <BookOpen class="h-5 w-5 text-[#8B4513]" />
+            <div class="flex items-center gap-2 p-4 border border-gray-300 rounded-lg">
+              <div class="p-2 rounded-full bg-[#D2EEFA]">
+                <BookOpen class="h-5 w-5 text-[#255DAA]" />
               </div>
               <div>
-                <p class="text-sm text-muted-foreground">Books Read</p>
+                <p class="text-sm text-muted-foreground font-semibold">Books Read</p>
                 <p class="text-2xl font-bold">{stats.booksRead}</p>
               </div>
             </div>
-            <div class="flex items-center gap-2 p-4 border rounded-lg">
-              <div class="p-2 rounded-full bg-[#F5F5DC]">
-                <FileText class="h-5 w-5 text-[#8B4513]" />
+            <div class="flex items-center gap-2 p-4 border border-gray-300 rounded-lg">
+              <div class="p-2 rounded-full bg-[#D2EEFA]">
+                <FileText class="h-5 w-5 text-[#255DAA]" />
               </div>
               <div>
-                <p class="text-sm text-muted-foreground">Pages Read</p>
+                <p class="text-sm text-muted-foreground font-semibold">Pages Read</p>
                 <p class="text-2xl font-bold">{stats.pagesRead}</p>
               </div>
             </div>
-            <div class="flex items-center gap-2 p-4 border rounded-lg">
-              <div class="p-2 rounded-full bg-[#F5F5DC]">
-                <Star class="h-5 w-5 text-[#8B4513]" />
+            <div class="flex items-center gap-2 p-4 border border-gray-300 rounded-lg">
+              <div class="p-2 rounded-full bg-[#D2EEFA]">
+                <Star class="h-5 w-5 text-[#255DAA]" />
               </div>
               <div>
-                <p class="text-sm text-muted-foreground">Avg. Rating</p>
+                <p class="text-sm text-muted-foreground font-semibold">Avg. Rating</p>
                 <p class="text-2xl font-bold">{stats.averageRating}</p>
               </div>
             </div>
-            <div class="flex items-center gap-2 p-4 border rounded-lg">
-              <div class="p-2 rounded-full bg-[#F5F5DC]">
-                <Clock class="h-5 w-5 text-[#8B4513]" />
+            <div class="flex items-center gap-2 p-4 border border-gray-300 rounded-lg">
+              <div class="p-2 rounded-full bg-[#D2EEFA]">
+                <Clock class="h-5 w-5 text-[#255DAA]" />
               </div>
               <div>
-                <p class="text-sm text-muted-foreground">Reading Time</p>
+                <p class="text-sm text-muted-foreground font-semibold">Reading Time</p>
                 <p class="text-2xl font-bold">{stats.readingTime}h</p>
               </div>
             </div>

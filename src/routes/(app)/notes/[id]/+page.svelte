@@ -34,8 +34,7 @@
   ## Analysis
   Gatsby's tragic flaw is his inability to accept that the past cannot be recreated. His idealization of Daisy and their relationship leads to his downfall.
     `;
-  
-    // Mock book data
+
     const book = {
       title: "The Great Gatsby",
       author: "F. Scott Fitzgerald",
@@ -45,10 +44,9 @@
     let markdownContent;
     
     onMount(async () => {
-      // In a real app, you'd use a Svelte-compatible markdown library
-      // This is a simplified placeholder
       markdownContent = content;
     });
+    
   </script>
   
   <div class="container py-8">

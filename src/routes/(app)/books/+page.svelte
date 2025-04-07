@@ -161,8 +161,7 @@
 </script>
 
 <div class="container py-8">
-  <div class="flex items-center justify-between mb-8">
-    <h1 class="text-3xl font-bold text-[#2C4044]">My Books</h1>    
+  <div class="flex items-center justify-between mb-8">    
     <Button class="bg-[#E6A04A] hover:bg-[#d08f3f]" on:click={goToAddBook}>
       <Plus class="mr-2 h-4 w-4" />
       Add Book

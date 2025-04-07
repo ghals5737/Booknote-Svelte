@@ -8,20 +8,19 @@
     export let categories;
   </script>
   
-  <Card>
-    <CardHeader>
-      <CardTitle>Categories</CardTitle>
+  <Card class="border-1 border-gray-300">
+    <CardHeader>      
     </CardHeader>
     <CardContent>
       <div class="space-y-4">
         {#each categories as category}
           <a 
             href={`/categories/${category.id}`}
-            class="flex items-center justify-between p-3 rounded-lg border hover:bg-[#F5F5DC] transition-colors"
+            class="flex items-center justify-between p-3 rounded-lg border border-gray-300 hover:bg-[#D2EEFA] transition-colors"
           >
             <div class="flex items-center gap-3">
-              <div class="p-2 rounded-full bg-[#F5F5DC]">
-                <Tag class="h-4 w-4 text-[#8B4513]" />
+              <div class="p-2 rounded-full bg-[#D2EEFA]">
+                <Tag class="h-4 w-4 text-[#255DAA]" />
               </div>
               <span>{category.name}</span>
             </div>
