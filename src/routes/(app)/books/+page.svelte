@@ -162,18 +162,15 @@
 
 <div class="container py-8">
   <div class="flex items-center justify-between mb-8">    
-    <Button class="bg-[#E6A04A] hover:bg-[#d08f3f]" on:click={goToAddBook}>
-      <Plus class="mr-2 h-4 w-4" />
-      Add Book
-    </Button>
+    
   </div>
   
   <div class="flex flex-col md:flex-row gap-6">
     <div class="w-full md:w-64 space-y-4">
-      <div class="relative">
-        <Search class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-        <Input
-          type="search"
+      <div class="relative">        
+          <Search class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="search"
           placeholder="Search books..."
           class="pl-8"
           bind:value={searchQuery}
@@ -267,9 +264,7 @@
           <span class="text-sm text-muted-foreground">
             {filteredBooks.length} {filteredBooks.length === 1 ? 'book' : 'books'}
           </span>
-        </div>
-        
-        <div class="flex items-center gap-2">
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" class="flex items-center">
@@ -300,6 +295,13 @@
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+        
+        <div class="flex items-center gap-2">
+          <Button class="bg-[#A3D8F1] hover:bg-[#54A6E1]" on:click={goToAddBook}>
+            <Plus class="mr-2 h-4 w-4" />
+              Add Book
+            </Button>         
+        </div>        
       </div>
       
       {#if viewMode === "grid"}

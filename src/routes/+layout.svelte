@@ -48,14 +48,13 @@
 	  <div class="container mx-auto flex h-16 items-center">
 		<div class="mr-4 hidden md:flex">
 		  <a href="/" class="mr-6 flex items-center space-x-2">
-			<BookOpen class="h-6 w-6 text-[#54A6E1]" />
-			<span class="font-bold text-xl text-[#54A6E1]">BookNote</span>
+			<span class="font-bold text-xl text-[#00ADB5]">BookNote</span>
 		  </a>
 		  <nav class="flex items-center space-x-6 text-sm font-medium">
 			{#each navItems as item}
 			  <a
 				href={item.href}
-				class="flex items-center text-sm font-semibold transition-colors hover:text-[#54A6E1] {$page.url.pathname === item.href ? 'text-[#54A6E1] font-semibold' : 'text-muted-foreground'}"
+				class="flex items-center text-sm font-semibold transition-colors hover:text-[#222831] {$page.url.pathname === item.href ? 'text-[#00ADB5] font-semibold' : 'text-[#393E46]'}"
 			  >
 				<!-- {#await import(`lucide-svelte`) then module}
 					<svelte:component this={module[item.icon]} class="mr-2 h-4 w-4" />

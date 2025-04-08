@@ -20,15 +20,16 @@
         </div>
         
         <div class="text-center mb-2">
-          <h3 class="font-bold line-clamp-2">{book.title}</h3>
-          <p class="text-sm text-muted-foreground">{book.author}</p>
+          <h3 class="font-bold line-clamp-2 text-[#222831]">{book.title}</h3>
+          <p class="text-sm text-muted-foreground text-[#393E46]">{book.author}</p>
         </div>
         
         <div class="flex items-center justify-center gap-2 w-full">
           <CircularProgress value={book.progress} size={36}/>
           <div class="text-xs">
-            <p class="font-medium">{book.progress}%</p>
-            <p class="text-muted-foreground">{book.currentPage}/{book.totalPages}</p>
+            <p class="font-medium text-[#222831]">{book.progress}%</p>
+            <p class="text-muted-foreground text-[#393E46]">{book.currentPage}/</p>
+            <p class="block text-[#393E46]">{book.totalPages}</p>
           </div>
         </div>
       </div>
