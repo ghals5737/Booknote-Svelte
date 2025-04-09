@@ -59,37 +59,37 @@
           <div class="grid grid-cols-2 gap-4 mt-4">
             <div class="flex items-center gap-2 p-4 border border-gray-300 rounded-lg">
               <div class="p-2 rounded-full bg-[#D2EEFA]">
-                <BookOpen class="h-5 w-5 text-[#255DAA]" />
+                <BookOpen class="h-5 w-5 text-[#00ADB5]" />
               </div>
               <div>
-                <p class="text-sm text-muted-foreground font-semibold">Books Read</p>
+                <p class="text-sm text-muted-foreground font-semibold text-[#393E46]">Books Read</p>
                 <p class="text-2xl font-bold">{stats.booksRead}</p>
               </div>
             </div>
             <div class="flex items-center gap-2 p-4 border border-gray-300 rounded-lg">
               <div class="p-2 rounded-full bg-[#D2EEFA]">
-                <FileText class="h-5 w-5 text-[#255DAA]" />
+                <FileText class="h-5 w-5 text-[#00ADB5]" />
               </div>
               <div>
-                <p class="text-sm text-muted-foreground font-semibold">Pages Read</p>
+                <p class="text-sm text-muted-foreground font-semibold text-[#393E46]">Pages Read</p>
                 <p class="text-2xl font-bold">{stats.pagesRead}</p>
               </div>
             </div>
             <div class="flex items-center gap-2 p-4 border border-gray-300 rounded-lg">
               <div class="p-2 rounded-full bg-[#D2EEFA]">
-                <Star class="h-5 w-5 text-[#255DAA]" />
+                <Star class="h-5 w-5 text-[#00ADB5]" />
               </div>
               <div>
-                <p class="text-sm text-muted-foreground font-semibold">Avg. Rating</p>
+                <p class="text-sm text-muted-foreground font-semibold text-[#393E46]">Avg. Rating</p>
                 <p class="text-2xl font-bold">{stats.averageRating}</p>
               </div>
             </div>
             <div class="flex items-center gap-2 p-4 border border-gray-300 rounded-lg">
               <div class="p-2 rounded-full bg-[#D2EEFA]">
-                <Clock class="h-5 w-5 text-[#255DAA]" />
+                <Clock class="h-5 w-5 text-[#00ADB5]" />
               </div>
               <div>
-                <p class="text-sm text-muted-foreground font-semibold">Reading Time</p>
+                <p class="text-sm text-muted-foreground font-semibold text-[#393E46]">Reading Time</p>
                 <p class="text-2xl font-bold">{stats.readingTime}h</p>
               </div>
             </div>
