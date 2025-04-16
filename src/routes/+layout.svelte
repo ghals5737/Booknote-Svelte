@@ -1,37 +1,41 @@
 <script lang="ts">
 	import "../app.css";
 	import { page } from "$app/stores";
-	import { BookOpen, Menu, Search } from 'lucide-svelte';
+
+	import { Book, BookOpen, Home, Library, User } from 'lucide-svelte';
 	import { fly } from "svelte/transition";
-	
+	import { cn } from "$lib/utils/utils.js";
+	import Button from '$lib/components/ui/button/Button.svelte';
+	import DropdownMenu from '$lib/components/ui/dropdown-menu/DropdownMenu.svelte';
+	import DropdownMenuContent from '$lib/components/ui/dropdown-menu/DropdownMenuContent.svelte';
+	import DropdownMenuItem from '$lib/components/ui/dropdown-menu/DropdownMenuItem.svelte';
+	import DropdownMenuTrigger from '$lib/components/ui/dropdown-menu/DropdownMenuTrigger.svelte';
+
+	const pathname = $page.url.pathname;
+
 	let isMenuOpen = false;
 	
 	const navItems = [
-	  {
-		name: "Dashboard",
-		href: "/dashboard",
-		icon: "Home",
-	  },
-	  {
-		name: "My Books",
-		href: "/books",
-		icon: "BookOpen",
-	  },	  
-	  {
-		name: "Notes",
+		{
+		name: "홈",
+		href: "/home",
+		icon: Home,
+		},
+		{
+		name: "내 노트",
 		href: "/notes",
-		icon: "BookmarkPlus",
-	  },
-	  {
-		name: "Categories",
+		icon: BookOpen,
+		},
+		{
+		name: "카테고리",
 		href: "/categories",
-		icon: "Tag",
-	  },
-	  {
-		name: "Statistics",
-		href: "/statistics",
-		icon: "BarChart2",
-	  },
+		icon: Library,
+		},
+		{
+		name: "독서기록",
+		href: "/logs",
+		icon: Book,
+		},
 	];
 	
 	function toggleMenu() {
@@ -42,84 +46,68 @@
 	  isMenuOpen = false;
 	}
 </script>
-  
-  <div class="flex min-h-screen flex-col">
-	<header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-	  <div class="container mx-auto flex h-16 items-center">
-		<div class="mr-4 hidden md:flex">
-		  <a href="/" class="mr-6 flex items-center space-x-2">
-			<span class="font-bold text-xl text-[#00ADB5]">BookNote</span>
-		  </a>
-		  <nav class="flex items-center space-x-6 text-sm font-medium">
-			{#each navItems as item}
-			  <a
-				href={item.href}
-				class="flex items-center text-sm font-semibold transition-colors hover:text-[#222831] {$page.url.pathname === item.href ? 'text-[#00ADB5] font-semibold' : 'text-[#393E46]'}"
-			  >
-				<!-- {#await import(`lucide-svelte`) then module}
-					<svelte:component this={module[item.icon]} class="mr-2 h-4 w-4" />
-				{/await} -->				
-				{item.name}
-			  </a>
-			{/each}
-		  </nav>
-		</div>
-		
-		<button class="md:hidden mr-2" on:click={toggleMenu}>
-		  <Menu class="h-5 w-5" />
-		  <span class="sr-only">Toggle menu</span>
-		</button>
-		
-		<a href="/" class="mr-6 flex items-center space-x-2 md:hidden">
-		  <BookOpen class="h-6 w-6 text-[#54A6E1]" />
-		  <span class="font-bold text-xl text-[#54A6E1]">BookNote</span>
-		</a>
-		
-		<div class="flex flex-1 items-center justify-end space-x-4">
-		  <div class="w-full flex-1 md:w-auto md:flex-none">
-			<button class="ml-auto inline-flex h-9 w-9 items-center justify-center rounded-md border border-input bg-transparent px-3 py-2 text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-			  <Search class="h-4 w-4" />
-			  <span class="sr-only">Search</span>
-			</button>
+
+	<header class="sticky top-0 z-50 w-full border-b bg-background">
+		<div class="container flex h-16 items-center justify-between">
+		  <div class="flex items-center gap-6 md:gap-10">
+			<a href="/home" class="flex items-center space-x-2">
+			  <span class="text-2xl font-bold text-[#A02334]">북노트</span>
+			</a>
+			<nav class="hidden md:flex gap-6">
+			  {#each navItems as item}
+				<a				 
+				  href={item.href}
+				  class={cn(
+					"flex items-center text-sm font-bold transition-colors hover:text-[#A02334]",
+					pathname === item.href ? "text-[#A02334]" : "text-muted-foreground",
+				  )}
+				>
+				  {item.name}
+				</a>
+			  {/each}
+			</nav>
+		  </div>
+		  <div class="flex items-center gap-2">
+			<Button variant="default" class="hidden md:flex bg-[#A02334] hover:bg-[#8a1e2c] text-white text-sm font-bold">
+			  노트 작성하기
+			</Button>
+			<DropdownMenu>
+			  <DropdownMenuTrigger asChild>
+				<Button variant="ghost" size="icon" class="rounded-full" aria-label="프로필 메뉴">
+				  <User class="h-5 w-5" />
+				</Button>
+			  </DropdownMenuTrigger>
+			  <DropdownMenuContent align="end" class="border-none z-50 bg-white">
+				<DropdownMenuItem asChild class="text-sm font-bold hover:bg-[#FFAD60]">
+				  <a href="/profile">프로필</a>
+				</DropdownMenuItem>
+				<DropdownMenuItem asChild class="text-sm font-bold hover:hover:bg-[#FFAD60]">
+				  <a href="/settings">설정</a>
+				</DropdownMenuItem>
+				<DropdownMenuItem class="text-sm font-bold hover:hover:bg-[#FFAD60]">로그아웃</DropdownMenuItem>
+			  </DropdownMenuContent>
+			</DropdownMenu>
 		  </div>
 		</div>
-	  </div>
-	</header>
+		<nav class="md:hidden flex overflow-auto border-t">		  
+		{#each navItems as item}
+			<a
+			  href={item.href}
+			  class={cn(
+				"flex flex-1 flex-col items-center justify-center py-2 text-xs font-medium transition-colors hover:text-[#A02334]",
+				pathname === item.href ? "text-[#A02334]" : "text-muted-foreground",
+			  )}
+			>
+			  <item.icon class="h-5 w-5" />
+			  <span>{item.name}</span>
+			</a>
+		{/each}
+		</nav>
+	  </header>
 	
-	{#if isMenuOpen}
-	  <div
-		class="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm md:hidden"
-		on:click={closeMenu}
-		transition:fly={{ x: -100, duration: 250 }}
-	  >
-		<div
-		  class="fixed inset-y-0 left-0 z-50 w-3/4 max-w-xs bg-background p-6 shadow-lg"
-		  on:click|stopPropagation={() => {}}
-		>
-		  <a href="/" class="flex items-center space-x-2">
-			<BookOpen class="h-6 w-6 text-[#54A6E1]" />
-			<span class="font-bold text-xl text-[#54A6E1]">BookNote</span>
-		  </a>
-		  <nav class="mt-8 flex flex-col space-y-4">
-			{#each navItems as item}
-			  <a
-				href={item.href}
-				class="flex items-center py-2 text-base font-medium transition-colors hover:text-[#54A6E1] {$page.url.pathname === item.href ? 'text-[#54A6E1] font-semibold' : 'text-muted-foreground'}"
-				on:click={closeMenu}
-			  >
-				<!-- <svelte:component this={import(`lucide-svelte`).then(m => m[item.icon])} class="mr-3 h-5 w-5" /> -->
-				{item.name}
-			  </a>
-			{/each}
-		  </nav>
-		</div>
-	  </div>
-	{/if}
-	
-	<main class="flex-1">
+	<main class="min-h-screen bg-background">
 	  <slot />
 	</main>
-  </div>
 
 <style lang="postcss">
 	@layer base {
