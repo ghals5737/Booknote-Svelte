@@ -1,9 +1,9 @@
 <script lang="ts">
     import Button from '$lib/components/ui/button/Button.svelte';
     import { ChevronRight, Book, BookOpen, Plus } from 'lucide-svelte';
-    import { Separator } from '$lib/components/ui/separator/Separator.svelte';
-    import { StatsCard } from '$lib/components/ui/stats-card/StatsCard.svelte';
-    import { RecentBookCard } from '$lib/components/ui/recent-book-card/RecentBookCard.svelte';
+    import Separator from '$lib/components/ui/separator/Separator.svelte';
+    import StatsCard from '$lib/components/stat-card/StatsCard.svelte'
+    import RecentBookCard from '$lib/components/book/RecentBookCard.svelte';
 </script>
 
 <div class="container py-6 space-y-8">
@@ -21,23 +21,26 @@
         <RecentBookCard
           title="사피엔스"
           author="유발 하라리"
-          coverUrl="/placeholder.svg?height=200&width=150"
+          coverUrl="https://shopping-phinf.pstatic.net/main_3244103/32441031070.20231011075212.jpg"
           lastUpdated="2023년 4월 12일"
           noteCount={5}
+          isFavorite={true}
         />
         <RecentBookCard
           title="아몬드"
           author="손원평"
-          coverUrl="/placeholder.svg?height=200&width=150"
+          coverUrl="https://shopping-phinf.pstatic.net/main_3244103/32441031070.20231011075212.jpg"
           lastUpdated="2023년 4월 10일"
           noteCount={3}
+          isFavorite={false}
         />
         <RecentBookCard
           title="달러구트 꿈 백화점"
           author="이미예"
-          coverUrl="/placeholder.svg?height=200&width=150"
+          coverUrl="https://shopping-phinf.pstatic.net/main_3244103/32441031070.20231011075212.jpg"
           lastUpdated="2023년 4월 5일"
           noteCount={2}
+          isFavorite={false}
         />
       </div>
     </section>

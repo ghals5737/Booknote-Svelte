@@ -50,7 +50,7 @@ const config: Config= {
 
                 ,
                 muted: {
-                    DEFAULT: "hsl(var(--muted))",
+                    DEFAULT: "#EAEAEA",
                         foreground: "hsl(var(--muted-foreground))",
                 }
 
