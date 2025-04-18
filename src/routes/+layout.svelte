@@ -22,6 +22,11 @@
 		icon: Home,
 		},
 		{
+		name: "내서제",
+		href: "/books",
+		icon: Book,
+		},
+		{
 		name: "내 노트",
 		href: "/notes",
 		icon: BookOpen,
