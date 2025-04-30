@@ -15,7 +15,7 @@
     export let icon: Icon;
 </script>
 
-<Card class={cn("", className)}>
+<Card class={cn("border border-[#F7F7F7]", className)}>
     <CardHeader class="flex flex-row items-center justify-between pb-2">
       <CardTitle class="text-sm font-medium">{title}</CardTitle>
       <icon class="h-4 w-4 text-muted-foreground" />

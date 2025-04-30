@@ -10,6 +10,7 @@
 	import DropdownMenuContent from '$lib/components/ui/dropdown-menu/DropdownMenuContent.svelte';
 	import DropdownMenuItem from '$lib/components/ui/dropdown-menu/DropdownMenuItem.svelte';
 	import DropdownMenuTrigger from '$lib/components/ui/dropdown-menu/DropdownMenuTrigger.svelte';
+	import { goto } from "$app/navigation";
 
 	const pathname = $page.url.pathname;
 
@@ -51,20 +52,20 @@
 	  isMenuOpen = false;
 	}
 </script>
-
+<div class="flex flex-col justify-center items-center">
 	<header class="sticky top-0 z-50 w-full border-b bg-background">
-		<div class="container flex h-16 items-center justify-between">
+		<div class="container mx-auto flex h-16 items-center justify-between px-4">
 		  <div class="flex items-center gap-6 md:gap-10">
 			<a href="/home" class="flex items-center space-x-2">
-			  <span class="text-2xl font-bold text-[#A02334]">북노트</span>
+			  <span class="text-2xl font-bold text-theme-brown">북노트</span>
 			</a>
 			<nav class="hidden md:flex gap-6">
 			  {#each navItems as item}
 				<a				 
 				  href={item.href}
 				  class={cn(
-					"flex items-center text-sm font-bold transition-colors hover:text-[#A02334]",
-					pathname === item.href ? "text-[#A02334]" : "text-muted-foreground",
+					"flex items-center text-sm font-bold transition-colors hover:text-theme-brown",
+					pathname === item.href ? "text-theme-brown" : "text-muted-foreground",
 				  )}
 				>
 				  {item.name}
@@ -73,7 +74,11 @@
 			</nav>
 		  </div>
 		  <div class="flex items-center gap-2">
-			<Button variant="default" class="hidden md:flex bg-[#A02334] hover:bg-[#8a1e2c] text-white text-sm font-bold">
+			<Button
+				on:click={() => {
+					goto('/notes/create');
+				}}
+				variant="default" class="hidden md:flex bg-theme-brown hover:bg-theme-brown/90 text-white text-sm font-bold">
 			  노트 작성하기
 			</Button>
 			<DropdownMenu>
@@ -83,13 +88,13 @@
 				</Button>
 			  </DropdownMenuTrigger>
 			  <DropdownMenuContent align="end" class="border-none z-50 bg-white">
-				<DropdownMenuItem asChild class="text-sm font-bold hover:bg-[#FFAD60]">
+				<DropdownMenuItem asChild class="text-sm font-bold hover:bg-theme-gold">
 				  <a href="/profile">프로필</a>
 				</DropdownMenuItem>
-				<DropdownMenuItem asChild class="text-sm font-bold hover:hover:bg-[#FFAD60]">
+				<DropdownMenuItem asChild class="text-sm font-bold hover:hover:bg-theme-gold">
 				  <a href="/settings">설정</a>
 				</DropdownMenuItem>
-				<DropdownMenuItem class="text-sm font-bold hover:hover:bg-[#FFAD60]">로그아웃</DropdownMenuItem>
+				<DropdownMenuItem class="text-sm font-bold hover:hover:bg-theme-gold">로그아웃</DropdownMenuItem>
 			  </DropdownMenuContent>
 			</DropdownMenu>
 		  </div>
@@ -99,8 +104,8 @@
 			<a
 			  href={item.href}
 			  class={cn(
-				"flex flex-1 flex-col items-center justify-center py-2 text-xs font-medium transition-colors hover:text-[#A02334]",
-				pathname === item.href ? "text-[#A02334]" : "text-muted-foreground",
+				"flex flex-1 flex-col items-center justify-center py-2 text-xs font-medium transition-colors hover:text-theme-brown",
+				pathname === item.href ? "text-theme-brown" : "text-muted-foreground",
 			  )}
 			>
 			  <item.icon class="h-5 w-5" />
@@ -110,11 +115,13 @@
 		</nav>
 	  </header>
 	
-	<main class="min-h-screen bg-background">
-	  <slot />
+	<main class="w-full min-h-screen bg-background">
+	  <div class="container mx-auto px-4">
+		<slot />
+	  </div>
 	</main>
-
-<style lang="postcss">
+</div>
+<!-- <style lang="postcss">
 	@layer base {
 		* {
 			border-color: hsl(var(--border));
@@ -135,4 +142,4 @@
 			max-width: 80rem;
 		}
 	}
-</style>
+</style> -->

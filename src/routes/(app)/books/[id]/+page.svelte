@@ -1,281 +1,231 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { ArrowLeft, BookOpen, Edit, Plus, Star, Calendar, MoreHorizontal, ChevronDown } from 'lucide-svelte';
+  import { Heart, Save } from 'lucide-svelte';
   import { slide } from 'svelte/transition';
 
   import Button from '$lib/components/ui/button/Button.svelte';
-  import Card from '$lib/components/ui/card/Card.svelte';
-  import CardContent from '$lib/components/ui/card/CardContent.svelte';
-  import CardHeader from '$lib/components/ui/card/CardHeader.svelte';
-  import CardTitle from '$lib/components/ui/card/CardTitle.svelte';  
-  import DropdownMenu from '$lib/components/ui/dropdown-menu/DropdownMenu.svelte';
-  import DropdownMenuContent from '$lib/components/ui/dropdown-menu/DropdownMenuContent.svelte';
-  import DropdownMenuItem from '$lib/components/ui/dropdown-menu/DropdownMenuItem.svelte';
-  import DropdownMenuTrigger from '$lib/components/ui/dropdown-menu/DropdownMenuTrigger.svelte';
-  import CircularProgress from '$lib/components/ui/progress/CircularProgress.svelte';
+  import Tabs from '$lib/components/ui/tabs/Tabs.svelte';
+  import TabsContent from '$lib/components/ui/tabs/TabsContent.svelte';
+  import TabsList from '$lib/components/ui/tabs/TabsList.svelte';
+  import TabsTrigger from '$lib/components/ui/tabs/TabsTrigger.svelte';
+  import Textarea from '$lib/components/ui/textarea/Textarea.svelte';
+  import NoteCard from '$lib/components/note/NoteCard.svelte';
+  import CategoryTag from '$lib/components/category/CategoryTag.svelte';
+  import ReadingProgress from '$lib/components/book/ReadingProgress.svelte';
+  import Input  from '$lib/components/ui/input/Input.svelte';
+  import Label  from '$lib/components/ui/label/Label.svelte';
+  import { toast } from "$lib/components/ui/toast/index.js"
   
-  // 책 상세 정보 (실제로는 ID를 기반으로 데이터를 가져옴)
-  const bookId = $page.params.id;
+  const { id } = $page.params;
   
-  // Mock data for demonstration
-  const book = {
+  const bookData = {
     id: "1",
-    title: "The Great Gatsby",
-    author: "F. Scott Fitzgerald",
-    cover: "https://shopping-phinf.pstatic.net/main_3244103/32441031070.20231011075212.jpg",
-    progress: 75,
-    totalPages: 180,
-    currentPage: 135,
-    rating: 4,
-    category: "Fiction",
-    lastRead: "2023-04-15",
-    description: "The Great Gatsby is a 1925 novel by American writer F. Scott Fitzgerald. Set in the Jazz Age on Long Island, near New York City, the novel depicts first-person narrator Nick Carraway's interactions with mysterious millionaire Jay Gatsby and Gatsby's obsession to reunite with his former lover, Daisy Buchanan.",
-    publisher: "Scribner",
-    publishedDate: "1925-04-10",
-    isbn: "9780743273565",
-    language: "English",
-  };
-  
-  // 이 책에 관련된 노트 목록
-  const bookNotes = [
-    {
-      id: "1",
-      title: "Character Analysis: Jay Gatsby",
-      excerpt: "Gatsby's character represents the American Dream and its ultimate failure...",
-      content: "Gatsby's character represents the American Dream and its ultimate failure. Born into poverty, he amasses a fortune through questionable means, all in pursuit of winning back Daisy Buchanan, his first love. His wealth and lavish parties are merely a facade to impress Daisy, revealing the emptiness of materialism and the corruption of the American Dream. Despite his wealth, Gatsby remains emotionally stunted, unable to move past his idealized memory of Daisy from five years ago. His tragic flaw is his inability to accept that the past cannot be recreated, leading to his eventual downfall.",
-      date: "2023-04-15",
-      tags: ["character", "analysis", "symbolism"],
-    },
-    {
-      id: "2",
-      title: "Symbolism of the Green Light",
-      excerpt: "The green light at the end of Daisy's dock represents Gatsby's hopes and dreams...",
-      content: "The green light at the end of Daisy's dock represents Gatsby's hopes and dreams for the future. Throughout the novel, Gatsby stares at this light, which is visible from his mansion across the bay. It symbolizes his longing for Daisy and his belief that he can recapture the past. The green light also represents the broader American Dream—the idea that anyone can achieve success through hard work and determination. However, like Gatsby's dream of reuniting with Daisy, the green light is ultimately unattainable, representing the impossibility of fully realizing the American Dream.",
-      date: "2023-04-10",
-      tags: ["symbolism", "themes"],
-    },
-    {
-      id: "3",
-      title: "The Valley of Ashes",
-      excerpt: "The valley of ashes represents the moral and social decay hidden by the beautiful façades...",
-      content: "The valley of ashes represents the moral and social decay hidden by the beautiful façades of the wealthy. This desolate area, located between West Egg and New York City, is described as a 'fantastic farm where ashes grow like wheat into ridges and hills and grotesque gardens.' It symbolizes the consequences of the unbridled pursuit of wealth and the stark contrast between the lives of the rich and the poor. The valley of ashes is home to the Wilsons, whose lives are destroyed by the carelessness of the wealthy characters. The billboard of the eyes of Doctor T.J. Eckleburg overlooking the valley serves as a symbol of God's judgment on this moral decay, watching over the characters but unable to intervene.",
-      date: "2023-03-28",
-      tags: ["setting", "symbolism"],
-    },
-  ];
-  
-  // 날짜 포맷팅 함수
-  function formatDate(dateString: string) {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
+    title: "사피엔스",
+    subtitle: "유인원에서 사이보그까지, 인간 역사의 대담한 역사",
+    author: "유발 하라리",
+    publisher: "김영사",
+    publishedDate: "2015-11-24",
+    coverUrl: "/placeholder.svg?height=400&width=300",
+    isFavorite: true,
+    categories: ["인문", "역사", "과학"],
+    totalPages: 524,
+    currentPage: 312,
+    notes: [
+      {
+        id: "note1",
+        content:
+          "인류의 역사는 세 번의 혁명으로 나눌 수 있다: 인지 혁명, 농업 혁명, 과학 혁명. 각각의 혁명은 인류의 생활 방식과 사고방식을 완전히 바꿔놓았다.",
+        createdAt: "2023년 4월 12일",
+        categories: ["인문", "역사"],
+      },
+      {
+        id: "note2",
+        content:
+          "허구를 믿는 능력은 호모 사피엔스의 가장 독특하고 중요한 능력이다. 이것이 없었다면 대규모 협력이 불가능했을 것이다.",
+        createdAt: "2023년 4월 10일",
+        categories: ["인문"],
+      },
+      {
+        id: "note3",
+        content:
+          "농업 혁명은 인류 역사상 가장 큰 사기라고 할 수 있다. 농업으로 인해 더 많은 음식을 생산할 수 있게 되었지만, 그것이 더 나은 식단이나 더 많은 여가 시간으로 이어지지는 않았다.",
+        createdAt: "2023년 4월 5일",
+        categories: ["역사", "과학"],
+      },
+    ],
   }
-  
-  // 노트 상세 보기 상태 관리
-  let expandedNoteId: string | null = null;
-  
-  function toggleNoteExpansion(noteId: string) {
-    if (expandedNoteId === noteId) {
-      expandedNoteId = null;
-    } else {
-      expandedNoteId = noteId;
-    }
+
+  let activeTab = "notes"
+  let noteContent = ""
+  let selectedCategories: string[] = [] 
+  let currentPage = bookData.currentPage
+  let isUpdatingProgress = false
+
+  const toggleCategory = (category: string) => {
+    selectedCategories = selectedCategories.includes(category) ? selectedCategories.filter((c) => c !== category) : [...selectedCategories, category]
+  }
+
+  const handleSaveNote = () => {
+    if (!noteContent.trim()) return
+    // 실제 구현에서는 API 호출을 통해 노트를 저장해야 합니다
+    console.log("Saving note:", { content: noteContent, categories: selectedCategories })
+    noteContent = ""
+    selectedCategories = []
+  }
+
+  const handleUpdateProgress = () => {
+    // 실제 구현에서는 API 호출을 통해 진행률을 저장해야 합니다
+    console.log("Updating progress:", { currentPage })
+    toast({
+      title: "독서 진행률이 업데이트되었습니다",
+      description: `${currentPage}/${bookData.totalPages} 페이지 (${Math.round((currentPage / bookData.totalPages) * 100)}%)`,
+    })
+    isUpdatingProgress = false
+  }
+
+  // 독서 상태 결정
+  let readingStatus = "읽기 전"
+  if (currentPage >= bookData.totalPages) {
+    readingStatus = "완독"
+  } else if (currentPage > 0) {
+    readingStatus = "읽는 중"
   }
 </script>
 
-<div class="container py-8">
-  <div class="flex items-center mb-6">
-    <a href="/books">
-      <Button variant="ghost" size="icon">
-        <ArrowLeft class="h-5 w-5" />
-      </Button>
-    </a>
-    <h1 class="text-2xl font-bold ml-2 text-[#255DAA]">{book.title}</h1>
-  </div>
-  
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <!-- 책 정보 사이드바 -->
-    <div class="lg:col-span-1">
-      <Card>
-        <CardContent class="p-6">
-          <div class="flex flex-col items-center mb-6">
-            <div class="relative w-40 h-60 bg-[#FCE0D4] mb-4">
-              <img
-                src={book.cover || "/placeholder.svg"}
-                alt={book.title}
-                class="absolute inset-0 object-cover w-full h-full"
-              />
-            </div>
-            
-            <div class="flex items-center justify-center mb-2">
-              {#each Array(5) as _, i}
-                <Star class="h-5 w-5 {i < book.rating ? 'fill-current text-[#DE525E]' : 'text-muted-foreground'}"/>
-              {/each}
-            </div>
-            
-            <div class="flex items-center justify-center gap-2 mb-4">
-              <CircularProgress value={book.progress} size={48} />
-              <div class="text-sm">
-                <p class="font-medium">{book.progress}% Complete</p>
-                <p class="text-muted-foreground">{book.currentPage} of {book.totalPages} pages</p>
-              </div>
-            </div>
-            
-            <div class="flex gap-2 w-full">
-              <Button class="flex-1 bg-[#54A6E1] hover:bg-[#255DAA] text-white">
-                Update Progress
-              </Button>
-              <Button variant="outline" size="icon">
-                <Edit class="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-          
-          <div class="space-y-4">
-            <div>
-              <h3 class="text-sm font-medium text-muted-foreground mb-1">Author</h3>
-              <p>{book.author}</p>
-            </div>
-            
-            <div>
-              <h3 class="text-sm font-medium text-muted-foreground mb-1">Category</h3>
-              <div class="flex">
-                <span class="inline-flex items-center rounded-full bg-[#D2EEFA]/50 px-2.5 py-1 text-xs font-medium text-[#255DAA]">
-                  {book.category}
-                </span>
-              </div>
-            </div>
-            
-            <div>
-              <h3 class="text-sm font-medium text-muted-foreground mb-1">Last Read</h3>
-              <div class="flex items-center">
-                <Calendar class="h-4 w-4 mr-2 text-muted-foreground" />
-                <span>{formatDate(book.lastRead)}</span>
-              </div>
-            </div>
-            
-            <div>
-              <h3 class="text-sm font-medium text-muted-foreground mb-1">Publisher</h3>
-              <p>{book.publisher}</p>
-            </div>
-            
-            <div>
-              <h3 class="text-sm font-medium text-muted-foreground mb-1">Published Date</h3>
-              <p>{formatDate(book.publishedDate)}</p>
-            </div>
-            
-            <div>
-              <h3 class="text-sm font-medium text-muted-foreground mb-1">ISBN</h3>
-              <p>{book.isbn}</p>
-            </div>
-            
-            <div>
-              <h3 class="text-sm font-medium text-muted-foreground mb-1">Language</h3>
-              <p>{book.language}</p>
-            </div>
-            
-            <!-- Reading Stats 섹션을 사이드바로 이동 -->
-            <div class="pt-4 border-t">
-              <h3 class="text-sm font-medium text-[#255DAA] mb-3">Reading Stats</h3>
-              <div class="space-y-3">
-                <div class="flex items-center justify-between">
-                  <span class="text-sm text-muted-foreground">Started Reading</span>
-                  <span class="text-sm">March 15, 2023</span>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span class="text-sm text-muted-foreground">Reading Time</span>
-                  <span class="text-sm">4h 30m</span>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span class="text-sm text-muted-foreground">Pages per Day</span>
-                  <span class="text-sm">12</span>
-                </div>
-                <div class="flex items-center justify-between">
-                  <span class="text-sm text-muted-foreground">Estimated Completion</span>
-                  <span class="text-sm">May 10, 2023</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+<div class="container py-6">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="md:col-span-1">
+      <div class="relative aspect-[3/4] w-full max-w-[300px] mx-auto md:mx-0">
+        <img
+          src={bookData.coverUrl || "/placeholder.svg"}
+          alt={bookData.title}          
+          class="object-cover rounded-md"
+        />
+      </div>
     </div>
-    
-    <!-- 노트 섹션 -->
-    <div class="lg:col-span-2">
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-xl font-semibold text-[#255DAA]">Notes ({bookNotes.length})</h2>
-        <Button class="bg-[#54A6E1] hover:bg-[#255DAA]">
-          <Plus class="mr-2 h-4 w-4" />
-          Add Note
+    <div class="md:col-span-2 space-y-4">
+      <div class="flex justify-between items-start">
+        <div>
+          <h1 class="text-3xl font-bold">{bookData.title}</h1>
+          {#if bookData.subtitle}
+            <p class="text-lg text-muted-foreground mt-1">{bookData.subtitle}</p>
+          {/if}
+        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          class={`rounded-full ${bookData.isFavorite && "text-theme-brown"}`}
+          aria-label={bookData.isFavorite ? "즐겨찾기 해제" : "즐겨찾기 추가"}
+        >
+          <Heart class={`h-5 w-5 ${bookData.isFavorite && "fill-theme-brown"}`} />
         </Button>
       </div>
-      
-      {#if bookNotes.length === 0}
-        <div class="flex flex-col items-center justify-center py-12 text-center">
-          <BookOpen class="h-12 w-12 text-muted-foreground mb-4" />
-          <h3 class="text-lg font-medium mb-1">No notes yet</h3>
-          <p class="text-muted-foreground mb-4">
-            Start capturing your thoughts and insights about this book
-          </p>
-          <Button class="bg-[#54A6E1] hover:bg-[#255DAA]">
-            <Plus class="mr-2 h-4 w-4" />
-            Create First Note
-          </Button>
+      <div class="space-y-1">
+        <p class="text-lg">{bookData.author}</p>
+        <p class="text-sm text-muted-foreground">
+          {bookData.publisher} · {bookData.publishedDate}
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-2 pt-2">
+        {#each bookData.categories as category}
+          <CategoryTag name={category} />
+        {/each}
+      </div>
+
+      <div class="bg-theme-gold/10 p-4 rounded-md space-y-3 mt-4">
+        <div class="flex justify-between items-center">
+          <h3 class="font-medium">독서 진행률</h3>
+          <span class="text-sm font-medium">{readingStatus}</span>
         </div>
-      {:else}
-        <div class="space-y-4">
-          {#each bookNotes as note}
-            <Card class="hover:shadow-md transition-shadow">
-              <CardHeader class="pb-2 cursor-pointer" >
-                <div class="flex justify-between items-start" on:click={() => toggleNoteExpansion(note.id)}>
-                  <div class="flex-1">
-                    <div class="flex items-center">
-                      <CardTitle class="text-lg text-[#255DAA]">{note.title}</CardTitle>
-                      <ChevronDown class="h-4 w-4 ml-2 text-muted-foreground transition-transform {expandedNoteId === note.id ? 'rotate-180' : ''}" />
-                    </div>
-                    <p class="text-sm text-muted-foreground mt-1">{note.excerpt}</p>
-                    <div class="flex flex-wrap gap-2 mt-2">
-                      {#each note.tags as tag}
-                        <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
-                          {tag}
-                        </span>
-                      {/each}
-                    </div>
-                  </div>
-                  <div class="flex items-center">
-                    <span class="text-sm text-muted-foreground mr-2">{formatDate(note.date)}</span>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger>
-                        <Button variant="ghost" size="icon" class="h-8 w-8" on:click={(e) => e.stopPropagation()}>
-                          <MoreHorizontal class="h-4 w-4" />
-                          <span class="sr-only">Open menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Share</DropdownMenuItem>
-                        <DropdownMenuItem class="text-destructive">Delete</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {#if expandedNoteId === note.id}
-                  <div class="pt-4" transition:slide={{ duration: 300 }}>
-                    <h4 class="text-sm font-medium mb-2">Full Note</h4>
-                    <p class="text-sm whitespace-pre-line">{note.content}</p>
-                  </div>
-                {/if}
-              </CardContent>
-            </Card>
-          {/each}
-        </div>
-      {/if}
+
+        <ReadingProgress currentPage={currentPage} totalPages={bookData.totalPages} size="md" className="w-full" />
+
+        {#if !isUpdatingProgress}
+          <div class="flex justify-end">
+            <Button variant="outline" size="sm" onClick={() => isUpdatingProgress = true}>
+              진행률 업데이트
+            </Button>
+          </div>
+          {:else}
+          <div class="space-y-3">
+            <div class="flex items-center gap-2">
+              <Label htmlFor="currentPage" class="w-24">
+                현재 페이지:
+              </Label>
+              <Input
+                id="currentPage"
+                type="number"
+                min="0"
+                max={bookData.totalPages}
+                value={currentPage.toString()}
+                on:change={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  currentPage = Number.parseInt(target.value) || 0;
+                }}
+                class="max-w-[100px]"
+              />
+              <span class="text-sm text-muted-foreground">/ {bookData.totalPages}페이지</span>
+            </div>
+            <div class="flex justify-end gap-2">
+              <Button variant="outline" size="sm" onClick={() => isUpdatingProgress = false}>
+                취소
+              </Button>
+              <Button size="sm" class="bg-theme-brown hover:bg-theme-brown/90" onClick={handleUpdateProgress}>
+                저장
+              </Button>
+            </div>
+          </div>
+        {/if}
+      </div>
     </div>
   </div>
+
+  <Tabs value={activeTab}  class="space-y-4">
+    <TabsList class="grid w-full grid-cols-2">
+      <TabsTrigger value="notes">노트</TabsTrigger>
+      <TabsTrigger value="write">노트 작성</TabsTrigger>
+    </TabsList>
+    <TabsContent value="notes" class="space-y-4">
+      {#each bookData.notes as note}
+        <NoteCard content={note.content} createdAt={note.createdAt} categories={note.categories} />
+      {/each}
+    </TabsContent>
+    <TabsContent value="write">
+      <div class="space-y-4 bg-theme-gold/20 p-4 rounded-md">
+        <div class="space-y-2">
+          <h3 class="font-medium">카테고리 선택</h3>
+          <div class="flex flex-wrap gap-2">
+            {#each bookData.categories as category}
+              <CategoryTag
+                name={category}
+                isSelected={selectedCategories.includes(category)}
+                on:click={() => toggleCategory(category)}
+              />
+            {/each}
+          </div>
+        </div>
+        <div class="space-y-2">
+          <h3 class="font-medium">노트 내용</h3>
+          <Textarea
+            placeholder="책에 대한 생각이나 인상 깊은 구절을 기록해보세요..."
+            class="min-h-[200px] bg-white"
+            value={noteContent}
+            on:change={(e) => {
+              const target = e.target as HTMLTextAreaElement;
+              noteContent = target.value;
+            }}
+          />
+        </div>
+        <Button
+          class="bg-theme-brown hover:bg-theme-brown/90"
+          onClick={handleSaveNote}
+          disabled={!noteContent.trim()}
+        >
+          <Save class="h-4 w-4 mr-2" />
+          저장하기
+        </Button>
+      </div>
+    </TabsContent>
+  </Tabs>
 </div>
 

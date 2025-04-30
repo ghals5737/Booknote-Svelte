@@ -1,140 +1,82 @@
-import type {
-    Config
-}
-
-from 'tailwindcss'
+import type { Config } from "tailwindcss"
 import animate from "tailwindcss-animate"
 
-const config: Config= {
-
+const config = {
     darkMode: "class",
-    content: ["./src/**/*.{html,js,svelte,ts}",
-    "*.{js,ts,jsx,tsx,mdx}"],
+    content: ["./src/**/*.{html,js,svelte,ts}", "*.{js,ts,jsx,tsx,mdx}"],
+    prefix: "",
     theme: {
         container: {
-
             center: true,
             padding: "2rem",
             screens: {
                 "2xl": "1400px",
-            }
-
-            ,
-        }
-
-        ,
+            },
+        },
         extend: {
             colors: {
-
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
                 ring: "hsl(var(--ring))",
                 background: "hsl(var(--background))",
                 foreground: "hsl(var(--foreground))",
                 primary: {
-                    DEFAULT: "#A02334",
-                        foreground: "hsl(var(--primary-foreground))",
-                }
-
-                ,
+                  DEFAULT: "#854836",
+                  foreground: "hsl(var(--primary-foreground))",
+                },
                 secondary: {
-                    DEFAULT: "#FFAD60",
-                        foreground: "hsl(var(--secondary-foreground))",
-                }
-
-                ,
-                destructive: {
-                    DEFAULT: "#96CEB4",
-                        foreground: "hsl(var(--destructive-foreground))",
-                }
-
-                ,
-                muted: {
-                    DEFAULT: "#EAEAEA",
-                        foreground: "hsl(var(--muted-foreground))",
-                }
-
-                ,
+                  DEFAULT: "#FFB22C",
+                  foreground: "hsl(var(--secondary-foreground))",
+                },
                 accent: {
-                    DEFAULT: "hsl(var(--accent))",
-                        foreground: "hsl(var(--accent-foreground))",
-                }
-
-                ,
+                  DEFAULT: "#F7F7F7",
+                  foreground: "hsl(var(--accent-foreground))",
+                },
+                destructive: {
+                  DEFAULT: "hsl(var(--destructive))",
+                  foreground: "hsl(var(--destructive-foreground))",
+                },
+                muted: {
+                  DEFAULT: "hsl(var(--muted))",
+                  foreground: "hsl(var(--muted-foreground))",
+                },
                 popover: {
-                    DEFAULT: "hsl(var(--popover))",
-                        foreground: "hsl(var(--popover-foreground))",
-                }
-
-                ,
+                  DEFAULT: "hsl(var(--popover))",
+                  foreground: "hsl(var(--popover-foreground))",
+                },
                 card: {
-                    DEFAULT: "hsl(var(--card))",
-                        foreground: "hsl(var(--card-foreground))",
-                }
-
-                ,
-                // Custom brand colors
-                "brand-beige": "#DDE0B6",
-                "brand-orange": "#E6A04A",
-                "brand-teal-dark": "#2C4044",
-                "brand-teal-medium": "#2C868E",
-                "brand-teal-light": "#88E3D9",
-                "brand-teal-pale": "#C2E4DE",
-            }
-
-            ,
-            borderRadius: {
+                  DEFAULT: "hsl(var(--card))",
+                  foreground: "hsl(var(--card-foreground))",
+                },
+                theme: {
+                  light: "#F7F7F7",
+                  gold: "#FFB22C",
+                  brown: "#854836",
+                  black: "#000000",
+                },
+              },
+              borderRadius: {
                 lg: "var(--radius)",
-                    md: "calc(var(--radius) - 2px)",
-                    sm: "calc(var(--radius) - 4px)",
-            }
-
-            ,
-            keyframes: {
+                md: "calc(var(--radius) - 2px)",
+                sm: "calc(var(--radius) - 4px)",
+              },
+              keyframes: {
                 "accordion-down": {
-                    from: {
-                        height: "0"
-                    }
-
-                    ,
-                    to: {
-                        height: "var(--radix-accordion-content-height)"
-                    }
-
-                    ,
-                }
-
-                ,
+                  from: { height: "0" },
+                  to: { height: "var(--radix-accordion-content-height)" },
+                },
                 "accordion-up": {
-                    from: {
-                        height: "var(--radix-accordion-content-height)"
-                    }
-
-                    ,
-                    to: {
-                        height: "0"
-                    }
-
-                    ,
-                }
-
-                ,
-            }
-
-            ,
-            animation: {
+                  from: { height: "var(--radix-accordion-content-height)" },
+                  to: { height: "0" },
+                },
+              },
+              animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
-                    "accordion-up": "accordion-up 0.2s ease-out",
-            }
-
-            ,
-        }
-
-        ,
-    }
-
-    ,
+                "accordion-up": "accordion-up 0.2s ease-out",
+              },
+        },
+    },
     plugins: [animate],
-}
+} satisfies Config
 
 export default config

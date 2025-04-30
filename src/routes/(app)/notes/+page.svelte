@@ -1,348 +1,306 @@
 <script lang="ts">
-  import { Search, Plus, BookOpen, Tag, Filter, ChevronDown } from 'lucide-svelte';
-  import { goto } from '$app/navigation';
-  import Card from '$lib/components/ui/card/Card.svelte';
-  import CardContent from '$lib/components/ui/card/CardContent.svelte';
-  import CardDescription from '$lib/components/ui/card/CardDescription.svelte';
-  import CardHeader from '$lib/components/ui/card/CardHeader.svelte';
-  import CardTitle from '$lib/components/ui/card/CardTitle.svelte';
-  import Tabs from '$lib/components/ui/tabs/Tabs.svelte';
-  import TabsContent from '$lib/components/ui/tabs/TabsContent.svelte';
-  import TabsList from '$lib/components/ui/tabs/TabsList.svelte';
-  import TabsTrigger from '$lib/components/ui/tabs/TabsTrigger.svelte';  
-  import Input from '$lib/components/ui/input/Input.svelte';
-  import Button from '$lib/components/ui/button/Button.svelte';
-  import DropdownMenu from '$lib/components/ui/dropdown-menu/DropdownMenu.svelte';
-  import DropdownMenuContent from '$lib/components/ui/dropdown-menu/DropdownMenuContent.svelte';
-  import DropdownMenuItem from '$lib/components/ui/dropdown-menu/DropdownMenuItem.svelte';
-  import DropdownMenuTrigger from '$lib/components/ui/dropdown-menu/DropdownMenuTrigger.svelte';
-  
-  // Mock data for demonstration
-  const notes = [
-    {
-      id: "1",
-      title: "Character Analysis: Jay Gatsby",
-      bookTitle: "The Great Gatsby",
-      bookId: "1",
-      excerpt: "Gatsby's character represents the American Dream and its ultimate failure...",
-      date: "2023-04-15",
-      tags: ["character", "analysis", "symbolism"],
-    },
-    {
-      id: "2",
-      title: "Themes of Justice",
-      bookTitle: "To Kill a Mockingbird",
-      bookId: "2",
-      excerpt: "The novel explores various forms of justice and injustice through the trial...",
-      date: "2023-03-22",
-      tags: ["themes", "justice", "society"],
-    },
-    {
-      id: "3",
-      title: "Dystopian Elements",
-      bookTitle: "1984",
-      bookId: "3",
-      excerpt: "Orwell's vision of a totalitarian future includes several key dystopian elements...",
-      date: "2023-02-10",
-      tags: ["dystopia", "totalitarianism", "surveillance"],
-    },
-    {
-      id: "4",
-      title: "Symbolism of the Green Light",
-      bookTitle: "The Great Gatsby",
-      bookId: "1",
-      excerpt: "The green light at the end of Daisy's dock represents Gatsby's hopes and dreams...",
-      date: "2023-04-10",
-      tags: ["symbolism", "themes"],
-    },
-  ];
-  
-  // 모든 태그 추출
-  const allTags = [...new Set(notes.flatMap(note => note.tags))];
-  
-  // 모든 책 추출
-  const books = [...new Set(notes.map(note => ({ id: note.bookId, title: note.bookTitle })))];
-  
-  let searchQuery: string = "";
-  let selectedTab: string = "all";
-  let selectedTags: string[] = [];
-  let selectedBooks: string[] = [];
-  
-  // 필터링된 노트
-  $: filteredNotes = notes.filter(note => {
-    // 검색어 필터링
-    const matchesSearch = searchQuery === "" || 
-      note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      note.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    // 태그 필터링
-    const matchesTags = selectedTags.length === 0 || 
-      selectedTags.some(tag => note.tags.includes(tag));
-    
-    // 책 필터링
-    const matchesBooks = selectedBooks.length === 0 || 
-      selectedBooks.includes(note.bookId);
-    
-    // 탭 필터링
-    let matchesTab = true;
-    if (selectedTab === "recent") {
-      // 최근 30일 이내의 노트만 표시
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-      matchesTab = new Date(note.date) >= thirtyDaysAgo;
-    } else if (selectedTab === "favorites") {
-      // 실제로는 즐겨찾기 상태를 확인해야 함
-      // 여기서는 예시로 id가 1, 3인 노트를 즐겨찾기로 가정
-      matchesTab = ["1", "3"].includes(note.id);
+    import { BookOpen, Filter, Search, SortDesc } from "lucide-svelte"
+    import Button from "$lib/components/ui/button/Button.svelte"
+    import DropdownMenu from "$lib/components/ui/dropdown-menu/DropdownMenu.svelte"
+    import DropdownMenuContent from "$lib/components/ui/dropdown-menu/DropdownMenuContent.svelte"
+    import DropdownMenuItem from "$lib/components/ui/dropdown-menu/DropdownMenuItem.svelte"
+    import DropdownMenuLabel from "$lib/components/ui/dropdown-menu/DropdownMenuLabel.svelte"
+    import DropdownMenuSeparator from "$lib/components/ui/dropdown-menu/DropdownMenuSeparator.svelte"
+    import DropdownMenuTrigger from "$lib/components/ui/dropdown-menu/DropdownMenuTrigger.svelte"
+    import DropdownMenuGroup from "$lib/components/ui/dropdown-menu/DropdownMenuGroup.svelte"
+    import Input from "$lib/components/ui/input/Input.svelte"
+    import Tabs from "$lib/components/ui/tabs/Tabs.svelte"
+    import TabsList from "$lib/components/ui/tabs/TabsList.svelte"
+    import TabsTrigger from "$lib/components/ui/tabs/TabsTrigger.svelte"
+    import NoteCard from "$lib/components/note/NoteCard.svelte"
+    import BookNoteCard from "$lib/components/note/BookNoteCard.svelte"
+    import CategoryTag from "$lib/components/category/CategoryTag.svelte"
+
+    const mockNotes = [
+        {
+            id: "note1",
+            bookId: "1",
+            bookTitle: "사피엔스",
+            bookCover: "/placeholder.svg?height=200&width=150",
+            content:
+            "인류의 역사는 세 번의 혁명으로 나눌 수 있다: 인지 혁명, 농업 혁명, 과학 혁명. 각각의 혁명은 인류의 생활 방식과 사고방식을 완전히 바꿔놓았다.",
+            createdAt: "2023년 4월 12일",
+            categories: ["인문", "역사"],
+        },
+        {
+            id: "note2",
+            bookId: "1",
+            bookTitle: "사피엔스",
+            bookCover: "/placeholder.svg?height=200&width=150",
+            content:
+            "허구를 믿는 능력은 호모 사피엔스의 가장 독특하고 중요한 능력이다. 이것이 없었다면 대규모 협력이 불가능했을 것이다.",
+            createdAt: "2023년 4월 10일",
+            categories: ["인문"],
+        },
+        {
+            id: "note3",
+            bookId: "1",
+            bookTitle: "사피엔스",
+            bookCover: "/placeholder.svg?height=200&width=150",
+            content:
+            "농업 혁명은 인류 역사상 가장 큰 사기라고 할 수 있다. 농업으로 인해 더 많은 음식을 생산할 수 있게 되었지만, 그것이 더 나은 식단이나 더 많은 여가 시간으로 이어지지는 않았다.",
+            createdAt: "2023년 4월 5일",
+            categories: ["역사", "과학"],
+        },
+        {
+            id: "note4",
+            bookId: "2",
+            bookTitle: "아몬드",
+            bookCover: "/placeholder.svg?height=200&width=150",
+            content:
+            "감정을 느끼지 못하는 주인공 윤재의 이야기. 아몬드라 불리는 편도체가 작아 공포나 분노와 같은 감정을 느끼지 못하는 희귀한 질환을 가진 소년의 성장 이야기.",
+            createdAt: "2023년 4월 8일",
+            categories: ["소설", "성장"],
+        },
+        {
+            id: "note5",
+            bookId: "3",
+            bookTitle: "달러구트 꿈 백화점",
+            bookCover: "/placeholder.svg?height=200&width=150",
+            content:
+            "잠들어야만 입장할 수 있는 달러구트 꿈 백화점은 잠들어 있는 사이 우리가 꿈을 선택할 수 있게 해주는 특별한 공간이다. 이곳에서 일어나는 다양한 이야기들이 우리에게 삶의 의미를 다시 생각하게 한다.",
+            createdAt: "2023년 4월 3일",
+            categories: ["소설", "판타지"],
+        },
+    ]
+
+    const allCategories = ["인문", "역사", "과학", "소설", "성장", "판타지", "자기계발", "경제"]    
+    const allBooks = [
+    { id: "1", title: "사피엔스" },
+    { id: "2", title: "아몬드" },
+    { id: "3", title: "달러구트 꿈 백화점" },
+    { id: "4", title: "어린왕자" },
+    ]
+    let view:string = "list"
+    let searchQuery:string = ""
+    let selectedCategories:string[] = []
+    let selectedBooks:string[] = []
+    let sortOrder:string = "newest"
+
+    const filteredNotes = mockNotes
+        .filter((note) => {
+        // 검색어 필터링
+        if (
+            searchQuery &&
+            !note.content.toLowerCase().includes(searchQuery.toLowerCase()) &&
+            !note.bookTitle.toLowerCase().includes(searchQuery.toLowerCase())
+        ) {
+            return false
+        }
+
+        // 카테고리 필터링
+        if (selectedCategories.length > 0 && !note.categories.some((cat) => selectedCategories.includes(cat))) {
+            return false
+        }
+
+        // 책 필터링
+        if (selectedBooks.length > 0 && !selectedBooks.includes(note.bookId)) {
+            return false
+        }
+
+        return true
+        })
+        .sort((a, b) => {
+        // 날짜 정렬 (간단한 예시)
+        if (sortOrder === "newest") {
+            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        } else {
+            return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        }
+        })
+
+    const toggleCategory = (category: string) => {
+        selectedCategories = selectedCategories.includes(category) ? selectedCategories.filter((c) => c !== category) : [...selectedCategories, category]
+    }
+
+    const toggleBook = (bookId: string) => {
+        selectedBooks = selectedBooks.includes(bookId) ? selectedBooks.filter((id) => id !== bookId) : [...selectedBooks, bookId]
+    }
+
+    const clearFilters = () => {
+        selectedCategories = []
+        selectedBooks = []
+        searchQuery = ""
     }
     
-    return matchesSearch && matchesTags && matchesBooks && matchesTab;
-  });
-  
-  function toggleTagFilter(tag: any) {
-    if (selectedTags.includes(tag)) {
-      selectedTags = selectedTags.filter(t => t !== tag);
-    } else {
-      selectedTags = [...selectedTags, tag];
-    }
-  }
-  
-  function toggleBookFilter(bookId: any) {
-    if (selectedBooks.includes(bookId)) {
-      selectedBooks = selectedBooks.filter(id => id !== bookId);
-    } else {
-      selectedBooks = [...selectedBooks, bookId];
-    }
-  }
-  
-  function formatDate(dateString: any) {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  }
 </script>
 
-<div class="container py-8">
-  <div class="flex items-center justify-between mb-8">
-    <h1 class="text-3xl font-bold text-[#2C4044]">My Notes</h1>
-    <Button class="bg-[#E6A04A] hover:bg-[#d08f3f] text-white">
-      <Plus class="mr-2 h-4 w-4" />
-      New Note
-    </Button>
-  </div>
-  
-  <div class="flex flex-col md:flex-row gap-6">
-    <div class="w-full md:w-64 space-y-4">
-      <div class="relative">
-        <Search class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-        <Input
-          type="search"
-          placeholder="Search notes..."
-          class="pl-8"
-          bind:value={searchQuery}
-        />
-      </div>
-      
-      <Card>
-        <CardHeader class="py-4">
-          <CardTitle class="text-base text-[#2C4044]">Filter by Tags</CardTitle>
-        </CardHeader>
-        <CardContent class="py-2">
-          <div class="flex flex-wrap gap-2">
-            {#each allTags as tag}
-              <Button 
-                variant={selectedTags.includes(tag) ? "default" : "outline"} 
-                size="sm" 
-                class="rounded-full {selectedTags.includes(tag) ? 'bg-[#E6A04A] hover:bg-[#d08f3f] text-white' : ''}"
-                on:click={() => toggleTagFilter(tag)}
-              >
-                {tag}
-              </Button>
-            {/each}
+ <div class="container py-6 space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <h1 class="text-3xl font-bold">내 노트</h1>
+        <div class="flex items-center gap-2">
+          <div class="relative flex-1 md:w-64">
+            <Search class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="노트 내용 검색..."
+              class="pl-8"
+              value={searchQuery}
+              onChange={(e: Event) => searchQuery = (e.target as HTMLInputElement).value}
+            />
           </div>
-        </CardContent>
-      </Card>
-      
-      <Card>
-        <CardHeader class="py-4">
-          <CardTitle class="text-base text-[#2C4044]">Filter by Books</CardTitle>
-        </CardHeader>
-        <CardContent class="py-2 space-y-2">
-          {#each books as book}
-            <button 
-              class="flex items-center w-full space-x-2 py-2 px-3 rounded-md text-sm hover:bg-[#DDE0B6] transition-colors {selectedBooks.includes(book.id) ? 'bg-[#DDE0B6] text-[#2C4044] font-medium' : 'text-muted-foreground'}"
-              on:click={() => toggleBookFilter(book.id)}
-            >
-              <BookOpen class="h-4 w-4" />
-              <span>{book.title}</span>
-            </button>
-          {/each}
-        </CardContent>
-      </Card>
-      
-      <Card>
-        <CardHeader class="py-4">
-          <CardTitle class="text-base text-[#2C4044]">Sort Notes</CardTitle>
-        </CardHeader>
-        <CardContent class="py-2">
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" class="w-full justify-between">
-                <span>Date: Newest First</span>
-                <ChevronDown class="h-4 w-4 ml-2" />
+              <Button variant="outline" size="icon">
+                <Filter class="h-4 w-4" />
+                <span class="sr-only">필터</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" class="w-[200px]">
-              <DropdownMenuItem>Date: Newest First</DropdownMenuItem>
-              <DropdownMenuItem>Date: Oldest First</DropdownMenuItem>
-              <DropdownMenuItem>Title: A to Z</DropdownMenuItem>
-              <DropdownMenuItem>Title: Z to A</DropdownMenuItem>
-              <DropdownMenuItem>Book: A to Z</DropdownMenuItem>
+            <DropdownMenuContent align="end" class="w-56">
+              <DropdownMenuLabel>필터</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+
+              <DropdownMenuGroup>
+                <DropdownMenuLabel class="text-xs font-normal text-muted-foreground">카테고리</DropdownMenuLabel>
+                <div class="p-2 flex flex-wrap gap-1">
+                  {#each allCategories as category}
+                    <CategoryTag
+                      name={category}
+                      size="sm"
+                      isSelected={selectedCategories.includes(category)}
+                      on:click={() => toggleCategory(category)}
+                    />
+                  {/each}
+                </div>
+              </DropdownMenuGroup>
+
+              <DropdownMenuSeparator />
+
+              <DropdownMenuGroup>
+                <DropdownMenuLabel class="text-xs font-normal text-muted-foreground">책</DropdownMenuLabel>
+                {#each allBooks as book}
+                  <DropdownMenuItem
+                    key={book.id}
+                    className="flex items-center gap-2"
+                    onSelect={(e: Event) => {
+                      e.preventDefault()
+                      toggleBook(book.id)
+                    }}
+                  >
+                    <div
+                      class={`w-3 h-3 rounded-full ${selectedBooks.includes(book.id) ? "bg-[#96CEB4]" : "border border-muted-foreground"}`}
+                    />
+                    <span>{book.title}</span>
+                  </DropdownMenuItem>
+                {/each}
+              </DropdownMenuGroup>
+
+              <DropdownMenuSeparator />
+
+              <DropdownMenuItem onSelect={clearFilters}>필터 초기화</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </CardContent>
-      </Card>
-    </div>
-    
-    <div class="flex-1">
-      <Tabs bind:value={selectedTab} class="w-full">
-        <TabsList>
-          <TabsTrigger value="all">All Notes</TabsTrigger>
-          <TabsTrigger value="recent">Recent</TabsTrigger>
-          <TabsTrigger value="favorites">Favorites</TabsTrigger>
-        </TabsList>
-        <TabsContent value="all" class="space-y-4 mt-4">
-          {#if filteredNotes.length === 0}
-            <div class="flex flex-col items-center justify-center py-12 text-center">
-              <BookOpen class="h-12 w-12 text-muted-foreground mb-4" />
-              <h3 class="text-lg font-medium mb-1">No notes found</h3>
-              <p class="text-muted-foreground mb-4">
-                {searchQuery || selectedTags.length > 0 || selectedBooks.length > 0 
-                  ? "Try adjusting your filters" 
-                  : "Start by creating your first note"}
-              </p>
-              {#if !searchQuery && selectedTags.length === 0 && selectedBooks.length === 0}
-                <Button class="bg-[#E6A04A] hover:bg-[#d08f3f] text-white">
-                  <Plus class="mr-2 h-4 w-4" />
-                  Create First Note
-                </Button>
-              {/if}
-            </div>
-          {:else}
-            {#each filteredNotes as note}
-              <a href={`/notes/${note.id}`} class="block">
-                <Card class="hover:shadow-md transition-shadow">
-                  <CardHeader class="pb-2">
-                    <div class="flex justify-between items-start">
-                      <div>
-                        <CardTitle class="text-[#2C4044]">{note.title}</CardTitle>
-                        <CardDescription class="mt-1 flex items-center">
-                          <BookOpen class="h-3 w-3 mr-1" />
-                          <a href={`/books/${note.bookId}`} class="hover:underline">
-                            {note.bookTitle}
-                          </a>
-                        </CardDescription>
-                      </div>
-                      <div class="text-sm text-muted-foreground">{formatDate(note.date)}</div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p class="text-sm text-muted-foreground mb-3 line-clamp-2">{note.excerpt}</p>
-                    <div class="flex flex-wrap gap-2">
-                      {#each note.tags as tag}
-                        <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
-                          {tag}
-                        </span>
-                      {/each}
-                    </div>
-                  </CardContent>
-                </Card>
-              </a>
-            {/each}
-          {/if}
-        </TabsContent>
-        <TabsContent value="recent" class="mt-4">
-          <!-- 최근 노트 내용 (all과 동일한 구조) -->
-          <div class="space-y-4">
-            {#if filteredNotes.length === 0}
-              <div class="p-8 text-center text-muted-foreground">No recent notes found</div>
-            {:else}
-              {#each filteredNotes as note}
-                <a href={`/notes/${note.id}`} class="block">
-                  <Card class="hover:shadow-md transition-shadow">
-                    <CardHeader class="pb-2">
-                      <div class="flex justify-between items-start">
-                        <div>
-                          <CardTitle class="text-[#2C4044]">{note.title}</CardTitle>
-                          <CardDescription class="mt-1 flex items-center">
-                            <BookOpen class="h-3 w-3 mr-1" />
-                            <a href={`/books/${note.bookId}`} class="hover:underline">
-                              {note.bookTitle}
-                            </a>
-                          </CardDescription>
-                        </div>
-                        <div class="text-sm text-muted-foreground">{formatDate(note.date)}</div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p class="text-sm text-muted-foreground mb-3 line-clamp-2">{note.excerpt}</p>
-                      <div class="flex flex-wrap gap-2">
-                        {#each note.tags as tag}
-                          <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
-                            {tag}
-                          </span>
-                        {/each}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </a>
-              {/each}
-            {/if}
-          </div>
-        </TabsContent>
-        <TabsContent value="favorites" class="mt-4">
-          <!-- 즐겨찾기 노트 내용 (all과 동일한 구조) -->
-          <div class="space-y-4">
-            {#if filteredNotes.length === 0}
-              <div class="p-8 text-center text-muted-foreground">No favorite notes found</div>
-            {:else}
-              {#each filteredNotes as note}
-                <a href={`/notes/${note.id}`} class="block">
-                  <Card class="hover:shadow-md transition-shadow">
-                    <CardHeader class="pb-2">
-                      <div class="flex justify-between items-start">
-                        <div>
-                          <CardTitle class="text-[#2C4044]">{note.title}</CardTitle>
-                          <CardDescription class="mt-1 flex items-center">
-                            <BookOpen class="h-3 w-3 mr-1" />
-                            <a href={`/books/${note.bookId}`} class="hover:underline">
-                              {note.bookTitle}
-                            </a>
-                          </CardDescription>
-                        </div>
-                        <div class="text-sm text-muted-foreground">{formatDate(note.date)}</div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p class="text-sm text-muted-foreground mb-3 line-clamp-2">{note.excerpt}</p>
-                      <div class="flex flex-wrap gap-2">
-                        {#each note.tags as tag}
-                          <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
-                            {tag}
-                          </span>
-                        {/each}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </a>
-              {/each}
-            {/if}
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
-  </div>
-</div>
 
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon">
+                <SortDesc class="h-4 w-4" />
+                <span class="sr-only">정렬</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onSelect={() => sortOrder = "newest"}
+                class={sortOrder === "newest" ? "bg-muted" : ""}
+              >
+                최신순
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onSelect={() => sortOrder = "oldest"}
+                class={sortOrder === "oldest" ? "bg-muted" : ""}
+              >
+                오래된순
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Tabs value={view} onValueChange={(v) => view = v as "list" | "grid"} class="hidden md:block">
+            <TabsList class="grid w-16 grid-cols-2">
+              <TabsTrigger value="list" class="px-2">
+                <BookOpen class="h-4 w-4" />
+              </TabsTrigger>
+              <TabsTrigger value="grid" class="px-2">
+                <div class="grid grid-cols-2 gap-0.5">
+                  <div class="w-1.5 h-1.5 bg-current rounded-sm" />
+                  <div class="w-1.5 h-1.5 bg-current rounded-sm" />
+                  <div class="w-1.5 h-1.5 bg-current rounded-sm" />
+                  <div class="w-1.5 h-1.5 bg-current rounded-sm" />
+                </div>
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+      </div>
+
+      {#if selectedCategories.length > 0 || selectedBooks.length > 0}
+        <div class="flex flex-wrap gap-2 items-center">
+          <span class="text-sm text-muted-foreground">필터:</span>
+          {#each selectedCategories as category}
+            <CategoryTag
+              name={category}
+              size="sm"
+              isSelected={true}
+              on:click={() => toggleCategory(category)}
+            />
+          {/each}
+          {#each selectedBooks as bookId}
+            {#if allBooks.find((b) => b.id === bookId)}
+              <CategoryTag
+                name={allBooks.find((b) => b.id === bookId)?.title || ""}
+                size="sm"
+                isSelected={true}
+                on:click={() => toggleBook(bookId)}
+              />
+            {/if}
+          {/each}
+          <Button variant="ghost" size="sm" onClick={clearFilters} class="h-6 px-2 text-xs">
+            초기화
+          </Button>
+        </div>
+      {/if}
+
+      {#if filteredNotes.length === 0}
+        <div class="flex flex-col items-center justify-center py-12 text-center">
+          <BookOpen class="h-12 w-12 text-muted-foreground mb-4" />
+          <h3 class="text-lg font-medium">노트가 없습니다</h3>
+          <p class="text-muted-foreground mt-1">
+            {searchQuery || selectedCategories.length > 0 || selectedBooks.length > 0
+              ? "검색 조건에 맞는 노트가 없습니다. 다른 검색어나 필터를 시도해보세요."
+              : "아직 작성한 노트가 없습니다. 책을 등록하고 노트를 작성해보세요."}
+          </p>
+          {#if searchQuery || selectedCategories.length > 0 || selectedBooks.length > 0}
+            <Button variant="outline" class="mt-4" onClick={clearFilters}>
+              필터 초기화
+            </Button>
+          {/if}
+        </div>
+        {/if}
+      <div class={view === "list" ? "space-y-4" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"}>
+        {#each filteredNotes as note}
+          {#if view === "list"}
+              <NoteCard
+                content={note.content}
+                createdAt={note.createdAt}
+                categories={note.categories}
+                bookTitle={note.bookTitle}
+                bookCover={note.bookCover}
+              />
+          {/if}
+          {#if view === "grid"}
+              <BookNoteCard
+                content={note.content}
+                createdAt={note.createdAt}
+                categories={note.categories}
+                bookTitle={note.bookTitle}
+                bookCover={note.bookCover}
+              />
+          {/if}
+        {/each}
+      </div>
+    </div>

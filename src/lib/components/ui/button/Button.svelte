@@ -4,7 +4,7 @@
 
   const dispatch = createEventDispatcher();
 
-  let className = "";
+  let className= "";
   export { className as class };
   export let variant: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" = "default";
   export let size: "default" | "sm" | "lg" | "icon" = "default";

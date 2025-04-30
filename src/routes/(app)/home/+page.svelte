@@ -18,7 +18,7 @@
         </Button>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <RecentBookCard
+        <RecentBookCard          
           title="사피엔스"
           author="유발 하라리"
           coverUrl="https://shopping-phinf.pstatic.net/main_3244103/32441031070.20231011075212.jpg"
@@ -82,13 +82,13 @@
       </div>
     </section>
 
-    <section class="bg-[#FFEEAD] rounded-lg p-6 space-y-4">
+    <section class="bg-theme-gold/20 rounded-lg p-6 space-y-4">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div class="space-y-2">
           <h2 class="text-2xl font-bold">새로운 책을 등록해보세요</h2>
           <p class="text-muted-foreground">책을 검색하고 나만의 독서 노트를 작성해보세요.</p>
         </div>
-        <Button class="bg-[#A02334] hover:bg-[#8a1e2c]" asChild>
+        <Button class="bg-theme-brown hover:bg-theme-brown/90 text-white" asChild>
           <a href="/books/search" class="flex items-center gap-2">
             <Plus class="h-4 w-4" />책 등록하기
           </a>
