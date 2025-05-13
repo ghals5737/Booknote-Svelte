@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import { Chart, registerables } from 'chart.js';
     Chart.register(...registerables);
-
+    export let period: string;
     let chartCanvas: HTMLCanvasElement;
     let chart: Chart;
 

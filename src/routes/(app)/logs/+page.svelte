@@ -14,6 +14,9 @@
     import CardDescription from "$lib/components/ui/card/CardDescription.svelte";
     import CardHeader from "$lib/components/ui/card/CardHeader.svelte";
     import CardTitle from "$lib/components/ui/card/CardTitle.svelte";
+	import ReadingActivityChart from "$lib/components/log/ReadingActivityChart.svelte";
+	import ReadingTimeline from "$lib/components/log/ReadingTimeline.svelte";
+	import KeywordCloud from "$lib/components/log/KeywordCloud.svelte";
 
     let period = "이번 달";
 </script>

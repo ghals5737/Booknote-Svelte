@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { Popover, PopoverTrigger, PopoverContent } from "$lib/components/ui/popover"
+  import Popover from "$lib/components/ui/popover/Popover.svelte"
+  import PopoverTrigger from "$lib/components/ui/popover/PopoverTrigger.svelte"
+  import PopoverContent from "$lib/components/ui/popover/PopoverContent.svelte"
 </script>
 
 <div class="flex h-screen items-center justify-center">
