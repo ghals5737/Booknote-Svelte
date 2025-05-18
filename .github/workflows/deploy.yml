@@ -21,7 +21,6 @@ jobs:
 
     - name: Build Docker image
       run: |
-        cd booknote
         docker build . \          
           -t registry.booknote.site/booknote-front:latest
      

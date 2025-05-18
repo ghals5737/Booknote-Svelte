@@ -1,58 +1,99 @@
-# Svelte library
+# Booknote-Svelte 📚
 
-Everything you need to build a Svelte library, powered by [`sv`](https://npmjs.com/package/sv).
+독서 기록과 분석을 위한 모던 웹 애플리케이션입니다. Svelte와 TypeScript를 사용하여 개발되었습니다.
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+## 주요 기능 ✨
 
-## Creating a project
+- 📖 독서 기록 관리
+- 📊 독서 통계 및 분석
+- 🎯 키워드 클라우드 시각화
+- 📅 기간별 독서 데이터 분석
+- 🎨 모던하고 직관적인 UI
 
-If you're seeing this, you've probably already done this step. Congrats!
+## 기술 스택 🛠
+
+- **프론트엔드**
+  - Svelte 5.0
+  - TypeScript
+  - Tailwind CSS
+  - Chart.js (데이터 시각화)
+
+- **개발 도구**
+  - Vite
+  - ESLint
+  - Prettier
+  - TypeScript
+
+## 시작하기 🚀
+
+### 필수 조건
+
+- Node.js (최신 LTS 버전)
+- npm 또는 yarn
+
+### 설치
 
 ```bash
-# create a new project in the current directory
-npx sv create
+# 저장소 클론
+git clone https://github.com/yourusername/Booknote-Svelte.git
 
-# create a new project in my-app
-npx sv create my-app
+# 프로젝트 디렉토리로 이동
+cd Booknote-Svelte
+
+# 의존성 설치
+npm install
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### 개발 서버 실행
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+개발 서버는 기본적으로 http://localhost:5188 에서 실행됩니다.
 
-## Building
-
-To build your library:
-
-```bash
-npm run package
-```
-
-To create a production version of your showcase app:
+### 빌드
 
 ```bash
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+## 프로젝트 구조 📁
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
 ```
+src/
+├── lib/          # 공통 컴포넌트 및 유틸리티
+├── routes/       # 페이지 라우팅
+├── app.css       # 전역 스타일
+└── app.html      # HTML 템플릿
+```
+
+## 개발 가이드 📝
+
+### 코드 스타일
+
+- ESLint와 Prettier를 사용하여 코드 스타일을 관리합니다.
+- TypeScript를 사용하여 타입 안정성을 보장합니다.
+
+### 스크립트
+
+- `npm run dev`: 개발 서버 실행
+- `npm run build`: 프로덕션 빌드
+- `npm run check`: TypeScript 타입 체크
+- `npm run format`: 코드 포맷팅
+- `npm run lint`: 린트 검사
+
+## 기여하기 🤝
+
+1. 이슈를 생성하거나 기존 이슈를 확인합니다.
+2. 새로운 브랜치를 생성합니다.
+3. 변경사항을 커밋합니다.
+4. Pull Request를 생성합니다.
+
+## 라이선스 📄
+
+MIT License
+
+## 연락처 📧
+
+프로젝트에 대한 문의사항이 있으시면 이슈를 생성해주세요.
