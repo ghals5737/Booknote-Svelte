@@ -5,5 +5,8 @@ export default defineConfig({
 	plugins: [sveltekit()],
 	optimizeDeps: {
 		include: ['tagcloud']
+	},
+	preview: {
+		allowedHosts: ['booknote.site', 'registry.booknote.site']
 	}
 });
