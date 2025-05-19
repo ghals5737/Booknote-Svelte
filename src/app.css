@@ -1,11 +1,14 @@
-@import "tailwindcss";
+/* @import "tailwindcss"; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
+/* @theme {
     --color-theme-light: #F7F7F7;
     --color-theme-gold: #FFB22C;
     --color-theme-brown: #854836;
     --color-theme-black: #000000;
-}
+} */
 
 @layer base {
     :root {

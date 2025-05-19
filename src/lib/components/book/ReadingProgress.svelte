@@ -2,7 +2,7 @@
     import { cn } from "$lib/utils/utils.js";
     export let currentPage: number;
     export let totalPages: number;
-    export let className: string;
+    export let className: string = "";
     export let showText: boolean = true;
     export let size: "sm" | "md" | "lg" = "md";
     
@@ -35,7 +35,7 @@
     <div class="w-full bg-muted/30 rounded-full overflow-hidden">
       <div
       class={cn("rounded-full transition-all duration-300", heightClass, colorClass)}
-        style={{ width: `${progress}%` }}
+        style={`width: ${progress}%`}
       />
     </div>
     {#if showText}

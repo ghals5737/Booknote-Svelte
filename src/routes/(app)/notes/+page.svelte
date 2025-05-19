@@ -185,7 +185,7 @@
                   >
                     <div
                       class={`w-3 h-3 rounded-full ${selectedBooks.includes(book.id) ? "bg-[#96CEB4]" : "border border-muted-foreground"}`}
-                    />
+                    ></div>
                     <span>{book.title}</span>
                   </DropdownMenuItem>
                 {/each}
@@ -227,10 +227,10 @@
               </TabsTrigger>
               <TabsTrigger value="grid" class="px-2">
                 <div class="grid grid-cols-2 gap-0.5">
-                  <div class="w-1.5 h-1.5 bg-current rounded-sm" />
-                  <div class="w-1.5 h-1.5 bg-current rounded-sm" />
-                  <div class="w-1.5 h-1.5 bg-current rounded-sm" />
-                  <div class="w-1.5 h-1.5 bg-current rounded-sm" />
+                  <div class="w-1.5 h-1.5 bg-current rounded-sm"></div>
+                  <div class="w-1.5 h-1.5 bg-current rounded-sm"></div>
+                  <div class="w-1.5 h-1.5 bg-current rounded-sm"></div>
+                  <div class="w-1.5 h-1.5 bg-current rounded-sm"></div>
                 </div>
               </TabsTrigger>
             </TabsList>

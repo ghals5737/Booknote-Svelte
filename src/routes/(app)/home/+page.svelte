@@ -25,6 +25,8 @@
           lastUpdated="2023년 4월 12일"
           noteCount={5}
           isFavorite={true}
+          currentPage={312}
+          totalPages={524}
         />
         <RecentBookCard
           title="아몬드"
@@ -33,6 +35,8 @@
           lastUpdated="2023년 4월 10일"
           noteCount={3}
           isFavorite={false}
+          currentPage={272}
+          totalPages={272}
         />
         <RecentBookCard
           title="달러구트 꿈 백화점"
@@ -41,6 +45,8 @@
           lastUpdated="2023년 4월 5일"
           noteCount={2}
           isFavorite={false}
+          currentPage={150}
+          totalPages={308}
         />
       </div>
     </section>
@@ -61,21 +67,18 @@
         <StatsCard
           title="이번 달 독서량"
           value="5권"
-          icon={Book}
           description="지난 달보다 2권 증가했어요!"
           trend="increase"
         />
         <StatsCard
           title="작성한 노트"
           value="23개"
-          icon={BookOpen}
           description="꾸준히 기록 중이에요"
           trend="neutral"
         />
         <StatsCard
           title="가장 많이 읽은 장르"
           value="인문학"
-          icon={Book}
           description="총 8권을 읽었어요"
           trend="neutral"
         />

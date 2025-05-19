@@ -207,7 +207,7 @@
           >
             <div
               class={`w-3 h-3 rounded-full ${showFavoritesOnly ? "bg-theme-brown" : "border border-muted-foreground"}`}
-            />
+            ></div>
             <span>즐겨찾기만 보기</span>
           </DropdownMenuItem>
 

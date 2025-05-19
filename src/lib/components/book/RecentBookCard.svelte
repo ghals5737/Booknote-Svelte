@@ -7,6 +7,7 @@
     import CardFooter from '$lib/components/ui/card/CardFooter.svelte';
     import Badge from '$lib/components/ui/badge/Badge.svelte';
     import Button from '$lib/components/ui/button/Button.svelte';
+    import ReadingProgress from '$lib/components/book/ReadingProgress.svelte';
 
     export let coverUrl: string;
     export let title: string;
@@ -14,10 +15,14 @@
     export let lastUpdated: string;
     export let noteCount: number;
     export let isFavorite: boolean = false;
-    export let className = "";
+    export let className = "";    
+    export let currentPage: number = 0;
+    export let totalPages: number = 0;
+
+    const hasProgress = currentPage > 0 && totalPages > 0;
 </script>
 
-<Card class={cn("overflow-hidden border border-[#F7F7F7]", className)}>
+<Card class={cn("overflow-hidden", className)}>
     <CardHeader class="p-0">
       <div class="relative h-[200px] w-full bg-gray-50">
         <img 
@@ -31,11 +36,12 @@
           aria-label={isFavorite ? "즐겨찾기 해제" : "즐겨찾기 추가"}
         >
           <Heart class={cn("h-4 w-4", isFavorite && "fill-theme-brown text-theme-brown")} />
-        </Button>
+        </Button>       
       </div>
+     
     </CardHeader>
-    <CardContent class="p-4">
-      <div class="space-y-1.5">
+    <CardContent class="p-4">    
+      <div class="space-y-1.5">        
         <a
           href={`/books/${encodeURIComponent(title)}`}
           class="font-semibold hover:text-theme-brown transition-colors line-clamp-1"
@@ -43,6 +49,25 @@
           {title}
       </a>
         <p class="text-sm text-muted-foreground">{author}</p>
+        {#if hasProgress}                
+          <ReadingProgress currentPage={currentPage} totalPages={totalPages} size="sm" showText={false} />        
+          <div class="flex justify-between items-center text-xs text-muted-foreground mt-1">
+            <span>
+              {#if currentPage === 0}
+                읽기 전
+              {:else if currentPage >= totalPages}
+                완독
+              {:else}
+                {Math.round((currentPage / totalPages) * 100)}% 
+              {/if}
+            </span>
+            {#if currentPage > 0 && currentPage < totalPages}
+              <span>
+                {currentPage}/{totalPages}p
+              </span>
+            {/if}
+          </div>
+        {/if}
       </div>
     </CardContent>
     <CardFooter class="p-4 pt-0 flex justify-between items-center">
