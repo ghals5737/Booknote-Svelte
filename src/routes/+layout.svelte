@@ -4,12 +4,9 @@
 
 	import { Book, BookOpen, Home, Library, User } from 'lucide-svelte';
 	import { fly } from "svelte/transition";
-	import { cn } from "$lib/utils/utils.js";
-	import Button from '$lib/components/ui/button/Button.svelte';
-	import DropdownMenu from '$lib/components/ui/dropdown-menu/DropdownMenu.svelte';
-	import DropdownMenuContent from '$lib/components/ui/dropdown-menu/DropdownMenuContent.svelte';
-	import DropdownMenuItem from '$lib/components/ui/dropdown-menu/DropdownMenuItem.svelte';
-	import DropdownMenuTrigger from '$lib/components/ui/dropdown-menu/DropdownMenuTrigger.svelte';
+	import { cn } from "$lib/utils.js";
+	import { Button } from "$lib/components/ui/button/index.js";
+	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import { goto } from "$app/navigation";
 
 	const pathname = $page.url.pathname;
@@ -75,28 +72,28 @@
 		  </div>
 		  <div class="flex items-center gap-2">
 			<Button
-				on:click={() => {
+				onclick={() => {
 					goto('/notes/create');
 				}}
 				variant="default" class="hidden md:flex bg-theme-brown hover:bg-theme-brown/90 text-white text-sm font-bold">
 			  노트 작성하기
 			</Button>
-			<DropdownMenu>
-			  <DropdownMenuTrigger asChild>
+			<DropdownMenu.Root>
+			  <DropdownMenu.Trigger >
 				<Button variant="ghost" size="icon" class="rounded-full" aria-label="프로필 메뉴">
 				  <User class="h-5 w-5" />
 				</Button>
-			  </DropdownMenuTrigger>
-			  <DropdownMenuContent align="end" class="border-none z-50 bg-white">
-				<DropdownMenuItem asChild class="text-sm font-bold hover:bg-theme-gold">
+			  </DropdownMenu.Trigger>
+			  <DropdownMenu.Content align="end" class="border-none z-50 bg-white">
+				<DropdownMenu.Item  class="text-sm font-bold hover:bg-theme-gold">
 				  <a href="/profile">프로필</a>
-				</DropdownMenuItem>
-				<DropdownMenuItem asChild class="text-sm font-bold hover:hover:bg-theme-gold">
+				</DropdownMenu.Item>
+				<DropdownMenu.Item  class="text-sm font-bold hover:hover:bg-theme-gold">
 				  <a href="/settings">설정</a>
-				</DropdownMenuItem>
-				<DropdownMenuItem class="text-sm font-bold hover:hover:bg-theme-gold">로그아웃</DropdownMenuItem>
-			  </DropdownMenuContent>
-			</DropdownMenu>
+				</DropdownMenu.Item>
+				<DropdownMenu.Item class="text-sm font-bold hover:hover:bg-theme-gold">로그아웃</DropdownMenu.Item>
+			  </DropdownMenu.Content>
+			</DropdownMenu.Root>
 		  </div>
 		</div>
 		<nav class="md:hidden flex overflow-auto border-t">		  

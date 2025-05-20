@@ -40,7 +40,7 @@
 <div class="space-y-4">
     {#each timelineData as item}
         <div class="flex gap-4">
-        <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-theme-gold/20">
+        <div class="shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-theme-gold/20">
             {#if item.type === "book"}
                 <Book className="h-5 w-5 text-theme-brown" />
             {:else}

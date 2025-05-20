@@ -8,7 +8,7 @@
     export let categories;
   </script>
   
-  <Card class="border-1 border-gray-300">
+  <Card class="border border-gray-300">
     <CardHeader>      
     </CardHeader>
     <CardContent>

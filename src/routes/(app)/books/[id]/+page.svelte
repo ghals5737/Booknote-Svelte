@@ -3,18 +3,15 @@
   import { Heart, Save } from 'lucide-svelte';
   import { slide } from 'svelte/transition';
 
-  import Button from '$lib/components/ui/button/Button.svelte';
-  import Tabs from '$lib/components/ui/tabs/Tabs.svelte';
-  import TabsContent from '$lib/components/ui/tabs/TabsContent.svelte';
-  import TabsList from '$lib/components/ui/tabs/TabsList.svelte';
-  import TabsTrigger from '$lib/components/ui/tabs/TabsTrigger.svelte';
-  import Textarea from '$lib/components/ui/textarea/Textarea.svelte';
+  import { Button } from "$lib/components/ui/button/index.js";
+  import * as Tabs from "$lib/components/ui/tabs/index.js";
+  import { Textarea } from "$lib/components/ui/textarea/index.js";
   import NoteCard from '$lib/components/note/NoteCard.svelte';
   import CategoryTag from '$lib/components/category/CategoryTag.svelte';
   import ReadingProgress from '$lib/components/book/ReadingProgress.svelte';
-  import Input  from '$lib/components/ui/input/Input.svelte';
-  import Label  from '$lib/components/ui/label/Label.svelte';
-  import { toast } from "$lib/components/ui/toast/index.js"
+  import { Input } from "$lib/components/ui/input/index.js";
+  import { Label } from "$lib/components/ui/label/index.js";
+  //import { toast } from "$lib/components/ui/toast/index.js"
   
   const { id } = $page.params;
   
@@ -76,10 +73,10 @@
   const handleUpdateProgress = () => {
     // 실제 구현에서는 API 호출을 통해 진행률을 저장해야 합니다
     console.log("Updating progress:", { currentPage })
-    toast({
-      title: "독서 진행률이 업데이트되었습니다",
-      description: `${currentPage}/${bookData.totalPages} 페이지 (${Math.round((currentPage / bookData.totalPages) * 100)}%)`,
-    })
+      // toast({
+      //   title: "독서 진행률이 업데이트되었습니다",
+      //   description: `${currentPage}/${bookData.totalPages} 페이지 (${Math.round((currentPage / bookData.totalPages) * 100)}%)`,
+      // })
     isUpdatingProgress = false
   }
 
@@ -95,7 +92,7 @@
 <div class="container py-6">
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
     <div class="md:col-span-1">
-      <div class="relative aspect-[3/4] w-full max-w-[300px] mx-auto md:mx-0">
+      <div class="relative aspect-3/4 w-full max-w-[300px] mx-auto md:mx-0">
         <img
           src={bookData.coverUrl || "/placeholder.svg"}
           alt={bookData.title}          
@@ -128,7 +125,7 @@
       </div>
       <div class="flex flex-wrap gap-2 pt-2">
         {#each bookData.categories as category}
-          <CategoryTag name={category} />
+          <CategoryTag name={category} onclick={() => {}} />
         {/each}
       </div>
 
@@ -142,14 +139,14 @@
 
         {#if !isUpdatingProgress}
           <div class="flex justify-end">
-            <Button variant="outline" size="sm" onClick={() => isUpdatingProgress = true}>
+            <Button variant="outline" size="sm" onclick={() => isUpdatingProgress = true}>
               진행률 업데이트
             </Button>
           </div>
           {:else}
           <div class="space-y-3">
             <div class="flex items-center gap-2">
-              <Label htmlFor="currentPage" class="w-24">
+              <Label for="currentPage" class="w-24">
                 현재 페이지:
               </Label>
               <Input
@@ -158,7 +155,7 @@
                 min="0"
                 max={bookData.totalPages}
                 value={currentPage.toString()}
-                on:change={(e) => {
+                onchange={(e) => {
                   const target = e.target as HTMLInputElement;
                   currentPage = Number.parseInt(target.value) || 0;
                 }}
@@ -167,10 +164,10 @@
               <span class="text-sm text-muted-foreground">/ {bookData.totalPages}페이지</span>
             </div>
             <div class="flex justify-end gap-2">
-              <Button variant="outline" size="sm" onClick={() => isUpdatingProgress = false}>
+              <Button variant="outline" size="sm" onclick={() => isUpdatingProgress = false}>
                 취소
               </Button>
-              <Button size="sm" class="bg-theme-brown hover:bg-theme-brown/90" onClick={handleUpdateProgress}>
+              <Button size="sm" class="bg-theme-brown hover:bg-theme-brown/90" onclick={handleUpdateProgress}>
                 저장
               </Button>
             </div>
@@ -180,17 +177,17 @@
     </div>
   </div>
 
-  <Tabs value={activeTab}  class="space-y-4">
-    <TabsList class="grid w-full grid-cols-2">
-      <TabsTrigger value="notes">노트</TabsTrigger>
-      <TabsTrigger value="write">노트 작성</TabsTrigger>
-    </TabsList>
-    <TabsContent value="notes" class="space-y-4">
+  <Tabs.Root value={activeTab}  class="space-y-4">
+    <Tabs.List class="grid w-full grid-cols-2">
+      <Tabs.Trigger value="notes">노트</Tabs.Trigger>
+      <Tabs.Trigger value="write">노트 작성</Tabs.Trigger>
+    </Tabs.List>
+    <Tabs.Content value="notes" class="space-y-4">
       {#each bookData.notes as note}
         <NoteCard content={note.content} createdAt={note.createdAt} categories={note.categories} />
       {/each}
-    </TabsContent>
-    <TabsContent value="write">
+    </Tabs.Content>
+    <Tabs.Content value="write">
       <div class="space-y-4 bg-theme-gold/20 p-4 rounded-md">
         <div class="space-y-2">
           <h3 class="font-medium">카테고리 선택</h3>
@@ -199,7 +196,7 @@
               <CategoryTag
                 name={category}
                 isSelected={selectedCategories.includes(category)}
-                on:click={() => toggleCategory(category)}
+                onclick={() => toggleCategory(category)}
               />
             {/each}
           </div>
@@ -210,7 +207,7 @@
             placeholder="책에 대한 생각이나 인상 깊은 구절을 기록해보세요..."
             class="min-h-[200px] bg-white"
             value={noteContent}
-            on:change={(e) => {
+            onchange={(e) => {
               const target = e.target as HTMLTextAreaElement;
               noteContent = target.value;
             }}
@@ -218,14 +215,14 @@
         </div>
         <Button
           class="bg-theme-brown hover:bg-theme-brown/90"
-          onClick={handleSaveNote}
+          onclick={handleSaveNote}
           disabled={!noteContent.trim()}
         >
           <Save class="h-4 w-4 mr-2" />
           저장하기
         </Button>
       </div>
-    </TabsContent>
-  </Tabs>
+    </Tabs.Content>
+  </Tabs.Root>
 </div>
 

@@ -1,14 +1,8 @@
 <script lang="ts">
   import { Filter, Plus, Search, SortDesc } from "lucide-svelte"
-  import  Button  from "$lib/components/ui/button/Button.svelte"
-  import Input  from "$lib/components/ui/input/Input.svelte"
-  import DropdownMenu from "$lib/components/ui/dropdown-menu/DropdownMenu.svelte"
-  import DropdownMenuContent from "$lib/components/ui/dropdown-menu/DropdownMenuContent.svelte"
-  import DropdownMenuGroup from "$lib/components/ui/dropdown-menu/DropdownMenuGroup.svelte"
-  import DropdownMenuItem from "$lib/components/ui/dropdown-menu/DropdownMenuItem.svelte"
-  import DropdownMenuLabel from "$lib/components/ui/dropdown-menu/DropdownMenuLabel.svelte"
-  import DropdownMenuSeparator from "$lib/components/ui/dropdown-menu/DropdownMenuSeparator.svelte"
-  import DropdownMenuTrigger from "$lib/components/ui/dropdown-menu/DropdownMenuTrigger.svelte"
+  import { Button } from "$lib/components/ui/button/index.js";
+  import { Input } from "$lib/components/ui/input/index.js";
+  import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import RecentBookCard  from "$lib/components/book/RecentBookCard.svelte"
   import CategoryTag  from "$lib/components/category/CategoryTag.svelte"
 
@@ -174,85 +168,85 @@
         />
       </div>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger>
+      <DropdownMenu.DropdownMenu>
+        <DropdownMenu.DropdownMenuTrigger>
           <Button variant="outline" size="icon">
             <Filter class="h-4 w-4" />
             <span class="sr-only">필터</span>
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" class="w-56">
-          <DropdownMenuLabel>필터</DropdownMenuLabel>
-          <DropdownMenuSeparator />
+        </DropdownMenu.DropdownMenuTrigger>
+        <DropdownMenu.DropdownMenuContent align="end" class="w-56">
+          <DropdownMenu.DropdownMenuLabel>필터</DropdownMenu.DropdownMenuLabel>
+          <DropdownMenu.DropdownMenuSeparator />
 
-          <DropdownMenuGroup>
-            <DropdownMenuLabel class="text-xs font-normal text-muted-foreground">카테고리</DropdownMenuLabel>
+          <DropdownMenu.DropdownMenuGroup>
+            <DropdownMenu.DropdownMenuLabel class="text-xs font-normal text-muted-foreground">카테고리</DropdownMenu.DropdownMenuLabel>
             <div class="p-2 flex flex-wrap gap-1">
               {#each allCategories as category}
                 <CategoryTag
                   name={category}
                   size="sm"
                   isSelected={selectedCategories.includes(category)}
-                  on:click={() => toggleCategory(category)}
+                  onclick={() => toggleCategory(category)}
                 />
               {/each}
             </div>
-          </DropdownMenuGroup>
+          </DropdownMenu.DropdownMenuGroup>
 
-          <DropdownMenuSeparator />
+          <DropdownMenu.DropdownMenuSeparator />
 
-          <DropdownMenuItem
-            on:select={() => showFavoritesOnly = !showFavoritesOnly}
+          <DropdownMenu.DropdownMenuItem
+            onselect={() => showFavoritesOnly = !showFavoritesOnly}
             class="flex items-center gap-2"
           >
             <div
               class={`w-3 h-3 rounded-full ${showFavoritesOnly ? "bg-theme-brown" : "border border-muted-foreground"}`}
             ></div>
             <span>즐겨찾기만 보기</span>
-          </DropdownMenuItem>
+          </DropdownMenu.DropdownMenuItem>
 
-          <DropdownMenuSeparator />
+          <DropdownMenu.DropdownMenuSeparator />
 
-          <DropdownMenuItem on:select={clearFilters}>필터 초기화</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          <DropdownMenu.DropdownMenuItem onselect={clearFilters}>필터 초기화</DropdownMenu.DropdownMenuItem>
+        </DropdownMenu.DropdownMenuContent>
+      </DropdownMenu.DropdownMenu>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger>
+      <DropdownMenu.DropdownMenu>
+        <DropdownMenu.DropdownMenuTrigger>
           <Button variant="outline" size="icon">
             <SortDesc class="h-4 w-4" />
             <span class="sr-only">정렬</span>
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem
-            on:select={() => sortOrder = "newest"}
+        </DropdownMenu.DropdownMenuTrigger>
+        <DropdownMenu.DropdownMenuContent align="end">
+          <DropdownMenu.DropdownMenuItem
+            onselect={() => sortOrder = "newest"}
             class={sortOrder === "newest" ? "bg-muted" : ""}
           >
             최신순
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            on:select={() => sortOrder = "oldest"}
+          </DropdownMenu.DropdownMenuItem>
+          <DropdownMenu.DropdownMenuItem
+            onselect={() => sortOrder = "oldest"}
             class={sortOrder === "oldest" ? "bg-muted" : ""}
           >
             오래된순
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            on:select={() => sortOrder = "title"}
+          </DropdownMenu.DropdownMenuItem>
+          <DropdownMenu.DropdownMenuItem
+            onselect={() => sortOrder = "title"}
             class={sortOrder === "title" ? "bg-muted" : ""}
           >
             제목순
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            on:select={() => sortOrder = "author"}
+          </DropdownMenu.DropdownMenuItem>
+          <DropdownMenu.DropdownMenuItem
+            onselect={() => sortOrder = "author"}
             class={sortOrder === "author" ? "bg-muted" : ""}
           >
             저자순
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          </DropdownMenu.DropdownMenuItem>
+        </DropdownMenu.DropdownMenuContent>
+      </DropdownMenu.DropdownMenu>
 
-      <Button class="bg-theme-brown hover:bg-theme-brown/90" asChild>
+      <Button class="bg-theme-brown hover:bg-theme-brown/90">
         <a href="/books/add" class="flex items-center gap-2">
           <Plus class="h-4 w-4" />
           <span class="hidden md:inline">책 등록</span>
@@ -269,13 +263,13 @@
           name={category}
           size="sm"
           isSelected={true}
-          on:click={() => toggleCategory(category)}
+          onclick={() => toggleCategory(category)}
         />
       {/each}
       {#if showFavoritesOnly}
-        <CategoryTag name="즐겨찾기" size="sm" isSelected={true} on:click={() => showFavoritesOnly = false} />
+        <CategoryTag name="즐겨찾기" size="sm" isSelected={true} onclick={() => showFavoritesOnly = false} />
       {/if}
-      <Button variant="ghost" size="sm" on:click={clearFilters} class="h-6 px-2 text-xs">
+      <Button variant="ghost" size="sm" onclick={clearFilters} class="h-6 px-2 text-xs">
         초기화
       </Button>
     </div>
@@ -295,11 +289,11 @@
         {/if}
       </p>
       {#if searchQuery || selectedCategories.length > 0 || showFavoritesOnly}
-        <Button variant="outline" class="mt-4" on:click={clearFilters}>
+        <Button variant="outline" class="mt-4" onclick={clearFilters}>
           필터 초기화
         </Button>
       {/if}
-      <Button class="mt-2 bg-theme-brown hover:bg-theme-brown/90" asChild>
+      <Button class="mt-2 bg-theme-brown hover:bg-theme-brown/90">
         <a href="/books/search">책 등록하기</a>
       </Button>
     </div>

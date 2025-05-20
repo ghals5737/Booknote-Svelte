@@ -1,17 +1,9 @@
 <script lang="ts">
     import { BookOpen, Filter, Search, SortDesc } from "lucide-svelte"
-    import Button from "$lib/components/ui/button/Button.svelte"
-    import DropdownMenu from "$lib/components/ui/dropdown-menu/DropdownMenu.svelte"
-    import DropdownMenuContent from "$lib/components/ui/dropdown-menu/DropdownMenuContent.svelte"
-    import DropdownMenuItem from "$lib/components/ui/dropdown-menu/DropdownMenuItem.svelte"
-    import DropdownMenuLabel from "$lib/components/ui/dropdown-menu/DropdownMenuLabel.svelte"
-    import DropdownMenuSeparator from "$lib/components/ui/dropdown-menu/DropdownMenuSeparator.svelte"
-    import DropdownMenuTrigger from "$lib/components/ui/dropdown-menu/DropdownMenuTrigger.svelte"
-    import DropdownMenuGroup from "$lib/components/ui/dropdown-menu/DropdownMenuGroup.svelte"
-    import Input from "$lib/components/ui/input/Input.svelte"
-    import Tabs from "$lib/components/ui/tabs/Tabs.svelte"
-    import TabsList from "$lib/components/ui/tabs/TabsList.svelte"
-    import TabsTrigger from "$lib/components/ui/tabs/TabsTrigger.svelte"
+    import { Button } from "$lib/components/ui/button/index.js";
+    import { Input } from "$lib/components/ui/input/index.js";
+    import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";    
+    import * as Tabs from "$lib/components/ui/tabs/index.js";
     import NoteCard from "$lib/components/note/NoteCard.svelte"
     import BookNoteCard from "$lib/components/note/BookNoteCard.svelte"
     import CategoryTag from "$lib/components/category/CategoryTag.svelte"
@@ -141,44 +133,43 @@
               placeholder="노트 내용 검색..."
               class="pl-8"
               value={searchQuery}
-              onChange={(e: Event) => searchQuery = (e.target as HTMLInputElement).value}
+              onchange={(e: any) => searchQuery = e.target.value}
             />
           </div>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger >
               <Button variant="outline" size="icon">
                 <Filter class="h-4 w-4" />
                 <span class="sr-only">필터</span>
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" class="w-56">
-              <DropdownMenuLabel>필터</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content align="end" class="w-56">
+              <DropdownMenu.Label>필터</DropdownMenu.Label>
+              <DropdownMenu.Separator />
 
-              <DropdownMenuGroup>
-                <DropdownMenuLabel class="text-xs font-normal text-muted-foreground">카테고리</DropdownMenuLabel>
+              <DropdownMenu.Group>
+                <DropdownMenu.Label class="text-xs font-normal text-muted-foreground">카테고리</DropdownMenu.Label>
                 <div class="p-2 flex flex-wrap gap-1">
                   {#each allCategories as category}
                     <CategoryTag
                       name={category}
                       size="sm"
                       isSelected={selectedCategories.includes(category)}
-                      on:click={() => toggleCategory(category)}
+                      onclick={() => toggleCategory(category)}
                     />
                   {/each}
                 </div>
-              </DropdownMenuGroup>
+              </DropdownMenu.Group>
 
-              <DropdownMenuSeparator />
+              <DropdownMenu.Separator />
 
-              <DropdownMenuGroup>
-                <DropdownMenuLabel class="text-xs font-normal text-muted-foreground">책</DropdownMenuLabel>
+              <DropdownMenu.Group>
+                <DropdownMenu.Label class="text-xs font-normal text-muted-foreground">책</DropdownMenu.Label>
                 {#each allBooks as book}
-                  <DropdownMenuItem
-                    key={book.id}
-                    className="flex items-center gap-2"
-                    onSelect={(e: Event) => {
+                  <DropdownMenu.Item
+                    class="flex items-center gap-2"
+                    onclick={(e: Event) => {
                       e.preventDefault()
                       toggleBook(book.id)
                     }}
@@ -187,54 +178,54 @@
                       class={`w-3 h-3 rounded-full ${selectedBooks.includes(book.id) ? "bg-[#96CEB4]" : "border border-muted-foreground"}`}
                     ></div>
                     <span>{book.title}</span>
-                  </DropdownMenuItem>
+                  </DropdownMenu.Item>
                 {/each}
-              </DropdownMenuGroup>
+              </DropdownMenu.Group>
 
-              <DropdownMenuSeparator />
+              <DropdownMenu.Separator />
 
-              <DropdownMenuItem onSelect={clearFilters}>필터 초기화</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              <DropdownMenu.Item onSelect={clearFilters}>필터 초기화</DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>
               <Button variant="outline" size="icon">
                 <SortDesc class="h-4 w-4" />
                 <span class="sr-only">정렬</span>
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content align="end">
+              <DropdownMenu.Item
                 onSelect={() => sortOrder = "newest"}
                 class={sortOrder === "newest" ? "bg-muted" : ""}
               >
                 최신순
-              </DropdownMenuItem>
-              <DropdownMenuItem
+              </DropdownMenu.Item>
+              <DropdownMenu.Item
                 onSelect={() => sortOrder = "oldest"}
                 class={sortOrder === "oldest" ? "bg-muted" : ""}
               >
                 오래된순
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              </DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
 
-          <Tabs value={view} onValueChange={(v) => view = v as "list" | "grid"} class="hidden md:block">
-            <TabsList class="grid w-16 grid-cols-2">
-              <TabsTrigger value="list" class="px-2">
+          <Tabs.Root value={view} onValueChange={(v) => view = v as "list" | "grid"} class="hidden md:block">
+            <Tabs.List class="grid w-16 grid-cols-2">
+              <Tabs.Trigger value="list" class="px-2">
                 <BookOpen class="h-4 w-4" />
-              </TabsTrigger>
-              <TabsTrigger value="grid" class="px-2">
+              </Tabs.Trigger>
+              <Tabs.Trigger value="grid" class="px-2">
                 <div class="grid grid-cols-2 gap-0.5">
                   <div class="w-1.5 h-1.5 bg-current rounded-sm"></div>
                   <div class="w-1.5 h-1.5 bg-current rounded-sm"></div>
                   <div class="w-1.5 h-1.5 bg-current rounded-sm"></div>
                   <div class="w-1.5 h-1.5 bg-current rounded-sm"></div>
                 </div>
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
+              </Tabs.Trigger>
+            </Tabs.List>
+          </Tabs.Root>
         </div>
       </div>
 
@@ -246,7 +237,7 @@
               name={category}
               size="sm"
               isSelected={true}
-              on:click={() => toggleCategory(category)}
+              onclick={() => toggleCategory(category)}
             />
           {/each}
           {#each selectedBooks as bookId}
@@ -255,11 +246,11 @@
                 name={allBooks.find((b) => b.id === bookId)?.title || ""}
                 size="sm"
                 isSelected={true}
-                on:click={() => toggleBook(bookId)}
+                onclick={() => toggleBook(bookId)}
               />
             {/if}
           {/each}
-          <Button variant="ghost" size="sm" onClick={clearFilters} class="h-6 px-2 text-xs">
+          <Button variant="ghost" size="sm" onclick={clearFilters} class="h-6 px-2 text-xs">
             초기화
           </Button>
         </div>
@@ -275,7 +266,7 @@
               : "아직 작성한 노트가 없습니다. 책을 등록하고 노트를 작성해보세요."}
           </p>
           {#if searchQuery || selectedCategories.length > 0 || selectedBooks.length > 0}
-            <Button variant="outline" class="mt-4" onClick={clearFilters}>
+            <Button variant="outline" class="mt-4" onclick={clearFilters}>
               필터 초기화
             </Button>
           {/if}

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Button from '$lib/components/ui/button/Button.svelte';
+    import { Button } from "$lib/components/ui/button/index.js";
     import { ChevronRight, Book, BookOpen, Plus } from 'lucide-svelte';
-    import Separator from '$lib/components/ui/separator/Separator.svelte';
+    import { Separator } from "$lib/components/ui/separator/index.js";
     import StatsCard from '$lib/components/stat-card/StatsCard.svelte'
     import RecentBookCard from '$lib/components/book/RecentBookCard.svelte';
 </script>
@@ -10,7 +10,7 @@
     <section class="space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold">최근 등록한 책</h2>
-        <Button variant="ghost" size="sm" asChild>
+        <Button variant="ghost" size="sm">
           <a href="/books" class="flex items-center gap-1">
             더보기
             <ChevronRight class="h-4 w-4" />
@@ -56,7 +56,7 @@
     <section class="space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-bold">독서 통계</h2>
-        <Button variant="ghost" size="sm" asChild>
+        <Button variant="ghost" size="sm">
           <a href="/logs" class="flex items-center gap-1">
             자세히 보기
             <ChevronRight class="h-4 w-4" />
@@ -91,7 +91,7 @@
           <h2 class="text-2xl font-bold">새로운 책을 등록해보세요</h2>
           <p class="text-muted-foreground">책을 검색하고 나만의 독서 노트를 작성해보세요.</p>
         </div>
-        <Button class="bg-theme-brown hover:bg-theme-brown/90 text-white" asChild>
+        <Button class="bg-theme-brown hover:bg-theme-brown/90 text-white">
           <a href="/books/search" class="flex items-center gap-2">
             <Plus class="h-4 w-4" />책 등록하기
           </a>

@@ -1,22 +1,12 @@
 <script lang="ts">
     import { ChevronDown } from "lucide-svelte";
-    import Button from "$lib/components/ui/button/Button.svelte";    
-    import DropdownMenu from "$lib/components/ui/dropdown-menu/DropdownMenu.svelte";
-    import DropdownMenuContent from "$lib/components/ui/dropdown-menu/DropdownMenuContent.svelte";
-    import DropdownMenuItem from "$lib/components/ui/dropdown-menu/DropdownMenuItem.svelte";
-    import DropdownMenuTrigger from "$lib/components/ui/dropdown-menu/DropdownMenuTrigger.svelte";
-    import Tabs from "$lib/components/ui/tabs/Tabs.svelte";
-    import TabsContent from "$lib/components/ui/tabs/TabsContent.svelte";
-    import TabsList from "$lib/components/ui/tabs/TabsList.svelte";
-    import TabsTrigger from "$lib/components/ui/tabs/TabsTrigger.svelte";
-    import Card from "$lib/components/ui/card/Card.svelte";
-    import CardContent from "$lib/components/ui/card/CardContent.svelte";
-    import CardDescription from "$lib/components/ui/card/CardDescription.svelte";
-    import CardHeader from "$lib/components/ui/card/CardHeader.svelte";
-    import CardTitle from "$lib/components/ui/card/CardTitle.svelte";
-	import ReadingActivityChart from "$lib/components/log/ReadingActivityChart.svelte";
-	import ReadingTimeline from "$lib/components/log/ReadingTimeline.svelte";
-	import KeywordCloud from "$lib/components/log/KeywordCloud.svelte";
+    import { Button } from "$lib/components/ui/button/index.js";
+    import * as Tabs from "$lib/components/ui/tabs/index.js";
+    import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
+    import * as Card from "$lib/components/ui/card/index.js";    
+    import ReadingActivityChart from "$lib/components/log/ReadingActivityChart.svelte";
+    import ReadingTimeline from "$lib/components/log/ReadingTimeline.svelte";
+    import KeywordCloud from "$lib/components/log/KeywordCloud.svelte";
 
     let period = "이번 달";
 </script>
@@ -24,60 +14,60 @@
 <div class="container py-6 space-y-6">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
       <h1 class="text-3xl font-bold">독서 활동</h1>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger>
           <Button variant="outline" class="w-[180px] justify-between">
             {period}
             <ChevronDown class="h-4 w-4 ml-2" />
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem on:click={() => period = "이번 주"}>이번 주</DropdownMenuItem>
-          <DropdownMenuItem on:click={() => period = "이번 달"}>이번 달</DropdownMenuItem>
-          <DropdownMenuItem on:click={() => period = "올해"}>올해</DropdownMenuItem>
-          <DropdownMenuItem on:click={() => period = "전체 기간"}>전체 기간</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content>
+          <DropdownMenu.Item onclick={() => period = "이번 주"}>이번 주</DropdownMenu.Item>
+          <DropdownMenu.Item onclick={() => period = "이번 달"}>이번 달</DropdownMenu.Item>
+          <DropdownMenu.Item onclick={() => period = "올해"}>올해</DropdownMenu.Item>
+          <DropdownMenu.Item onclick={() => period = "전체 기간"}>전체 기간</DropdownMenu.Item>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
     </div>
 
-    <Tabs defaultValue="chart" class="space-y-4">
-      <TabsList class="grid w-full grid-cols-3">
-        <TabsTrigger value="chart">차트</TabsTrigger>
-        <TabsTrigger value="timeline">타임라인</TabsTrigger>
-        <TabsTrigger value="keywords">키워드</TabsTrigger>
-      </TabsList>
-      <TabsContent value="chart">
-        <Card>
-          <CardHeader>
-            <CardTitle>독서 활동 통계</CardTitle>
-            <CardDescription>{period} 동안의 독서 활동을 그래프로 확인하세요</CardDescription>
-          </CardHeader>
-          <CardContent class="h-[400px]">
+    <Tabs.Root value="chart" class="space-y-4">
+      <Tabs.List class="grid w-full grid-cols-3">
+        <Tabs.Trigger value="chart">차트</Tabs.Trigger>
+        <Tabs.Trigger value="timeline">타임라인</Tabs.Trigger>
+        <Tabs.Trigger value="keywords">키워드</Tabs.Trigger>
+      </Tabs.List>
+      <Tabs.Content value="chart">
+        <Card.Root>
+          <Card.Header>
+            <Card.Title>독서 활동 통계</Card.Title>
+            <Card.Description>{period} 동안의 독서 활동을 그래프로 확인하세요</Card.Description>
+          </Card.Header>
+          <Card.Content class="h-[400px]">
             <ReadingActivityChart period={period} />
-          </CardContent>
-        </Card>
-      </TabsContent>
-      <TabsContent value="timeline">
-        <Card>
-          <CardHeader>
-            <CardTitle>독서 타임라인</CardTitle>
-            <CardDescription>{period} 동안의 독서 활동을 시간순으로 확인하세요</CardDescription>
-          </CardHeader>
-          <CardContent>
+          </Card.Content>
+        </Card.Root>
+      </Tabs.Content>
+      <Tabs.Content value="timeline">
+        <Card.Root>
+          <Card.Header>
+            <Card.Title>독서 타임라인</Card.Title>
+            <Card.Description>{period} 동안의 독서 활동을 시간순으로 확인하세요</Card.Description>
+          </Card.Header>
+          <Card.Content>
             <ReadingTimeline period={period} />
-          </CardContent>
-        </Card>
-      </TabsContent>
-      <TabsContent value="keywords">
-        <Card>
-          <CardHeader>
-            <CardTitle>자주 사용한 키워드</CardTitle>
-            <CardDescription>{period} 동안 노트에 자주 사용한 키워드를 확인하세요</CardDescription>
-          </CardHeader>
-          <CardContent class="h-[400px]">
+          </Card.Content>
+        </Card.Root>
+      </Tabs.Content>
+      <Tabs.Content value="keywords">
+        <Card.Root>
+          <Card.Header>
+            <Card.Title>자주 사용한 키워드</Card.Title>
+            <Card.Description>{period} 동안 노트에 자주 사용한 키워드를 확인하세요</Card.Description>
+          </Card.Header>
+          <Card.Content class="h-[400px]">
             <KeywordCloud period={period} />
-          </CardContent>
-        </Card>
-      </TabsContent>
-    </Tabs>
+          </Card.Content>
+        </Card.Root>
+      </Tabs.Content>
+    </Tabs.Root>
 </div>

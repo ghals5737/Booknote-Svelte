@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { cn } from "$lib/utils/utils.js";
+    import { cn } from '$lib/utils.js';
     export let currentPage: number;
     export let totalPages: number;
     export let className: string = "";

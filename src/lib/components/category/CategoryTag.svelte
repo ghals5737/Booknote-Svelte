@@ -1,10 +1,11 @@
 <script lang="ts">
-    import { cn } from "$lib/utils";
-    import Badge from "$lib/components/ui/badge/Badge.svelte";
+    import { cn } from "$lib/utils.js";
+    import { Badge } from "$lib/components/ui/badge/index.js";
 
     export let name: string;
     export let size: "sm" | "md" = "md";
     export let isSelected = false;
+    export let onclick: () => void;
 </script>
 
 <Badge
@@ -16,7 +17,7 @@
             ? "bg-theme-gold text-theme-black hover:bg-theme-gold/90"
             : "hover:bg-theme-gold hover:text-theme-black hover:border-theme-gold"
     )}
-    on:click
+    onclick={onclick}
 >
     {name}
 </Badge>

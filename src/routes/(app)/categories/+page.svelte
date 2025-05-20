@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Plus } from "lucide-svelte"
-    import Button from "$lib/components/ui/button/Button.svelte"
-    import Input  from "$lib/components/ui/input/Input.svelte"
+    import { Button } from "$lib/components/ui/button/index.js";
+    import { Input } from "$lib/components/ui/input/index.js";
     import CategoryCard from "$lib/components/category/CategoryCard.svelte"
 
     const initialCategories = [
@@ -38,7 +38,7 @@
           type="text"
           placeholder="새 카테고리 이름"
           value={newCategory}
-          on:change={(e) => newCategory = (e.target as HTMLInputElement).value}
+          onchange={(e) => newCategory = (e.target as HTMLInputElement).value}
           class="max-w-[200px]"
         />
         <Button

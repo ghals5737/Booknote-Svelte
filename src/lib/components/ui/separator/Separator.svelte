@@ -1,21 +1,20 @@
 <script lang="ts">
-  import { cn } from "$lib/utils/utils.js";
+	import { Separator as SeparatorPrimitive } from "bits-ui";
+	import { cn } from "$lib/utils.js";
 
-  let className = "";
-  export { className as class };
-  export let orientation: "horizontal" | "vertical" = "horizontal";
-  export let decorative = true;
+	let {
+		ref = $bindable(null),
+		class: className,
+		...restProps
+	}: SeparatorPrimitive.RootProps = $props();
 </script>
 
-<div
-  class={cn(
-    "shrink-0 bg-border", 
-    orientation === "horizontal" ? "h-[1px] w-full" : "h-full w-[1px]",
-    className
-  )}
-  role={decorative ? "none" : "separator"}
-  aria-orientation={decorative ? undefined : orientation}
-  data-orientation={orientation}
-  {...$$restProps}
->
-</div> 
+<SeparatorPrimitive.Root
+	bind:ref
+	data-slot="separator-root"
+	class={cn(
+		"bg-border shrink-0 data-[orientation=horizontal]:h-px data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-px",
+		className
+	)}
+	{...restProps}
+/>

@@ -1,13 +1,10 @@
-<script lang="ts">
-    import { cn } from '$lib/utils/utils.js';
+<script lang="ts">    
     import { BookOpen,Heart } from 'lucide-svelte';
-    import Card from '$lib/components/ui/card/Card.svelte';
-    import CardContent from '$lib/components/ui/card/CardContent.svelte';
-    import CardHeader from '$lib/components/ui/card/CardHeader.svelte';
-    import CardFooter from '$lib/components/ui/card/CardFooter.svelte';
-    import Badge from '$lib/components/ui/badge/Badge.svelte';
-    import Button from '$lib/components/ui/button/Button.svelte';
+    import * as Card from "$lib/components/ui/card/index.js";
+    import { Badge } from "$lib/components/ui/badge/index.js";
+    import { Button } from "$lib/components/ui/button/index.js";
     import ReadingProgress from '$lib/components/book/ReadingProgress.svelte';
+	  import { cn } from '$lib/utils.js';
 
     export let coverUrl: string;
     export let title: string;
@@ -22,8 +19,8 @@
     const hasProgress = currentPage > 0 && totalPages > 0;
 </script>
 
-<Card class={cn("overflow-hidden", className)}>
-    <CardHeader class="p-0">
+<Card.Root class={cn("overflow-hidden", className)}>
+    <Card.Header class="p-0">
       <div class="relative h-[200px] w-full bg-gray-50">
         <img 
           src={coverUrl || "/placeholder.svg"} 
@@ -32,15 +29,15 @@
         />
         <Button
           size="icon"
-          class="absolute top-2 right-2 bg-white hover:bg-[#854836] backdrop-blur-sm rounded-full"
+          class="absolute top-2 right-2 bg-white hover:bg-theme-brown backdrop-blur-xs rounded-full"
           aria-label={isFavorite ? "즐겨찾기 해제" : "즐겨찾기 추가"}
         >
           <Heart class={cn("h-4 w-4", isFavorite && "fill-theme-brown text-theme-brown")} />
         </Button>       
       </div>
      
-    </CardHeader>
-    <CardContent class="p-4">    
+    </Card.Header>
+    <Card.Content class="p-4">    
       <div class="space-y-1.5">        
         <a
           href={`/books/${encodeURIComponent(title)}`}
@@ -69,9 +66,9 @@
           </div>
         {/if}
       </div>
-    </CardContent>
-    <CardFooter class="p-4 pt-0 flex justify-between items-center">
+    </Card.Content>
+    <Card.Footer class="p-4 pt-0 flex justify-between items-center">
       <p class="text-xs text-muted-foreground">{lastUpdated}</p>
       <Badge class="bg-theme-gold hover:bg-theme-gold/90">노트 {noteCount}개</Badge>
-    </CardFooter>
-  </Card>
+    </Card.Footer>
+  </Card.Root>

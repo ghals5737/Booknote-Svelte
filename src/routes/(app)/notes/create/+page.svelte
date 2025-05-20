@@ -1,18 +1,12 @@
 <script lang="ts">
     import { ArrowLeft, Save } from "lucide-svelte"
     import { goto } from "$app/navigation"
-    import { toast } from "$lib/components/ui/toast/index.js"
-    import Button from "$lib/components/ui/button/Button.svelte"
-    import Label from "$lib/components/ui/label/Label.svelte"
-    import Input from "$lib/components/ui/input/Input.svelte"
-    import Textarea from "$lib/components/ui/textarea/Textarea.svelte"
-    import Select from "$lib/components/ui/select/Select.svelte"
-    import SelectContent from "$lib/components/ui/select/SelectContent.svelte"    
-    import SelectItem from "$lib/components/ui/select/SelectItem.svelte"
-    import SelectGroup from "$lib/components/ui/select/SelectGroup.svelte"
-    import SelectLabel from "$lib/components/ui/select/SelectLabel.svelte"
-    import SelectTrigger from "$lib/components/ui/select/SelectTrigger.svelte"
-    import SelectValue from "$lib/components/ui/select/SelectValue.svelte"
+    //import { toast } from "$lib/components/ui/toast/index.js"
+    import { Button } from "$lib/components/ui/button/index.js";
+    import { Label } from "$lib/components/ui/label/index.js";
+    import { Input } from "$lib/components/ui/input/index.js";
+    import { Textarea } from "$lib/components/ui/textarea/index.js";
+    import * as Select from "$lib/components/ui/select/index.js";
     import CategoryTag from "$lib/components/category/CategoryTag.svelte"
 
     const mockBooks = [
@@ -60,18 +54,18 @@
 
     const handleSaveNote = () => {
         if (!selectedBook) {
-            toast({
-                title: "책을 선택해주세요",
-                variant: "destructive",
-            })
+            // toast({
+            //     title: "책을 선택해주세요",
+            //     variant: "destructive",
+            // })
             return
         }
 
         if (!content.trim()) {
-            toast({
-                title: "노트 내용을 입력해주세요",
-                variant: "destructive",
-            })
+            // toast({
+            //     title: "노트 내용을 입력해주세요",
+            //     variant: "destructive",
+            // })
             return
         }
         console.log("Saving note:", {
@@ -81,17 +75,17 @@
             categories: selectedCategories,
         })
 
-        toast({
-            title: "노트가 저장되었습니다",
-            description: "노트 목록에서 확인할 수 있습니다.",
-        })
+        // toast({
+        //     title: "노트가 저장되었습니다",
+        //     description: "노트 목록에서 확인할 수 있습니다.",
+        // })
         goto("/notes")
     }
 </script>
 
 <div class="container py-6 space-y-6 max-w-3xl">
     <div class="flex items-center gap-4">
-      <Button variant="ghost" size="icon" asChild>
+      <Button variant="ghost" size="icon">
         <a href="/notes">
           <ArrowLeft class="h-5 w-5" />
           <span class="sr-only">뒤로 가기</span>
@@ -102,42 +96,45 @@
 
     <div class="space-y-6">
       <div class="space-y-2">
-        <Label htmlFor="book">책 선택</Label>
-        <Select value={selectedBook} >
-          <SelectTrigger id="book">
-            <SelectValue placeholder="노트를 작성할 책을 선택하세요" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>내 서재</SelectLabel>
+        <Label for="book">책 선택</Label>
+        <Select.Root
+          type="single"
+          bind:value={selectedBook} 
+        >
+          <Select.Trigger id="book">
+            노트를 작성할 책을 선택하세요
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Group>
+              <Select.Label>내 서재</Select.Label>
               {#each mockBooks as book}
-                <SelectItem key={book.id} value={book.id}>
+                <Select.Item value={book.id}>
                   {book.title} - {book.author}
-                </SelectItem>
+                </Select.Item>
               {/each}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+            </Select.Group>
+          </Select.Content>
+        </Select.Root>
       </div>
 
       <div class="space-y-2">
-        <Label htmlFor="title">제목 (선택사항)</Label>
+        <Label for="title">제목 (선택사항)</Label>
         <Input
           id="title"
           placeholder="노트 제목을 입력하세요"
           value={title}
-          onChange={(e: Event) => title = (e.target as HTMLInputElement).value}
+          onchange={(e: any) => title = e.target.value}
         />
       </div>
 
       <div class="space-y-2">
-        <Label htmlFor="content">노트 내용</Label>
+        <Label for="content">노트 내용</Label>
         <Textarea
           id="content"
           placeholder="책에 대한 생각이나 인상 깊은 구절을 기록해보세요..."
           class="min-h-[300px]"
           value={content}
-          onChange={(e: Event) => content = (e.target as HTMLTextAreaElement).value}
+          onchange={(e: any) => content = e.target.value}
         />
       </div>
 
@@ -148,7 +145,7 @@
             <CategoryTag
               name={category}
               isSelected={selectedCategories.includes(category)}
-              on:click={() => toggleCategory(category)}
+              onclick={() => toggleCategory(category)}
             />
           {/each}
         </div>
@@ -156,8 +153,8 @@
           <Input
             placeholder="새 카테고리 추가"
             value={newCategory}
-            onChange={(e: Event) => newCategory = (e.target as HTMLInputElement).value}
-            onKeyDown={(e: KeyboardEvent) => {
+            onchange={(e: any) => newCategory = e.target.value}
+            onkeydown={(e: any) => {
               if (e.key === "Enter") {
                 e.preventDefault()
                 addNewCategory()
@@ -167,7 +164,7 @@
           <Button
             type="button"
             variant="outline"
-            onClick={addNewCategory}
+            onclick={addNewCategory}
             disabled={!newCategory.trim()}
             class="shrink-0"
           >
@@ -186,7 +183,7 @@
               <CategoryTag
                 name={category}
                 isSelected={true}
-                on:click={() => toggleCategory(category)}
+                onclick={() => toggleCategory(category)}
               />
             {/each}
           {/if}
@@ -194,10 +191,10 @@
       </div>
 
       <div class="flex justify-end gap-4">
-        <Button variant="outline" asChild>
+        <Button variant="outline">
           <a href="/notes">취소</a>
         </Button>
-        <Button class="bg-theme-brown hover:bg-theme-brown/90" on:click={handleSaveNote}>
+        <Button class="bg-theme-brown hover:bg-theme-brown/90" onclick={handleSaveNote}>
           <Save class="h-4 w-4 mr-2" />
           저장하기
         </Button>

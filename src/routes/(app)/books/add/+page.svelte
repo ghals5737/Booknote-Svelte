@@ -1,25 +1,16 @@
 <script lang="ts">
     import { ArrowLeft, Calendar, Check, Save, Search, Upload } from 'lucide-svelte';
-    import Button from '$lib/components/ui/button/Button.svelte';
-    import Card from '$lib/components/ui/card/Card.svelte';
-    import CardContent from '$lib/components/ui/card/CardContent.svelte';
-    import CardDescription from '$lib/components/ui/card/CardDescription.svelte';
-    import CardHeader from '$lib/components/ui/card/CardHeader.svelte';
-    import CardTitle from '$lib/components/ui/card/CardTitle.svelte';
-    import Separator from '$lib/components/ui/separator/Separator.svelte';
-    import Input  from '$lib/components/ui/input/Input.svelte';
-    import Label  from '$lib/components/ui/label/Label.svelte';
-    import Tabs from '$lib/components/ui/tabs/Tabs.svelte';
-    import TabsContent from '$lib/components/ui/tabs/TabsContent.svelte';
-    import TabsList from '$lib/components/ui/tabs/TabsList.svelte';
-    import TabsTrigger from '$lib/components/ui/tabs/TabsTrigger.svelte';
-    import Textarea from '$lib/components/ui/textarea/Textarea.svelte';
+    import { Button } from "$lib/components/ui/button/index.js";
+    import * as Card from "$lib/components/ui/card/index.js";
+    import { Separator } from "$lib/components/ui/separator/index.js";
+    import { Input } from "$lib/components/ui/input/index.js";
+    import { Label } from "$lib/components/ui/label/index.js";
+    import * as Tabs from "$lib/components/ui/tabs/index.js";
+    import { Textarea } from "$lib/components/ui/textarea/index.js";
     import BookScan from '$lib/components/book/BookScan.svelte';
-    import Popover from '$lib/components/ui/popover/Popover.svelte';
-    import PopoverContent from '$lib/components/ui/popover/PopoverContent.svelte';
-    import PopoverTrigger from '$lib/components/ui/popover/PopoverTrigger.svelte';
+    import * as Popover from "$lib/components/ui/popover/index.js";
     //import CalendarComponent from '$lib/components/ui/calendar/Calendar.svelte';    
-    import { toast } from "$lib/components/ui/toast/index.js"
+    // import { toast } from "$lib/components/ui/toast/index.js"
     import ReadingProgress from '$lib/components/book/ReadingProgress.svelte';
     import CategoryTag from '$lib/components/category/CategoryTag.svelte';
 
@@ -140,18 +131,18 @@
 
   const handleSave = () => {
     if (!bookInfo.title) {
-      toast({
-        title: "책 제목을 입력해주세요",
-        variant: "destructive",
-      })
+      // toast({
+      //   title: "책 제목을 입력해주세요",
+      //   variant: "destructive",
+      // })
       return
     }
 
     if (!bookInfo.author) {
-      toast({
-        title: "저자를 입력해주세요",
-        variant: "destructive",
-      })
+      // toast({
+      //   title: "저자를 입력해주세요",
+      //   variant: "destructive",
+      // })
       return
     }
 
@@ -170,10 +161,10 @@
     // 실제 구현에서는 API 호출을 통해 책을 저장해야 합니다
     console.log("Saving book:", { ...bookInfo, readingStatus })
 
-    toast({
-      title: "책이 등록되었습니다",
-      description: "내 서재에서 확인할 수 있습니다.",
-    })
+    // toast({
+    //   title: "책이 등록되었습니다",
+    //   description: "내 서재에서 확인할 수 있습니다.",
+    // })
 
     // 저장 후 내 서재 페이지로 이동
     window.location.href = "/books"
@@ -261,7 +252,7 @@
   
 <div class="container py-6 space-y-6 max-w-4xl">
   <div class="flex items-center gap-4">
-    <Button variant="ghost" size="icon" asChild>
+    <Button variant="ghost" size="icon">
       <a href="/books">
         <ArrowLeft class="h-5 w-5" />
         <span class="sr-only">뒤로 가기</span>
@@ -272,8 +263,8 @@
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">    
     <div class="md:col-span-1 space-y-4">
-      <Card>
-        <CardContent class="p-4 space-y-4">
+      <Card.Root>
+        <Card.Content class="p-4 space-y-4">
           <h2 class="text-lg font-semibold">책 검색</h2>
           <form onsubmit={handleSearch} class="space-y-2">
             <div class="flex gap-2">
@@ -281,7 +272,7 @@
                 type="search"
                 placeholder="책 제목, 저자 검색"
                 value={searchQuery}
-                onChange={(e: any) => searchQuery = e.target.value}
+                onchange={(e: any) => searchQuery = e.target.value}
                 class="flex-1"
               />
               <Button
@@ -309,7 +300,7 @@
                   tabindex="0"
                   role="button"
                 >
-                  <div class="relative h-16 w-12 flex-shrink-0">
+                  <div class="relative h-16 w-12 shrink-0">
                     <img
                       src={book.coverUrl || "/placeholder.svg"}
                       alt={book.title}
@@ -335,7 +326,7 @@
 
           <Separator />
 
-          <div class="relative aspect-[3/4] w-full bg-muted rounded-md overflow-hidden">
+          <div class="relative aspect-3/4 w-full bg-muted rounded-md overflow-hidden">
             <img
               src={bookInfo.coverUrl || "/placeholder.svg"}
               alt={bookInfo.title || "책 표지"}
@@ -343,46 +334,46 @@
             />
           </div>
           <div class="space-y-2">
-            <Label htmlFor="cover">책 표지 업로드</Label>
+            <Label for="cover">책 표지 업로드</Label>
             <div class="flex items-center gap-2">
-              <Input id="cover" type="file" accept="image/*" class="hidden" onChange={handleImageUpload} />
+              <Input id="cover" type="file" accept="image/*" class="hidden" onchange={handleImageUpload} />
               <Button
                 variant="outline"
                 class="w-full"
-                onClick={() => document.getElementById("cover")?.click()}
+                onclick={() => document.getElementById("cover")?.click()}
               >
                 <Upload class="h-4 w-4 mr-2" />
                 이미지 업로드
               </Button>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </Card.Content>
+      </Card.Root>
     </div>
 
     <div class="md:col-span-2 space-y-4">
-      <Card>
-        <CardContent class="p-6 space-y-4">
+      <Card.Root>
+        <Card.Content class="p-6 space-y-4">
           <h2 class="text-xl font-semibold">책 정보</h2>
 
           <div class="space-y-4">
             <div class="space-y-2">
-              <Label htmlFor="title">책 제목 *</Label>
+              <Label for="title">책 제목 *</Label>
               <Input
                 id="title"
                 value={bookInfo.title}
-                on:change={(e: any) => bookInfo.title = e.target.value}
+                onchange={(e: any) => bookInfo.title = e.target.value}
                 placeholder="책 제목을 입력하세요"
                 required
               />
             </div>
 
             <div class="space-y-2">
-              <Label htmlFor="author">저자 *</Label>
+              <Label for="author">저자 *</Label>
               <Input
                 id="author"
                 value={bookInfo.author}
-                on:change={(e: any) => bookInfo.author = e.target.value}
+                onchange={(e: any) => bookInfo.author = e.target.value}
                 placeholder="저자를 입력하세요"
                 required
               />
@@ -390,32 +381,32 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="space-y-2">
-                <Label htmlFor="publisher">출판사</Label>
+                <Label for="publisher">출판사</Label>
                 <Input
                   id="publisher"
                   value={bookInfo.publisher}
-                  on:change={(e: any) => bookInfo.publisher = e.target.value}
+                  onchange={(e: any) => bookInfo.publisher = e.target.value}
                   placeholder="출판사를 입력하세요"
                 />
               </div>
 
               <div class="space-y-2">
-                <Label htmlFor="publishedDate">출판일</Label>
+                <Label for="publishedDate">출판일</Label>
                 <Input
                   id="publishedDate"
                   value={bookInfo.publishedDate}
-                  on:change={(e: any) => bookInfo.publishedDate = e.target.value}
+                  onchange={(e: any) => bookInfo.publishedDate = e.target.value}
                   placeholder="YYYY-MM-DD"
                 />
               </div>
             </div>
 
             <div class="space-y-2">
-              <Label htmlFor="isbn">ISBN</Label>
+              <Label for="isbn">ISBN</Label>
               <Input
                 id="isbn"
                 value={bookInfo.isbn}
-                on:change={(e: any) => bookInfo.isbn = e.target.value}
+                onchange={(e: any) => bookInfo.isbn = e.target.value}
                 placeholder="ISBN을 입력하세요"
               />
             </div>
@@ -432,7 +423,7 @@
                     class={
                       bookInfo.readingStatus === "not-started" ? "bg-theme-brown hover:bg-theme-brown/90" : ""
                     }
-                    onClick={() => setReadingStatus("not-started")}
+                    onclick={() => setReadingStatus("not-started")}
                   >
                     읽기 전
                   </Button>
@@ -445,7 +436,7 @@
                         ? "bg-theme-gold hover:bg-theme-gold/90 text-theme-black"
                         : ""
                     }
-                    onClick={() => setReadingStatus("in-progress")}
+                    onclick={() => setReadingStatus("in-progress")}
                   >
                     읽는 중
                   </Button>
@@ -456,7 +447,7 @@
                     class={
                       bookInfo.readingStatus === "completed" ? "bg-theme-brown hover:bg-theme-brown/90" : ""
                     }
-                    onClick={() => setReadingStatus("completed")}
+                    onclick={() => setReadingStatus("completed")}
                   >
                     완독
                   </Button>
@@ -465,26 +456,26 @@
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-2">
-                  <Label htmlFor="totalPages">총 페이지</Label>
+                  <Label for="totalPages">총 페이지</Label>
                   <Input
                     id="totalPages"
                     type="number"
                     min="0"
                     value={String(bookInfo.totalPages) || ""}
-                    on:change={handleTotalPagesChange}
+                    onchange={handleTotalPagesChange}
                     placeholder="총 페이지 수"
                   />
                 </div>
 
                 <div class="space-y-2">
-                  <Label htmlFor="currentPage">현재 페이지</Label>
+                  <Label for="currentPage">현재 페이지</Label>
                   <Input
                     id="currentPage"
                     type="number"
                     min="0"
                     max={bookInfo.totalPages}
                     value={String(bookInfo.currentPage) || ""}
-                    on:change={handleCurrentPageChange}
+                    onchange={handleCurrentPageChange}
                     placeholder="현재 읽은 페이지"
                     disabled={bookInfo.totalPages === 0}
                   />
@@ -503,18 +494,18 @@
                   <CategoryTag
                     name={category}
                     isSelected={bookInfo.categories.includes(category)}
-                    on:click={() => toggleCategory(category)}
+                    onclick={() => toggleCategory(category)}
                   />
                 {/each}
               </div>
             </div>
 
             <div class="space-y-2">
-              <Label htmlFor="description">책 소개</Label>
+              <Label for="description">책 소개</Label>
               <Textarea
                 id="description"
                 value={bookInfo.description}
-                on:change={(e: any) => bookInfo.description = e.target.value}
+                onchange={(e: any) => bookInfo.description = e.target.value}
                 placeholder="책에 대한 간단한 소개나 설명을 입력하세요"
                 rows={4}
               />
@@ -523,9 +514,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="space-y-2">
                 <Label>독서 시작일</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant="outline" className="w-full justify-start text-left font-normal">
+                <Popover.Root>
+                  <Popover.Trigger>
+                    <Button variant="outline" class="w-full justify-start text-left font-normal">
                       <Calendar class="mr-2 h-4 w-4" />
                       {#if bookInfo.startDate}
                         {format(bookInfo.startDate, "PPP", { locale: ko })}
@@ -533,22 +524,22 @@
                         <span>날짜 선택</span>
                       {/if}
                     </Button>
-                  </PopoverTrigger>
-                  <PopoverContent class="w-auto p-0">
+                  </Popover.Trigger>
+                  <Popover.Content class="w-auto p-0">
                     <!-- <CalendarComponent
                       mode="single"
                       selected={bookInfo.startDate || undefined}
                       onSelect={(date) => setBookInfo((prev) => ({ ...prev, startDate: date }))}
                       initialFocus
                     /> -->
-                  </PopoverContent>
-                </Popover>
+                  </Popover.Content>
+                </Popover.Root>
               </div>
 
               <div class="space-y-2">
                 <Label>독서 완료일</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
+                <Popover.Root>
+                  <Popover.Trigger>
                     <Button variant="outline" class="w-full justify-start text-left font-normal">
                       <Calendar class="mr-2 h-4 w-4" />
                       {#if bookInfo.endDate}
@@ -557,16 +548,16 @@
                         <span>날짜 선택</span>
                       {/if}
                     </Button>
-                  </PopoverTrigger>
-                  <PopoverContent class="w-auto p-0">
+                  </Popover.Trigger>
+                  <Popover.Content class="w-auto p-0">
                     <!-- <CalendarComponent
                       mode="single"
                       selected={bookInfo.endDate || undefined}
                       onSelect={(date) => setBookInfo((prev) => ({ ...prev, endDate: date }))}
                       initialFocus
                     /> -->
-                  </PopoverContent>
-                </Popover>
+                  </Popover.Content>
+                </Popover.Root>
               </div>
             </div>
 
@@ -575,7 +566,6 @@
               <div class="flex items-center gap-1">
                 {#each [1, 2, 3, 4, 5] as star}
                   <Button
-                    key={star}
                     type="button"
                     variant="ghost"
                     size="icon"
@@ -603,24 +593,24 @@
             </div>
 
             <div class="space-y-2">
-              <Label htmlFor="notes">메모</Label>
+              <Label for="notes">메모</Label>
               <Textarea
                 id="notes"
                 value={bookInfo.notes}
-                on:change={(e: any) => bookInfo.notes = e.target.value}
+                onchange={(e: any) => bookInfo.notes = e.target.value}
                 placeholder="책에 대한 간단한 메모나 감상을 남겨보세요"
                 rows={3}
               />
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </Card.Content>
+      </Card.Root>
 
       <div class="flex justify-end gap-4 pt-4">
-        <Button variant="outline" asChild>
+        <Button variant="outline" >
           <a href="/books">취소</a>
         </Button>
-        <Button class="bg-theme-brown hover:bg-theme-brown/90" onClick={handleSave}>
+        <Button class="bg-theme-brown hover:bg-theme-brown/90" onclick={handleSave}>
           <Save class="h-4 w-4 mr-2" />책 등록하기
         </Button>
       </div>
