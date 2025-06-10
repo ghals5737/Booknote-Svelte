@@ -79,8 +79,7 @@
     }
 
     function handleAddNote() {
-        selectedNote = null
-        currentView = "note-editor"
+        goto(`/book-detail/${id}/note-editor`)
     }
     
     function handleBackToLibrary() {
@@ -144,7 +143,7 @@
                     <h3 class="text-2xl font-bold text-foreground">노트 목록</h3>
                     <Button
                         onclick={handleAddNote}
-                        class="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white"
+                        class="bg-primary  hover:from-primary/90 hover:to-accent/90 text-white"
                     >
                         <Plus class="h-4 w-4 mr-2" />
                         노트 추가
