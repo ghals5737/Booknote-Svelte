@@ -6,5 +6,6 @@ export interface Note {
     createdAt: Date
     updatedAt: Date
     isImportant: boolean
-  }
+    bookTitle?: string
+}
   

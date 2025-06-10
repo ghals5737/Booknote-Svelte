@@ -2,8 +2,11 @@
     import { BookOpen, Search, RotateCcw, BarChart3, Home, Plus } from "lucide-svelte"
     import * as Sidebar from "$lib/components/ui/sidebar/index.js";
     import { Button } from "$lib/components/ui/button/index.js";
-	import type { Book } from "$lib/type/book/book.js";
+	  import type { Book } from "$lib/type/book/book.js";
+	import { goto } from "$app/navigation";
+
     let currentView = "";
+
     const books: Book[] = [
   {
     id: "1",
@@ -64,7 +67,8 @@
     createdAt: new Date("2024-02-10"),
     notes: [],
   },
-]
+    ]
+
     const menuItems = [
         {
             title: "내 서재",
@@ -89,14 +93,14 @@
     ]
 
     function setCurrentView(view: string) {
-        currentView = view;
+        goto(`/${view}`);
     }
 </script>
 
 <Sidebar.Root class="border-r border-secondary bg-background">
-    <Sidebar.Header class="border-b border-secondary bg-gradient-to-r from-primary/5 to-accent/5">
+    <Sidebar.Header class="border-b border-secondary">
       <div class="flex items-center gap-3 px-3 py-4">
-        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
+        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
           <BookOpen class="h-6 w-6 text-white" />
         </div>
         <div>
@@ -148,10 +152,10 @@
       </Sidebar.Group>
     </Sidebar.Content>
 
-    <Sidebar.Footer className="border-t border-secondary bg-background">
+    <Sidebar.Footer class="border-t border-secondary bg-background">
       <Button
-        className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white"
-        onClick={() => setCurrentView("library")}
+        class="w-full hover:from-primary/90 hover:to-accent/90 text-white"
+        onclick={() => setCurrentView("library")}
       >
         <Plus className="h-4 w-4 mr-2" />새 책 추가
       </Button>
