@@ -17,6 +17,9 @@
             category: "자기계발",
             progress: 75,
             createdAt: new Date("2024-01-15"),
+            currentPage: 100,
+            totalPages: 200,
+            publisher: "현대지성",
             notes: [
             {
                 id: "1",
@@ -45,6 +48,9 @@
             cover: "/placeholder.svg?height=200&width=150",
             category: "개발",
             progress: 45,
+            currentPage: 100,
+            totalPages: 200,
+            publisher: "현대지성",
             createdAt: new Date("2024-02-01"),
             notes: [
             {
@@ -65,6 +71,9 @@
             cover: "/placeholder.svg?height=200&width=150",
             category: "역사",
             progress: 20,
+            currentPage: 100,
+            totalPages: 200,
+            publisher: "현대지성",
             createdAt: new Date("2024-02-10"),
             notes: [],
         },
