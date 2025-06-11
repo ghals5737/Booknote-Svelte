@@ -40,7 +40,7 @@
   }
 </script>
 
-<Dialog.Root>
+<Dialog.Root open={open}>
     <Dialog.Content class="sm:max-w-[425px] bg-card border-secondary">
       <Dialog.Header>
         <Dialog.Title class="text-foreground">새 책 추가</Dialog.Title>
@@ -110,13 +110,13 @@
             type="button"
             variant="outline"
             onclick={() => open = false}
-            class="border-accent text-accent hover:bg-accent/10"
+            class="border border-accent text-accent hover:bg-accent/10"
           >
             취소
           </Button>
           <Button
             type="submit"
-            class="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white"
+            class="bg-primary hover:from-primary/90 hover:to-accent/90 text-white"
           >
             <Plus className="h-4 w-4 mr-2" />
             추가

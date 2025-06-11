@@ -4,9 +4,9 @@
     import { Button } from "$lib/components/ui/button/index.js"
     import { Badge } from "$lib/components/ui/badge/index.js";
     import { Progress } from "$lib/components/ui/progress/index.js";
-	import type { Book } from "$lib/type/book/book.js";
-	import AddBookDialog from "$lib/components/book/AddBookDialog.svelte";
-	import { goto } from "$app/navigation";
+	  import type { Book } from "$lib/type/book/book.js";
+	  import AddBookDialog from "$lib/components/book/AddBookDialog.svelte";
+	  import { goto } from "$app/navigation";
 
     let books: Book[] = [
         {
@@ -130,5 +130,5 @@
       {/each}
     </div>
 
-    <AddBookDialog books={books} open={showAddBookDialog} />
+    <AddBookDialog books={books} bind:open={showAddBookDialog} />
 </div>
